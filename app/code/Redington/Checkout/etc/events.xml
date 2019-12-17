@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @package Redington_Checkout
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_convert_quote_to_order">
+        <observer name="Redington_Checkout::sales_quote_save_after" instance="Redington\Checkout\Observer\Sales\Quote" />
+    </event>
+    <event name="email_order_set_template_vars_before">
+        <observer name="redington_add_extra_data_to_transport" instance="Redington\Checkout\Observer\Sales\AddExtraTransportData" />
+    </event>
+	<event name="checkout_onepage_controller_success_action">
+        <observer name="checkout_onepage_controller_success_action_sendmail" instance="Redington\Checkout\Observer\SendMailOnOrderSuccess" />
+    </event>
+</config>

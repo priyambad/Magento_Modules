@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Customer
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <redington_customer>
+            <general>
+                <enabled>1</enabled>        
+            </general>            
+        </redington_customer>
+    </default>
+</config>

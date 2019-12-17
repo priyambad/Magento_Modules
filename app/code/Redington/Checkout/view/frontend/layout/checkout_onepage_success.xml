@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	
+	<referenceBlock name="page.main.title" remove="true" />
+	
+	<referenceBlock name="amasty.checkout.success">
+	    <action method="setTemplate">
+	        <argument name="template" xsi:type="string">Redington_Checkout::onepage/success.phtml</argument>
+	    </action>
+	</referenceBlock>
+    <referenceBlock name="amasty.checkout.success">
+        <block class="Redington\Checkout\Block\Onepage\Success\Extrainfo" name="display-lponumber" template="Redington_Checkout::onepage/details/lponumber.phtml"/>
+		<block class="Redington\Checkout\Block\Onepage\Success\Extrainfo" name="display-order-documents" template="Redington_Checkout::onepage/details/checkout_documents.phtml" after="display-lponumber"/>
+		<block class="Redington\Checkout\Block\Onepage\Success\Extrainfo" name="display-payment-documents" template="Redington_Checkout::onepage/details/payment_document.phtml"/>
+		<block class="Redington\Checkout\Block\Onepage\Success\Extrainfo" name="display-sapnumber" template="Redington_Checkout::onepage/details/sapnumber.phtml"/>
+		<block class="Redington\Checkout\Block\Onepage\Success\Extrainfo" name="display-order-status" template="Redington_Checkout::onepage/details/orderstatus.phtml"/>
+		<block class="Redington\Checkout\Block\Onepage\Success\Extrainfo" name="display-thankyou-message" template="Redington_Checkout::onepage/details/thankyou-message.phtml"/>
+    </referenceBlock>
+</page>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">transaction_listing.transaction_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>transaction_columns</spinner>
+        <deps>
+            <dep>transaction_listing.transaction_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="transaction_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_id</param>
+            </storageConfig>
+            <updateUrl path="company_credit/ui/render"/>
+        </settings>
+        <dataProvider class="Redington\Transactions\Ui\Component\Transaction\DataProvider" name="transaction_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>main_table.entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="transaction_columns" component="uiB2bListing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="table_css_class" xsi:type="string">data table</item>
+            </item>
+        </argument>
+        <settings>
+            <childDefaults>
+                <param name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">transaction_listing.transaction_listing.transaction_listing_top.bookmarks</item>
+                    <item name="root" xsi:type="string">columns.${ $.index }</item>
+                    <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                </param>
+            </childDefaults>
+            <storageConfig>
+                <namespace>current</namespace>
+                <provider>transaction_listing.transaction_listing.transaction_listing_top.bookmarks</provider>
+            </storageConfig>
+        </settings>
+
+        <column name="transaction_id" sortOrder="80">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Order Reference Number</label>
+            </settings>
+        </column>
+
+        <column name="transaction_date" sortOrder="81">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Transaction Date</label>
+            </settings>
+        </column>
+        <column name="transaction_amount" class="Redington\Transactions\Ui\Component\Transaction\Listing\Column\TransactionAmount" sortOrder="82">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Transaction Amount</label>
+            </settings>
+        </column>
+        <column name="remaining_credit_limit" class="Redington\Transactions\Ui\Component\Transaction\Listing\Column\CreditLimit" sortOrder="83">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Remaining Credit Limit</label>
+            </settings>
+        </column>
+        <column name="action_taken_by" class="Redington\Transactions\Ui\Component\Transaction\Listing\Column\CompanyUser" sortOrder="84">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Action Taken By</label>
+            </settings>
+        </column>
+        <column name="transaction_type" sortOrder="85">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Transaction Type</label>
+            </settings>
+        </column>
+    </columns>
+    <container name="transaction_listing_top">
+        <paging name="listing_paging" component="uiB2bPaging">
+            <settings>
+                <selectProvider>transaction_listing.transaction_listing.role_columns.ids</selectProvider>
+                <storageConfig>
+                    <namespace>current.paging</namespace>
+                    <provider>transaction_listing.transaction_listing.transaction_listing_top.bookmarks</provider>
+                </storageConfig>
+            </settings>
+        </paging>
+    </container>
+</listing>

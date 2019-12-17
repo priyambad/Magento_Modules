@@ -1,0 +1,100 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+$dataHelper = $this->helper('Redington\Quotation\Helper\Data');
+
+?>
+<div class="block block-comments">
+<!--    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Quote Comments')) ?></strong>
+    </div>-->
+	
+	<?php $quoteId = $block->getQuote()->getId();
+		
+		  $status = $dataHelper->getStatus($quoteId);
+	
+	
+	?>
+    <div class="block-content">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="comments-field field-row" data-role="attach-wrapper">
+            <?php
+                /** @var  $block \Magento\NegotiableQuote\Block\Quote\Comments*/
+                $disable = !$block->canEdit() ? ' _disabled' : '';
+            ?>
+            <form action="<?= /* @noEscape */ $block->getUrl('negotiable_quote/quote/send') ?>"
+                  data-action="comment-form" id="comment-form"
+                  method="post"
+                  enctype="multipart/form-data">
+                
+                <div class="comments-field-control custom-form form-group">
+        <label class="comments-field-label control-label"
+                       for="negotiation_comment"><?= /* @noEscape */ __('Add your comment') ?></label>
+                        <textarea name="comment" maxlength="300"
+                            <?php if (!$block->isAllowedManage()): ?>
+                                disabled="disabled"
+                            <?php endif; ?>
+                                  class="negotiation-control-textarea<?= /* @noEscape */ $disable ?>"
+                                  rows="3"
+                            <?= /* @noEscape */ !$block->canEdit() ? 'disabled' : '' ?>
+							 <?php if($status=='declined'){echo 'disabled';}?>
+							<?php if($status=='created'){echo 'disabled';}?>
+                                  cols="5"
+                                  id="negotiation_comment"></textarea>
+        </div>
+      </div>
+        
+                </div>
+               <!-- <div data-mage-init='{"Magento_NegotiableQuote/js/quote/add-files": {
+                                            "maxSizeB" : "<?= /* @noEscape */ $block->getMaxFileSize() ?>",
+                                            "maxSizeMb" : "<?= /* @noEscape */ $block->getMaxFileSizeMb() ?>",
+                                            "extensions" : "<?= /* @noEscape */ $block->getAllowedExtensions() ?>",
+                                            "modal" : "true"
+                                            }}'
+                     class="field-attachment<?= /* @noEscape */ $disable ?>"
+                     data-role="send-files"
+                     data-progress="">
+                    <?php if ($block->isAllowedManage()): ?>
+                    <label data-mage-init='{"Magento_NegotiableQuote/js/quote/add-file": {}}'
+                           for="add-file-0"
+                            <?php /* @noEscape */ echo $block->canEdit() ? 'tabindex="0"' : '' ?>>
+                        <input name="files[0]" data-role="add-file" id="add-file-0" type="file">
+                        <?= /* @noEscape */ __('Attach file') ?>
+                    </label>
+                    <?php endif; ?>
+                </div>	-->
+                <input type="hidden" name="quote_id" value="<?= /* @noEscape */ $block->getQuote()->getId() ?>"/>
+                <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+            </form>
+            <div class="attachments-list" data-role="added-files"></div>
+            <div class="attachments-list" data-role="history-added-files"></div>
+        </div>
+    </div>
+</div>
+<!--script type="text/x-magento-init">
+    {
+        "#comment-form": {
+            "validation": {}
+        }
+    }
+</script-->
+<!--script type="text/javascript">
+
+ require([
+        "jquery", 
+        "mage/mage",
+    
+    ], function ($, _) {
+		
+		var dataForm = $('#comment-form');
+		dataForm.mage('validation', {});
+	});
+
+
+</script-->

@@ -1,0 +1,57 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Totals\Original */ ?>
+<?php $total = $block->getTotal() ?>
+<tr class="<?= $block->escapeHtml($total->getCode()) ?>_table">
+    <td <?= $block->escapeHtml($block->getValueProperties()) ?>
+        data-th="<?= $block->escapeHtml($total->getLabel()) ?>" colspan="2">
+        <div id="toggle-part" class="collapsible-table" data-role="catalog-price">
+            <table class="data-table">
+                <tbody>
+                <?php foreach ($total->getSubtotals() as $key => $option): ?>
+                    <tr class="<?= /* @noEscape */ $block->escapeHtml($key . ' ' . $option['class']) ?>">
+                        <th scope="row">
+                            <?= $block->escapeHtml($option['label']) ?>
+                        </th>
+                        <td data-th="<?= $block->escapeHtml($option['label']) ?>">
+                            <?= /* @noEscape */ $block->displayPrices($option['value'], $total->getBaseCurrency()) ?>
+                        </td>
+                    </tr>
+                <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
+        <table class="data-table"
+               
+            >
+            <tbody>
+            <tr class="<?= $block->escapeHtml($total->getCode()) ?>">
+                <th scope="row">
+                    <span data-action="toggle-arrow" ><?= $block->escapeHtml($total->getLabel()) ?></span>
+                </th>
+                <td data-th="<?= $block->escapeHtml($total->getLabel()) ?>">
+                    
+                    <?php if ($total->getCurrency() && $total->getBaseCurrency() != $total->getCurrency()): ?>
+                        <br />
+                        [<?php
+                        /* @noEscape */ echo $block->displayPrices(
+                            $total->getQuoteValue() !== null ? $total->getQuoteValue() : $total->getValue(),
+                            $total->getCurrency()
+                        );
+                        ?>]
+					<?php else:?>
+					<?= /* @noEscape */ $block->displayPrices($total->getValue(), $total->getBaseCurrency()) ?>					
+                    <?php endif; ?>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </td>
+</tr>

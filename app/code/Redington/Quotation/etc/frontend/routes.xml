@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="rquotation" frontName="rquotation">
+            <module name="Redington_Quotation"/>
+        </route>
+    </router>
+</config>

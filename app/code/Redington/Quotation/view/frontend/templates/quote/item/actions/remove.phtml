@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\NegotiableQuote\Block\Quote\Item\Actions\Remove */
+?>
+<?php if ($block->isAllowedManage()): ?>
+    <a href="#"
+       title="<?= $block->escapeHtml(__('Remove item')) ?>"
+       data-post='<?= /* @noEscape */ $block->getRemoveParams() ?>'
+        <?= /* @noEscape */ $block->isSubmitAvailable() ? '' : 'tabindex="-1"' ?>
+       class="action action-delete">
+        <span>
+            <?= $block->escapeHtml(__('Remove item')) ?>
+        </span>
+    </a>
+<?php endif ?>

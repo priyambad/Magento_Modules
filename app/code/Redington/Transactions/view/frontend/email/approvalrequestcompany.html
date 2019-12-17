@@ -1,0 +1,28 @@
+
+<!--@subject {{trans "New request for additional credit"}} @-->
+
+{{template config_path="design/email/header_template"}}
+<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting" style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">{{trans "Dear "}} <b>{{var companyAdmin}}</b>,</p>
+			
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+				{{trans "You have requested for additional credit of "}}<strong>{{var requestAmount}}</strong>.
+			</p>
+		
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+				{{trans "It is being reviewed."}}
+			</p>
+        </td>
+    </tr>
+	<tr>
+		<td style="font-family:Arial, Open Sans, Helvetica, sans-serif; vertical-align:top; padding:0; font-size:12px;">
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px; margin-top:20px;">Thank You</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:0;">Regards,</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:0; margin-bottom:20px;">Redington Team</p>
+		</td>
+	</tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

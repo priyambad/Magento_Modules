@@ -1,0 +1,28 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="company_address_listing_data_source" xsi:type="string">Redington\CompanyLogo\Model\ResourceModel\CompanyLogo\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Redington\CompanyLogo\Model\ImageUploader">
+    <arguments>
+       
+        <argument name="baseTmpPath" xsi:type="string">logos</argument>
+        <argument name="basePath" xsi:type="string">logos</argument>
+        <argument name="allowedExtensions" xsi:type="array">
+            <item name="jpg" xsi:type="string">jpg</item>
+            <item name="jpeg" xsi:type="string">jpeg</item>
+            <item name="gif" xsi:type="string">gif</item>
+            <item name="png" xsi:type="string">png</item>
+        </argument>
+    </arguments>
+</type>
+    <virtualType name="Redington\CompanyLogo\Model\ResourceModel\CompanyLogo\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">redington_pdf_data</argument>
+            <argument name="resourceModel" xsi:type="string">Redington\CompanyLogo\Model\ResourceModel\CompanyLogo</argument>
+        </arguments>
+    </virtualType>
+</config>

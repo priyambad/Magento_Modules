@@ -1,0 +1,31 @@
+<!--@subject {{trans "New request for additional credit has been "}}{{var approvalAction}}@-->
+{{template config_path="design/email/header_template"}}
+<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting" style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">{{trans "Dear"}} <b>{{var companyAdmin}}</b>,</p>
+            <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+				{{trans "Your additional credit request for amount "}}<strong>{{var requestAmount}}</strong> {{var status}}.
+            </p>
+            {{if isApproved}}
+            <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;"><strong>Below are the comments entered by Redington while approving this request:</strong></p>
+            {{else}}
+            <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;"><strong>Please note below comments by Redington:</strong></p>
+            {{/if}}
+            <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">{{var comment}}</p>
+            <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+				<strong>{{trans "Your available credit limit is "}}{{var creditLimit}}<strong>.
+			</p>
+        </td>
+    </tr>
+	<tr>
+		<td style="font-family:Arial, Open Sans, Helvetica, sans-serif; vertical-align:top; padding:0; font-size:12px;">
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px; margin-top:20px;">Thank You</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:0;">Regards,</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:0; margin-bottom:20px;">Redington Team</p>
+		</td>
+	</tr>
+</table>
+
+
+{{template config_path="design/email/footer_template"}}

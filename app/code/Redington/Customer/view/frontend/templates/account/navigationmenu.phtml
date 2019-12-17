@@ -1,0 +1,180 @@
+<?php
+/**
+ *  Phtml file for the customer navigation menu.
+ *  @author SpadeWorx Team
+ *  @copyright (c) 2019 Redington
+ * @package Redington_Customer
+ * Created @ 28-04-2019
+ *
+ */
+?>
+<?php
+/**
+ * @var $block Redington\Customer\Block\Navigation
+ *
+ */
+
+?>
+<?php
+
+$userrole = $block->getUserRole();
+$isQuoteEnabled = $block->getQuotePermission();
+
+?>
+<!-- Customer Navigation menus by user roles -->
+<?php if ($userrole == 'Finance'): ?>
+<nav class="main-leftmenu">
+    <ul>
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>customer/account/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-dashboard-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Dashboard</span></a>
+        </li>
+		<!--li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>negotiable_quote/quote/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-quotes-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Quotes</span>
+            </a>
+        </li-->
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>sales/order/history/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-orders-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Orders</span>
+            </a>
+        </li>
+        <li class="has-subnav">
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>company/profile/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-credits-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Company<i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+            </a>
+            <ul class="submenu">
+                <li><a href="<?php echo $block->getUrl() ?>company/profile/"><span class="nav-text">Company Profile</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>company/users/"><span class="nav-text">Company Users</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>customer/credit/"><span class="nav-text">Company Credits</span></a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<?php endif;?>
+<?php if ($userrole =='Sales'): ?>
+
+<nav class="main-leftmenu">
+    <ul>
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>customer/account/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-dashboard-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Dashboard</span></a>
+        </li>
+		<?php if($isQuoteEnabled==1){?>
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>negotiable_quote/quote/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-quotes-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Quotes</span>
+            </a>
+        </li>
+		<?php } ?>
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>sales/order/history/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-orders-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Orders</span>
+            </a>
+        </li>
+        <li class="has-subnav">
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>customer/address/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-address-book-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Address<i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+            </a>
+            <ul class="submenu">
+                <li><a href="<?php echo $block->getUrl() ?>customer/address/"><span class="nav-text">Address Book</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>customer/forwarder/"><span class="nav-text">Forwarder</span></a></li>
+            </ul>
+        </li>
+        <li class="has-subnav">
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>company/profile/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-credits-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Company<i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+            </a>
+            <ul class="submenu">
+                <li><a href="<?php echo $block->getUrl() ?>company/profile/"><span class="nav-text">Company Profile</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>company/users/"><span class="nav-text">Company Users</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>customer/credit/"><span class="nav-text">Company Credits</span></a></li>
+                <!--<li><a href="<?php echo $block->getUrl() ?>negotiableextendedquote/quote/config/"><span class="nav-text">Review Order Config</span></a></li>-->
+            </ul>
+        </li>
+    </ul>
+</nav>
+<?php endif;?>
+<?php if ($userrole ==''): ?>
+
+<nav class="main-leftmenu">
+    <ul>
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>customer/account/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-dashboard-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Dashboard</span></a>
+        </li>
+		<?php if($isQuoteEnabled==1){?>
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>negotiable_quote/quote/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-quotes-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Quotes</span>
+            </a>
+        </li>
+		<?php } ?>
+        <li>
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>sales/order/history/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-orders-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Orders</span>
+            </a>
+        </li>
+        <li class="has-subnav">
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>customer/address/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-address-book-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Address<i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+            </a>
+            <ul class="submenu">
+                <li><a href="<?php echo $block->getUrl() ?>customer/address/"><span class="nav-text">Address Book</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>customer/forwarder/"><span class="nav-text">Forwarder</span></a></li>
+            </ul>
+        </li>
+        <li class="has-subnav">
+            <a class="mvp-type-sidenav" href="<?php echo $block->getUrl() ?>company/profile/">
+                <span class="css-8bylvl library-nav-icon">
+                <img src="<?php echo $block->getUrl() ?>pub/media/home/nav-credits-icon.png" width="26" height="26" alt=""/> </span>
+                <span class="nav-text">Company<i class="fa fa-chevron-down" aria-hidden="true"></i></span>
+            </a>
+            <ul class="submenu">
+                <li><a href="<?php echo $block->getUrl() ?>company/profile/"><span class="nav-text">Company Profile</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>company/users/"><span class="nav-text">Company Users</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>customer/credit/"><span class="nav-text">Company Credits</span></a></li>
+                <li><a href="<?php echo $block->getUrl() ?>negotiableextendedquote/quote/config/"><span class="nav-text">Review Order Configuration</span></a></li>
+            </ul>
+        </li>
+    </ul>
+</nav>
+<?php endif;?>
+<!-- Script added for the submenu -->
+
+<script type="text/javascript">
+
+    require(['jquery'],function($){
+		$('.main-leftmenu > ul > li').hover(function() {
+		  $(this).find('li').closest('ul').toggle(100);
+		});
+	});
+
+</script>
+<!-- Script end for submenu -->

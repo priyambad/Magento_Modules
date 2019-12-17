@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Info
+ */
+?>
+<div class="wrap-messages" data-role="message-block">
+    <?php if ($block->canEdit()): ?>
+    <?php $isShown = ($block->hasQuoteChanges() || $block->hasUnconfirmedChanges())?>
+    <div id="quote-changed-message"<?= /* @noEscape */ !$isShown ? ' class="hidden"' : '' ?>>
+        <div class="message message-notice notice">
+            <div data-ui-id="messages-message-notice">
+                <?= $block->escapeHtml(
+                    __('The proposed price has been updated successfully.')
+                ) ?>
+            </div>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>

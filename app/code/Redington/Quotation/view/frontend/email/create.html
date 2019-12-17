@@ -1,0 +1,29 @@
+<!--@subject New quotation details @-->
+
+{{template config_path="design/email/header_template"}}
+<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting" style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">{{trans "Dear"}} <b>{{var companyAdmin}}</b>,</p>
+           <div>
+				<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+					<tr>
+						<td colspan="2"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:2px;">{{trans "The quote requested by you"}} <b><a href="{{var QuoteId}}">{{var quotationId}}</a> </b>has been sent for approval.</p></td>
+					</tr>
+					<tr>
+						<td colspan="2" height="10px">&nbsp;</td>
+					</tr>
+				</table>
+            </div>
+		</td>
+    </tr>
+	<tr>
+		<td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; vertical-align:top; padding:0; font-size:12px;">
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px; margin-top:20px;">Thank You</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:0;">Regards,</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:0; margin-bottom:20px;">Redington Team</p>
+		</td>
+	</tr>
+	</table>
+
+{{template config_path="design/email/footer_template"}}

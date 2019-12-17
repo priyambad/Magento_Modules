@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Redington_AddressApproval::address_index" sortOrder="10" title="Address approval">
+					<resource id="Redington_AddressApproval::address_view" sortOrder="10" title="Request view"/>
+					<resource id="Redington_AddressApproval::address_save" sortOrder="10" title="Request action"/>
+				</resource>
+                <resource id="Redington_AddressApproval::forwarder_index" sortOrder="10" title="Forwarder approval">
+					<resource id="Redington_AddressApproval::forwarder_view" sortOrder="10" title="Request view"/>
+					<resource id="Redington_AddressApproval::forwarder_save" sortOrder="10" title="Request action"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

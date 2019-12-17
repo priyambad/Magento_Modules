@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Copyright © Redington. All rights reserved.
+ * 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add action="paymentgroup/group/index" id="Redington_PaymentGroup::payment_group" sortOrder="100" module="Redington_PaymentGroup" parent="Redington::menu" resource="Redington_PaymentGroup::paymentgroup_index" title="Payment Group"/>
+	</menu>
+</config>

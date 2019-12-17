@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Company
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="redington" translate="label" sortOrder="200">
+            <label>Redington</label>
+        </tab>
+        <section id="redington_otp" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Otp</label>
+            <tab>redington</tab>
+            <resource>Redington_Otp::config_redington_otp</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                
+                <field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Otp Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="otp_expire_time" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>OTP Expire Time</label>
+					<comment>In Minutes</comment>
+                </field> 
+				<field id="otp_email_template" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Otp Template </label>
+                    <comment>Email template chosen based on theme fallback when "Default" option is selected.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+				<field id="otp_sms_api_url" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sms API Url</label>
+                </field> 
+				<field id="otp_sms_content" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sms Content</label>
+					<comment>otp_val : Dynamic OTP</comment>
+                </field>
+            </group>
+			<group id="message_note" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Message And Note</label>
+				<field id="otp_expiration" translate="label comment" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>OTP Expiration Message</label>
+                </field>
+				<field id="otp_not_matched" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>OTP Not Matched Message</label>
+                </field>
+				<field id="otp_resend_successfully" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Otp Resend Successfully Message</label>
+                </field>
+				<field id="otp_system_error" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>System Error Message</label>
+                </field>
+				<field id="otp_send_note" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>OTP Send Note</label>
+					<comment>otp_type : Dynamic OTP Type</comment>
+                </field>
+			</group>
+        </section>
+    </system>
+</config>

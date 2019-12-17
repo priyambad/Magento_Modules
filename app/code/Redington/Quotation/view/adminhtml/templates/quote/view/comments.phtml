@@ -1,0 +1,190 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var  $block \Magento\NegotiableQuote\Block\Quote\Comments */
+?>
+<?php
+$disable = !$block->canEdit() ? ' _disabled' : '';
+?>
+<section class="admin__page-section quote-view-shipping">
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item admin-quote-comments-history">
+            <div class="product data items quote-details-items" data-mage-init='{"tabs":{}}'>
+                <ul class="tabs-horiz">
+                    <li>
+                        <a href="#comment" id="grid_tab_new_comments"
+                           title="<?= /* @noEscape */ $block->escapeHtml(__('Comments')) ?>"
+                           class="ui-tabs-anchor" data-tab-type="">
+                        <span>
+                            <span class="changed" title="<?php /* @noEscape */
+                            echo __('The information in this tab has been changed.') ?>"></span>
+                            <span class="error" title="<?php /* @noEscape */
+                            echo __('This tab contains invalid data. Please resolve this before saving.') ?>"></span>
+                            <span class="loader" title="<?= /* @noEscape */ __('Loading...') ?>"></span>
+                            <?= /* @noEscape */ $block->escapeHtml(__('Comments')) ?>
+                        </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#history" id="grid_tab_new_history"
+                           title="<?= /* @noEscape */ $block->escapeHtml(__('History Log')) ?>"
+                           class="ui-tabs-anchor" data-tab-type="">
+                        <span>
+                            <span class="changed" title="<?php /* @noEscape */
+                            echo __('The information in this tab has been changed.') ?>"></span>
+                            <span class="error" title="<?php /* @noEscape */
+                            echo __('This tab contains invalid data. Please resolve this before saving.') ?>"></span>
+                            <span class="loader" title="<?php /* @noEscape */
+                            echo __('Loading...') ?>"></span>
+                            <?= /* @noEscape */ $block->escapeHtml(__('History Log')) ?>
+                        </span>
+                        </a>
+                    </li>
+                </ul>
+                <div id="comment" class="admin-quote-comment" style="display:none">
+                    <div class="quote-comments-block">
+                        <div class="comments-block-list">
+                            <?php 
+								$comments = $block->getQuoteComments();
+								$commentArray = [];
+								foreach ($comments as $comment):
+									array_push($commentArray, $comment);
+								endforeach;
+								rsort($commentArray);
+							
+							foreach ($commentArray as $comment): ?>
+                                <?php /** @var $comment \Magento\NegotiableQuote\Model\Comment */?>
+                                <div class="comments-block-item">
+                                    <span class="comments-block-item-date-time">
+                                        <?php /* @noEscape */ echo $block->formatDate(
+                                            $comment->getCreatedAt(),
+                                            \IntlDateFormatter::MEDIUM,
+                                            true
+                                        ) ?>
+                                        <?= $block->escapeHtml($block->getCommentCreator($comment)) ?>
+                                    </span>
+                                    <div class="comments-block-item-comment">
+                                        <?php if ($comment->getIsDecline()): ?>
+                                            <b class="comments-request-declined">
+                                                <?= /* @noEscape */ __('Request Declined. Reason: ') ?>
+                                            </b>
+                                        <?php endif ?>
+                                        <?= /* @noEscape */ nl2br($comment->getComment()) ?>
+                                    </div>
+                                    <?php $attachments = $block->getCommentAttachments($comment->getEntityId()) ?>
+                                    <?php if ($attachments->count() > 0): ?>
+                                        <div class="attachments-list">
+                                            <?php foreach($attachments as $file): ?>
+                                                <?php /** @var $file \Magento\NegotiableQuote\Model\CommentAttachment */ ?>
+                                                <span class="attachments-item">
+                                                    <a href="<?php /* @noEscape */
+                                                        echo $block->getAttachmentUrl($file->getAttachmentId()) ?>"
+                                                       title="<?php /* @noEscape */
+                                                       echo $file->getFileName() ?>">
+                                                        <?php /* @noEscape */
+                                                        echo $file->getFileName() ?></a>
+                                                </span>
+                                            <?php endforeach ?>
+                                        </div>
+                                    <?php endif ?>
+                                </div>
+                            <?php endforeach ?>
+                        </div>
+                        <div class="comments-field field-row" data-role="attach-wrapper">
+                            <form action="" data-action="comment-form" data-action="comment-form" id="comment-form" data-mage-init='{"validation": {}}'
+								  method="post">
+							  <label class="comments-field-label"
+                                       for="negotiation_comment">
+                                    <?= /* @noEscape */ __('Add your comment') ?>
+                                </label>
+                                <div class="comments-field-control">
+                                <textarea name="comment"  maxlength="300" data-validate="{required:true}"
+                                  class="negotiation-control-textarea<?= /* @noEscape */ $disable ?>"
+                                  rows="3"
+                                  <?= /* @noEscape */ !$block->canEdit() ? 'disabled' : '' ?>
+                                  cols="5" id="negotiation_comment"><?php
+                                    if ($block->getDraftComment() !== null):
+                                        echo $block->escapeHtml($block->getDraftComment()->getComment());
+                                    endif ?></textarea>
+                                </div>
+                                <!--div data-mage-init='{"Magento_NegotiableQuote/js/quote/add-files": {
+                                        "maxSizeB" : "<?= /* @noEscape */ $block->getMaxFileSize() ?>",
+                                        "maxSizeMb" : "<?= /* @noEscape */ $block->getMaxFileSizeMb() ?>",
+                                        "extensions" : "<?= /* @noEscape */ $block->getAllowedExtensions() ?>",
+                                        "modal" : "true"
+                                    }}'
+                                     class="field-attachment<?= /* @noEscape */ $disable ?>"
+                                     data-role="send-files">
+                                    <label data-role="wrap-file"
+                                           data-mage-init='{"Magento_NegotiableQuote/js/quote/add-file": {}}'
+                                           for="add-file-0"
+                                            <?php /* @noEscape */ echo $block->canEdit() ? 'tabindex="0"' : '' ?>>
+                                        <input name="files[0]"
+                                               data-role="add-file"
+                                               id="add-file-0"
+                                               type="file">
+                                        <?php /* @noEscape */
+                                        echo __('Attach file') ?>
+                                    </label>
+
+                                </div-->
+                                <?= /* @noEscape */ $block->getBlockHtml('formkey') ?>
+                            </form>
+                            <div class="attachments-list" data-role="added-files"></div>
+                            <?php if ($block->getDraftComment()): ?>
+                                <?php $attachments = $block->getCommentAttachments(
+                                    $block->getDraftComment()->getEntityId()
+                                ) ?>
+                                <div class="attachments-list" data-role="history-added-files">
+                                    <?php foreach($attachments as $file): ?>
+                                        <div class="attachments-item" data-role="attached-item">
+                                            <span><?= /* @noEscape */ $file->getFileName() ?></span>
+                                            <button type="button"
+                                                    class="action-delete"
+                                                    data-role="delete-button"
+                                                    data-action="delete-file"
+                                                    data-mage-init='{"Magento_NegotiableQuote/quote/actions/delete-item": {
+                                                        "attachmentId" : "<?php /* @noEscape */
+                                                        echo $file->getAttachmentId(); ?>"}}'>
+                                                <span>Delete</span>
+                                            </button>
+                                        </div>
+                                    <?php endforeach ?>
+                                </div>
+                            <?php endif ?>
+                        </div>
+                    </div>
+                </div>
+                <div id="history" style="display:none">
+                    <?= /* @noEscape */ $block->getChildHtml('quote_history') ?>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/x-magento-init">
+    {
+        "#comment-form": {
+            "validation": {}
+        }
+    }
+</script>
+<script type="text/javascript">
+
+ require([
+        "jquery", 
+        "mage/mage",
+    
+    ], function ($, _) {
+		
+		var dataForm = $('#comment-form');
+		dataForm.mage('validation', {});
+	});
+
+
+</script>

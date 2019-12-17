@@ -1,0 +1,22 @@
+<!--
+/**
+ * @author Redington Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_CashPayment
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+    <default>
+        <payment>
+            <cashpayment>
+                <active>1</active>
+                <title>Cash Payment</title>
+                <order_status>pending</order_status>
+                <instructions>Instruction.</instructions>
+                <payment_action>true</payment_action>
+                <model>Redington\CashPayment\Model\Cashpayment</model>
+                <group>offline</group>
+            </cashpayment>
+        </payment>
+    </default>
+</config>

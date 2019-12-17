@@ -1,0 +1,27 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+?>
+<?php /** @var $block \Redington\Checkout\Block\Onepage\Success\Extrainfo */ ?>
+
+<?php
+$lpoDocument = $block->getLpoReferenceDocument();
+
+if($lpoDocument){ ?>
+<div class="block block-order-details-documents lpo-block">
+    <div class="block-title-custom"><strong><?= __('LPO Documents') ?>:</strong>
+		<span class="block-content-lponumber">
+			<?php 
+			if($lpoDocument){
+				echo '<span class="document-label"><a href="'.$lpoDocument.'" target="_blank" >'.__('Reference Document').'</a></span>';
+			}else{
+				echo '<span class="document-label no-document">'.__('Reference Document').":". __('Not Uploaded').'</span>';
+			}
+			?>
+		</span>
+	</div>
+</div>
+<?php } ?>

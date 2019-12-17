@@ -1,0 +1,59 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Customer
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var Redington\Customer\Block\Account\Dashboard\Address $block */
+?>
+<div class="block block-dashboard-addresses">
+    <div class="block-content">
+        <div class="box box-billing-address">
+            <strong class="box-title">
+                <span><?= $block->escapeHtml(__('Default Billing Address')) ?></span>
+            </strong>
+            <div class="box-content">
+                <address>
+                    <?php 	$address = $block->getPrimaryBillingAddressHtml();
+							
+							$street=$address->getStreet();							   
+							echo $address->getFirstname().' '.$address->getLastname().'<br>';
+							echo $address->getCompany().'<br>';
+							foreach($street as $straddress){
+								echo $straddress .'<br>';
+							}
+							echo $address->getCity().',';
+							echo $address->getPostcode().'<br>';
+							echo $block->getCountryname($address->getCountryId()).'<br>';
+							echo 'T: ' .$address->getTelephone().'<br>';	
+				
+					?>
+                </address>
+            </div>
+        </div>
+        <div class="box box-shipping-address">
+            <strong class="box-title">
+                <span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span>
+            </strong>
+            <div class="box-content">
+                <address>
+                    <?php $address = $block->getPrimaryShippingAddressHtml();
+							$street=$address->getStreet();							   
+							echo $address->getFirstname().' '.$address->getLastname().'<br>';
+							echo $address->getCompany().'<br>';
+							foreach($street as $straddress){
+								echo $straddress .'<br>';
+							}
+							echo $address->getCity().',';
+							echo $address->getPostcode().'<br>';
+							echo $block->getCountryname($address->getCountryId()).'<br>';
+							echo 'T: ' .$address->getTelephone().'<br>';
+					?>
+                </address>
+            </div>
+        </div>
+    </div>
+</div>

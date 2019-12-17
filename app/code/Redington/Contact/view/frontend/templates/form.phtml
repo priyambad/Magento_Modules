@@ -1,0 +1,111 @@
+<?php
+   /**
+    * Copyright © Magento, Inc. All rights reserved.
+    * See COPYING.txt for license details.
+    */
+   
+   // @codingStandardsIgnoreFile
+   /** @var \Redington\Contact\Block\ContactForm $block */
+   ?>
+<section id="contactus" class="contactus-wrap grey-bg text-center">
+   <div class="container">
+      <header class="section-header">
+         <h3>Get Assistance to Setup your Account</h3>
+         <p>A Redington Relationship Manager will get in touch with you to help you through the process. </p>
+      </header>
+      <div class="row">
+         <div class="col-md-8 offset-lg-2">
+            <form class="form contact" action="<?= $block->escapeUrl($block->getFormAction()) ?>" id="red-contact-form" method="post" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>" data-mage-init='{"validation":{}}'>
+               <div class="red-contact form-group required text-left">
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="control-label required">
+                        <?= $block->escapeHtml(__('Full name')) ?>
+                        </label>
+                        <input type="text" name="full_name" class="form-control" data-validate="{required:true}" title="" placeholder="<?= $block->escapeHtml(__('Full name')) ?>">
+                     </div>
+                     <div class="col-md-6">
+                        <label class="control-label required">
+                        <?= $block->escapeHtml(__('Company Name')) ?>
+                        </label>
+                        <input type="text" name='company_name' class="form-control" title="" placeholder=" <?= $block->escapeHtml(__('Company Name')) ?>" data-validate="{required:true}" >
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-6">
+                        <label class="control-label required">
+                        <?= $block->escapeHtml(__('Email')) ?> </label>
+                        <input type="email" name="email" class="form-control" title="" placeholder="<?= $block->escapeHtml(__('Email')) ?>" data-validate="{required:true, 'validate-email':true}" >
+                     </div>
+                     <div class="col-md-6 field telephone">
+                        <label class="control-label required" for="telephone">
+                            <span><?= $block->escapeHtml(__('Mobile Number')) ?></span>
+                        </label>
+
+                        <select name="country_code" id="country_code" class="adduser-countrycode">
+                            <option style="background-image:url('<?= $block->getViewFileUrl('images/countryFlag_AE.png'); ?>');" value="971" selected="selected">+971</option>
+                            <option style="background-image:url('<?= $block->getViewFileUrl('images/countryFlag_KE.png'); ?>');" value="254">+254</option>
+                        </select>
+
+                        <div class="control adduser-countrynum">
+                            <input type="number" name="mobile" id="telephone" value="" title="<?= $block->escapeHtml(__('Mobile Number')) ?>" placeholder="<?= $block->escapeHtml(__('Mobile Number')) ?>" class="form-control mobilenumber" data-validate="{required:true, 'validate-number':true}"  maxlength="10">
+                          <span style="color:#e02b27;" id="spnPhone"></span>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-9">
+                        <div class="thankyou-msg text-right" id="message">
+                         Thanks for contacting us. We'll respond to you very soon.
+                        </div>
+                     </div>
+                     <div class="col-md-3">
+                        <div class="btn-grp">
+                           <!-- <a type="button" class="btn-become-partner btn-fill" href="#">Send Request</a> -->
+                           <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="btn-become-partner btn-fill contact-submit-btn">
+                           <span><?= $block->escapeHtml(__('Send Request')) ?></span>
+                           </button>
+                        </div>
+                     </div>
+                  </div>
+                   <div class="row">
+                     <div class="col-md-12">
+                      
+                     </div>
+                    </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   </div>
+</section>
+<script type="text/javascript">
+  require(['jquery', 'jquery/ui'], function($){
+  jQuery(document).ready( function() {
+    $("#message").hide();
+    $("#red-contact-form").submit(function(event){
+        var post_url = $(this).attr("action"); 
+        var request_method = $(this).attr("method"); 
+        var form_data = $(this).serialize(); 
+       
+        event.preventDefault();
+        if($("#red-contact-form").valid())
+        {
+            $.ajax({
+            url : post_url,
+            type: request_method,
+            data : form_data
+          }).done(function(response){ 
+            $("#message").fadeTo(2000, 700).slideUp(700, function(){
+                $("#message").slideUp(700);
+            });
+            $("#red-contact-form").trigger("reset");
+          });
+        }
+         
+      });
+  });
+});
+  
+</script>

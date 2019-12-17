@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Redington. All rights reserved.
+ * 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Company::index" title="All" translate="title" sortOrder="100">
+                <resource id="Magento_Company::view" title="Company Profile" translate="title" sortOrder="100">
+                    <resource id="Magento_Company::view_account" title="Account Information (View)" translate="title" sortOrder="100">
+                        <resource id="Magento_Company::edit_account" title="Edit" translate="title" sortOrder="100" />
+                    </resource>
+                    <resource id="Magento_Company::view_address" title="Legal Address (View)" translate="title" sortOrder="200">
+                        <resource id="Magento_Company::edit_address" title="Edit" translate="title" sortOrder="200" />
+                    </resource>
+                    <resource id="Magento_Company::contacts" title="Contacts (View)" translate="title" sortOrder="300" />
+                </resource>
+                <resource id="Magento_Company::user_management" title="Company User Management" translate="title" sortOrder="200">
+                    <resource id="Magento_Company::roles_view" title="View roles and permissions" translate="title" sortOrder="100">
+                        <resource id="Magento_Company::roles_edit" title="Manage roles and permissions" translate="title" sortOrder="200" />
+                    </resource>
+                    <resource id="Magento_Company::users_view" title="View users and teams" translate="title" sortOrder="300">
+                        <resource id="Magento_Company::users_edit" title="Manage users and teams" translate="title" sortOrder="400" />
+                    </resource>
+                </resource>
+                <resource id="Magento_Sales::all" title="Sales" translate="title" sortOrder="10">
+                    <resource id="Magento_Sales::place_order" title="Checkout (place order)" translate="title" sortOrder="20">
+                        <resource id="Magento_Sales::payment_account" title="Use Pay On Account method" translate="title" sortOrder="30" />
+                    </resource>
+                    <resource id="Magento_Sales::view_orders" title="View orders" translate="title" sortOrder="40">
+                        <resource id="Magento_Sales::view_orders_sub" title="View orders of subordinate users" translate="title" sortOrder="40" />
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

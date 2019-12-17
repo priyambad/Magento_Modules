@@ -1,0 +1,211 @@
+<?php
+/**
+ * Copyright � Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+
+<div class="block block-addresses-list">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Forwarder details')) ?></strong></div>
+    <div class="block-content">
+        <?php $_pAddsses = $block->getApprovedForwarders() ?>
+        <?php if (sizeof($_pAddsses)): ?>
+            <ol class="items addresses">
+                <?php foreach ($_pAddsses as $address): 
+                     ?>
+                     <?php $_address = $block->getAddressObject($address->getId());?>
+                        <li class="item">
+                            <address>
+                                <?= $block->getAddressHtml($_address) ?><br />
+                            </address>
+                            <?php if (!$_pAddsses = $block->isAddressValid($_address->getId())): ?>
+                            <div class="item actions">
+                                <a class="address-status invalid" href="<?= $block->escapeUrl($block->getUrl('customer/address/view', ['entity_id' => $block->getForwarderRequestId($_address->getId()),'address_id'=>$_address->getId()])) ?>">Invalid</a> | 
+                                <a class="action edit" href="<?= $block->escapeUrl($block->getUrl('customer/forwarder/edit', ['id' => $_address->getId()])) ?>"><span><?= $block->escapeHtml(__('Edit Forwarder')) ?></span></a>
+                            </div>    
+                            <?php else: ?>
+                            <div class="item actions">
+                                <a class="action view-document-button"><span><?= $block->escapeHtml(__('View Documents')) ?> <img src="<?= $block->getViewFileUrl('images/icon_top.png'); ?>" alt="address-icon_top.png"> </span></a>
+                                |
+                                <a class="action" href="<?= $block->escapeUrl($block->getUrl('customer/forwarder/update', ['entity_id' => $block->getForwarderRequestId($_address->getId()),'id'=>$_address->getId()])) ?>"><span><?= $block->escapeHtml(__('Update Documents')) ?></span></a>
+                                <div class="docView hide">
+                                    <div class="address-view-documents document-list">
+                                        <table class="table">
+                                            <thead>
+                                                <th>Document name</th>
+                                                <th>Document number</th>
+                                                <th>Issue date</th>
+                                                <th>Expiry date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </thead>
+                                            <tbody>
+                                                <?php $documents = $block->getForwarderDocuments($_address->getId());
+                                                if($documents) :
+                                                foreach($documents as $key => $document ){ ?>
+                                                   <tr>
+                                                        <td><?= $document['documentName'] ?></td>
+                                                        <td><?= $document['documentNumber']?$document['documentNumber']:'Not Applicable' ?></td>
+                                                        <td><?= $document['documentIssue']?$document['documentIssue']:'Not Applicable' ?></td>
+                                                        <td><?= $document['documentExpiry']?$document['documentExpiry']:'Not Applicable' ?></td>
+                                                        <td><div class="address-status Approved"><?='Approved'?></div></td>
+                                                        <td><a href="<?= $document['docUrl'] ?>" target="blank">View</a></td>
+                                                    </tr>
+                                                <?php }
+                                                else: ?>
+                                                    <tr>
+                                                        <td colspan="5" align="center"> Unable to fetch documents</td>
+                                                    </tr>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php endif; ?>
+                        </li>
+                    <?php 
+                endforeach; ?>
+            </ol>
+        <?php else: ?>
+            <p class="empty"><?= $block->escapeHtml(__('You have no forwarder entries in your address book.')) ?></p>
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="block block-addresses-list">
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Requested Forwarder Entries')) ?></strong></div>
+    <div class="block-content">
+        <?php $_pAddsses = $block->getRequestedForwardersIds();?>
+         <?php if (sizeof($_pAddsses)>0): ?>
+            <ol class="items addresses">
+                <?php foreach ($_pAddsses as $requestedAddress): ?>
+                    <?php $_address = $block->getAddressObject($requestedAddress->getAddressId());?>
+                    <li class="item">
+                        <address>
+                            <?= $block->getAddressHtml($_address) ?><br />
+                        </address>
+                        <?php if ($requestedAddress->getStatus()==1 || $requestedAddress->getStatus()==100): ?>
+                            <div class="item actions">
+                                <a class="address-status <?php echo $this->getStatus($requestedAddress->getStatus())?>" href="<?= $block->escapeUrl($block->getUrl('customer/forwarder/view', ['entity_id' => $requestedAddress->getEntityId(),'address_id'=>$_address->getId()])) ?>"><?php echo $this->getStatus($requestedAddress->getStatus())?></a>
+                                | 
+                                <a class="action edit" href="<?= $block->escapeUrl($block->getUrl('customer/forwarder/edit/', ['id' => $_address->getId()])) ?>"><span><?= $block->escapeHtml(__('Edit Forwarder')) ?></span></a>
+                            </div>
+                        <?php else: ?>
+                            <div class="item actions">
+                                <a class="address-status <?php echo $this->getStatus($requestedAddress->getStatus())?>" href="<?= $block->escapeUrl($block->getUrl('customer/forwarder/view', ['entity_id' => $requestedAddress->getEntityId(),'address_id'=>$_address->getId()])) ?>"><?php echo $this->getStatus($requestedAddress->getStatus())?></a>
+                                |
+                                <a class="action view-document-button"><span><?= $block->escapeHtml(__('View Documents')) ?> <img src="<?= $block->getViewFileUrl('images/icon_top.png'); ?>" alt="address-icon_top.png"> </span></a>
+                                <div class="docView hide">
+                                    <div class="address-view-documents document-list">
+                                        <table class="table">
+                                            <thead>
+                                                <th>Document name</th>
+                                                <th>Document number</th>
+                                                <th>Issue date</th>
+                                                <th>Expiry date</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </thead>
+                                            <tbody>
+                                                <?php $gotDocuments = false; ?>
+                                                <?php $documents = $block->getForwarderDocuments($_address->getId());
+                                                if ($documents) :
+                                                $gotDocuments = true;
+                                                foreach($documents as $key => $document ){ ?>
+                                                    <tr>
+                                                        <td><?= $document['documentName'] ?></td>
+                                                        <td><?= $document['documentNumber']?$document['documentNumber']:'Not Applicable' ?></td>
+                                                        <td><?= $document['documentIssue']?$document['documentIssue']:'Not Applicable' ?></td>
+                                                        <td><?= $document['documentExpiry']?$document['documentExpiry']:'Not Applicable' ?></td>
+                                                        <td><div class="address-status Approved"><?= 'Approved' ?></div></td>
+                                                        <td><a href="<?= $document['docUrl'] ?>" target="blank">View</a></td>
+                                                    </tr>
+                                                <?php }?>
+                                                <?php endif; ?>
+                                                <?php $documents = $block->getRequestedForwarderDocuments($_address->getId());
+                                                if ($documents) :
+                                                $gotDocuments = true;
+                                                foreach($documents as $key => $document ){ ?>
+                                                    <tr>
+                                                        <td><?= $document['documentName'] ?></td>
+                                                        <td><?= $document['documentNumber']?$document['documentNumber']:'Not Applicable' ?></td>
+                                                        <td><?= $document['documentIssue']?$document['documentIssue']:'Not Applicable' ?></td>
+                                                        <td><?= $document['documentExpiry']?$document['documentExpiry']:'Not Applicable' ?></td>
+                                                        <td><div class="address-status Pending"><?= 'Pending' ?></div></td>
+                                                        <td><a href="<?= $document['docUrl'] ?>" target="blank">View</a></td>
+                                                    </tr>
+                                                <?php } ?>
+                                                <?php endif; ?>
+                                                <?php if(!$gotDocuments) : ?>
+                                                    <tr>
+                                                        <td colspan="5" align="center"> Unable to fetch documents</td>
+                                                    </tr>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>   
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+        <?php else: ?>
+            <p class="empty"><?= $block->escapeHtml(__('You have no other forwarder pending for approval.')) ?></p>
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="actions-toolbar">
+    <div class="primary">
+        <a class="action back btn btn btn-outline-success btn-outline-green" href="<?= $block->escapeUrl($block->getUrl('customer/forwarder/newforwarder')) ?>">
+            <span><?= /* @escapeNotVerified */ __('Add New Forwarder') ?></span>
+        </a>
+    </div>
+    <div class="secondary">
+        <a class="action back" href="<?= $block->escapeUrl($block->getBackUrl()) ?>"><span><?= $block->escapeHtml(__('Back')) ?></span></a>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        ".page-main": {
+            "address": {
+                "deleteAddress": "li.item a[role='delete-address']",
+                "deleteUrlPrefix": "<?= $block->escapeJs($block->escapeUrl($block->getDeleteUrl())) ?>id/",
+                "addAddress": "button[role='add-address']",
+                "addAddressLocation": "<?= $block->escapeJs($block->escapeUrl($block->getAddAddressUrl())) ?>"
+            }
+        }
+    }
+</script>
+
+<script type="text/javascript">
+        require(['jquery', 'jquery/ui'], function($){
+        $(function () {
+            $(".view-document-button").on("click",function(){
+				if($(this).siblings().hasClass("hide")){
+					$(".docView").addClass("hide");
+					$("div").removeClass("DocActive");
+					$(this).parent().addClass("DocActive");
+					$(this).siblings().removeClass("hide");
+				} else {
+					$(this).parent().removeClass("DocActive");
+					$(this).siblings().addClass("hide");
+				}
+			});
+			
+			$(document).click(function(e){
+				if(! $(e.target).closest(".view-document-button").length > 0 && ! $(e.target).closest(".docView").length > 0) {
+                    $(".view-document-button").addClass("hide");
+                    $(".docView ").addClass("hide");
+					$("div").removeClass("DocActive");
+				}
+			});
+        });
+    });
+    </script>

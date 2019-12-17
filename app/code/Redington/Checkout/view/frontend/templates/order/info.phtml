@@ -1,0 +1,176 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Amasty (https://www.amasty.com)
+ * @package Amasty_Checkout
+ */
+?>
+
+<?php $_order = $block->getOrder() ?>
+<?php $paymentRefnumber = $block->getPaymentRefNum();?>
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?= /* @escapeNotVerified */ __('Shipping Information') ?></strong>
+    </div>
+    <div class="block-content">
+		 <div class="box box-order-billing-address">
+            <strong class="box-title">
+                <span><?= /* @escapeNotVerified */ __('Billing Address') ?></span>
+            </strong>
+            <div class="box-content">
+                <address>
+				<?php $address = $_order->getBillingAddress();
+					  $street=$address->getStreet();
+					  $postCode = $address->getPostcode() == '-' ? '' : $address->getPostcode();
+					  		echo $address->getFirstname().' '.$address->getLastname().'<br>';
+							echo $address->getCompany().'<br>';
+							foreach($street as $straddress){
+								echo $straddress .'<br>';
+							}
+							echo $address->getCity().', '.$postCode.'<br>';
+							echo $block->getCountryname($address->getCountryId()).'<br>';
+							echo 'T: ' .$address->getTelephone().'<br>';
+				?>
+				</address>
+            </div>
+        </div>
+    <?php if (!$_order->getIsVirtual()): ?>
+        <div class="box box-order-shipping-address">
+            <?php
+                $deliveryType = 'Shipping';
+                if($_order->getWarehouseCode())
+                $deliveryType = 'Pickup';
+            ?>
+            <strong class="box-title"><span><?= $deliveryType.' Address' ?></span></strong>
+            <div class="box-content">
+			<?php if($deliveryType=='Pickup'):?>
+                <address>
+					<?php $postCode = $_order->getShippingAddress()->getPostcode() == '-' ? '' : $_order->getShippingAddress()->getPostcode(); ?>
+					<?php $street = $_order->getShippingAddress()->getStreet()?>
+						<?php echo $_order->getShippingAddress()->getLastname();?><br>
+						<?php echo $_order->getShippingAddress()->getFirstname();?><br>
+						<?php echo $street[0];?><br>
+						<?php echo $_order->getShippingAddress()->getCity();?>, <?= $postCode;?><br>
+						<?php echo  $_order->getShippingAddress()->getCountry();?>
+						T: <?php echo  $_order->getShippingAddress()->getTelephone();?>
+						
+						<?php /* @escapeNotVerified *//* $block->getFormattedAddress($_order->getShippingAddress()) */?>
+				</address>
+				<?php else:?>
+				<?php  $defaultShipping = $block->getDefaultShippingAddressId();
+					   $shippingId = $_order->getShippingAddress()->getCustomerAddressId();
+					  if($defaultShipping == $shippingId) :
+				?>
+				<address>
+					<?php $address = $_order->getShippingAddress();
+					  $street=$address->getStreet();	
+					  $postCode = $address->getPostcode() == '-' ? '' : $address->getPostcode();		   	
+					  	echo $address->getFirstname().' '.$address->getLastname().'<br>';
+							echo $address->getCompany().'<br>';
+							foreach($street as $straddress){
+								echo $straddress .'<br>';
+							}
+							echo $address->getCity().', '.$postCode.'<br>';
+							echo $block->getCountryname($address->getCountryId()).'<br>';
+							echo 'T: ' .$address->getTelephone().'<br>';
+							?>
+						
+						<?php /* @escapeNotVerified *//* $block->getFormattedAddress($_order->getShippingAddress()) */?>
+				</address>
+				<?php	  
+					 else:
+				?>
+				<address>
+					<?php $address = $_order->getShippingAddress();
+					  $street=$address->getStreet();	
+					  $postCode = $address->getPostcode() == '-' ? '' : $address->getPostcode();		   	
+					  	echo $address->getFirstname().' '.$address->getLastname().'<br>';
+							echo $address->getCompany().'<br>';
+							foreach($street as $straddress){
+								echo $straddress .'<br>';
+							}
+							echo $address->getCity().', '.$postCode.'<br>';
+							echo $block->getCountryname($address->getCountryId()).'<br>';
+							echo 'M: ' .$address->getTelephone().'<br>';
+							?>
+						
+						<?php /* @escapeNotVerified *//* $block->getFormattedAddress($_order->getShippingAddress()) */?>
+				</address>
+				<?php endif;?>
+				<?php endif;?>
+            </div>
+        </div>
+
+        <div class="box box-order-shipping-method">
+            <strong class="box-title">
+                <span><?= /* @escapeNotVerified */ __('Forwarder') ?></span>
+            </strong>
+            <div class="box-content">
+            <?php if ($_order->getForwarderAddressId()): ?>
+                <?php $address =  $block->getForwarderAddress(); ?>
+				<address>
+					<?php $street=$address->getStreet();	
+					  $postCode = $address->getPostcode() == '-' ? '' : $address->getPostcode();		   	
+					  	echo $address->getFirstname().' '.$address->getLastname().'<br>';
+							echo $address->getCompany().'<br>';
+							foreach($street as $straddress){
+								echo $straddress .'<br>';
+							}
+							echo $address->getCity().', '.$postCode.'<br>';
+							echo $block->getCountryname($address->getCountryId()).'<br>';
+							echo 'M: ' .$address->getTelephone().'<br>';
+							?>
+						
+						<?php /* @escapeNotVerified *//* $block->getFormattedAddress($_order->getShippingAddress()) */?>
+				</address>
+            <?php else: ?>
+                <?= /* @escapeNotVerified */ __('N/A') ?>
+            <?php endif; ?>
+            </div>
+        </div>
+    <?php endif; ?>
+        <div class="box box-order-billing-method">
+            <strong class="box-title">
+                <span><?= /* @escapeNotVerified */ __('Mode Of Payment') ?></span>
+            </strong>
+            <div class="box-content">
+                <?= $block->getPaymentInfoHtml() ?>
+				<?php if($paymentRefnumber!='') :?>
+			<div class="payment-documents">
+			<div class="block block-order-details-documents">
+				<div class="block-title-custom payments-block">		
+					<?php 
+					$paymentRefnumber = $block->getPaymentRefNum();
+						if($paymentRefnumber!=''){
+							echo '<div class="document-label">'.__('<strong>Reference Number</strong>').'<p>'.$paymentRefnumber.'</p></div>';
+						}
+					?>
+				</div>
+				<div class="block-title-custom payments-block"><strong><?= __('Document') ?></strong>
+				<span class="block-content-lponumber">	
+				<?php $paymentRefdoc= $block->getPaymentRefDoc();
+					if($paymentRefdoc !=''){
+						echo '<p class="document-label"><a href="'.$paymentRefdoc.'" target="_blank" >'.__('Click here').'</a></p>';
+					}else{
+						echo '<p class="document-label no-document">'.__('Document').":". __('Not Uploaded').'</p>';
+					}
+					?>
+					</span>
+			</div>
+		</div>
+	</div>
+	<?php endif;?>
+		<?php if($block->getPaymentMethod()=='companycredit' || $block->getPaymentMethod()=='pdc' ) :?>
+			<div class="payment-term">
+			 	<?= $block->getPaymentTerm();?>
+			</div>
+			<?php endif;?>
+            </div>
+        </div>
+			
+    </div>	
+			</div>
+			
+        </div>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+<!--
+/**
+ * @author Redington Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Cdc
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Store/etc/config.xsd">
+    <default>
+        <payment>
+            <cdc>
+                <active>1</active>
+                <title>CDC Payment</title>
+                <order_status>pending</order_status>
+                <instructions>Instruction.</instructions>
+                <payment_action>true</payment_action>
+                <model>Redington\Cdc\Model\Cdc</model>
+                <group>offline</group>
+            </cdc>
+        </payment>
+    </default>
+</config>

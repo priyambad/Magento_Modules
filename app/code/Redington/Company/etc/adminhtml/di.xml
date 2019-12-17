@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Company
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+   <virtualType name="Redington\Company\Acl\AclResource\Config\Reader\Filesystem" type="Magento\Framework\Acl\AclResource\Config\Reader\Filesystem">
+        <arguments>
+            <argument name="fileName" xsi:type="string">company_acl.xml</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Redington\Company\Acl\Cache" type="Magento\Framework\Acl\Data\Cache">
+        <arguments>
+            <argument name="cacheTag" xsi:type="string">company_acl_resources</argument>
+            <argument name="aclBuilder" xsi:type="object">Magento\Company\Authorization\Acl\Builder</argument>
+        </arguments>
+    </virtualType>
+    <type name="Redington\Company\Model\RoleRepository">
+        <arguments>
+            <argument name="cache" xsi:type="object">Magento\Company\Acl\Cache</argument>
+        </arguments>
+    </type>
+    <type name="Redington\Company\Model\UserRoleManagement">
+        <arguments>
+            <argument name="cache" xsi:type="object">Magento\Company\Acl\Cache</argument>
+        </arguments>
+    </type>
+    <virtualType name="Redington\Company\Acl\RootResource" type="Magento\Framework\Acl\RootResource">
+        <arguments>
+            <argument name="identifier" xsi:type="string">Magento_Company::index</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Redington\Company\Acl\AclResource\Provider" type="Magento\Framework\Acl\AclResource\Provider">
+        <arguments>
+            <argument name="configReader" xsi:type="object">Magento\Company\Acl\AclResource\Config\Reader\Filesystem</argument>
+            <argument name="cacheKey" xsi:type="string">company_acl_resources_cache</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Redington\Company\Authorization\Loader\ResourceLoader" type="Magento\Framework\Acl\Loader\ResourceLoader">
+        <arguments>
+            <argument name="resourceProvider" xsi:type="object">Magento\Company\Acl\AclResource\Provider</argument>
+        </arguments>
+    </virtualType>
+    <type name="Redington\Company\Model\Authorization\Loader\Rule">
+        <arguments>
+            <argument name="rootResource" xsi:type="object">Magento\Company\Acl\RootResource</argument>
+            <argument name="resourceProvider" xsi:type="object">Magento\Company\Acl\AclResource\Provider</argument>
+        </arguments>
+    </type>
+    <virtualType name="Redington\Company\Authorization\Acl\Builder" type="Magento\Framework\Acl\Builder">
+        <arguments>
+            <argument name="resourceLoader" xsi:type="object">Magento\Company\Authorization\Loader\ResourceLoader</argument>
+            <argument name="ruleLoader" xsi:type="object">Magento\Company\Model\Authorization\Loader\Rule</argument>
+            <argument name="roleLoader" xsi:type="object">Magento\Company\Model\Authorization\Loader\Role</argument>
+        </arguments>
+    </virtualType>
+    <type name="Redington\Company\Model\Authorization\AclPolicy">
+        <arguments>
+            <argument name="aclBuilder" xsi:type="object">Magento\Company\Authorization\Acl\Builder</argument>
+        </arguments>
+    </type>
+    <type name="Redington\Company\Model\Authorization">
+        <arguments>
+            <argument name="aclPolicy" xsi:type="object">Magento\Company\Model\Authorization\AclPolicy</argument>
+            <argument name="roleLocator" xsi:type="object">Magento\Company\Model\Authorization\RoleLocator</argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Company\Api\AuthorizationInterface" type="Redington\Company\Model\Authorization" />
+
+    <type name="Redington\Company\Block\Adminhtml\Edit">
+        <arguments>
+            <argument name="resourceProvider" xsi:type="object">Magento\Company\Acl\AclResource\Provider</argument>
+        </arguments>
+    </type>
+    <type name="Redington\Company\Model\PermissionManagement">
+        <arguments>
+            <argument name="resourceProvider" xsi:type="object">Magento\Company\Acl\AclResource\Provider</argument>
+        </arguments>
+    </type>
+    <type name="Redington\Company\Controller\Adminhtml\Role\EditPost">
+        <arguments>
+            <argument name="resourceProvider" xsi:type="object">Magento\Company\Acl\AclResource\Provider</argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Company\Model\SaveValidator\RequiredFields" type="Redington\Company\Model\SaveValidator\RequiredFields" />
+</config> 

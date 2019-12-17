@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+?>
+<?php /** @var  $block \Magento\NegotiableQuote\Block\Quote\View*/?>
+
+<!--<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "negotiableQuoteRecalculate": {
+                        "component": "Magento_NegotiableQuote/js/quote/recalculate-negotiable-quote",
+                        "url": "<?= /* @noEscape */ $block->getRecalculateUrl() ?>",
+                        "canUpdate": "<?= /* @noEscape */ $block->isCanRecalculate() ?>",
+                        "quoteId": <?= /* @noEscape */ $block->getQuoteId() ?>
+                    }
+                }
+            }
+        }
+    }
+</script>-->
+<div class="product data items quote-details-items" data-mage-init='{"negotiableQuoteTabs":{"openedState":"active"}}'>
+
+    <div class="data item title quote-title"
+         aria-labeledby="tab-label-items-quoted-title"
+         data-role="collapsible" id="tab-label-items-quoted">
+        <a class="data switch"
+           tabindex="-1"
+           data-toggle="switch"
+           href="#items-quoted"
+           id="tab-label-items-quoted-title">
+            <?= /* @noEscape */ __('Items Quoted') ?>
+        </a>
+    </div>
+
+    <?= $block->getChildHtml('quote_items') ?>
+
+    <div class="data item title quote-comments"
+         aria-labeledby="tab-label-comments-title"
+         data-role="collapsible" id="tab-label-comments">
+        <a class="data switch"
+           tabindex="-1"
+           data-toggle="switch"
+           href="#comments"
+           id="tab-label-comments-title">
+            <?= /* @noEscape */ __('Comments') ?>
+        </a>
+    </div>
+
+    <div class="data item content" id="comments" data-role="content" style="display:none;">
+        <?= $block->getChildHtml('quote_comments') ?>
+    </div>
+
+    <div class="data item title quote-history-log"
+         aria-labeledby="tab-label-history-log-title"
+         data-role="collapsible" id="tab-label-history-log">
+        <a class="data switch"
+           tabindex="-1"
+           data-toggle="switch"
+           href="#history-log"
+           id="tab-label-history-log-title">History
+            
+        </a>
+    </div>
+
+    <div class="data item content" id="history-log" data-role="content" style="display:none;">
+        <?= $block->getChildHtml('quote_history') ?>
+    </div>
+
+</div>

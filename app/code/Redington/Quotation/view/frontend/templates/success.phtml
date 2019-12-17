@@ -1,0 +1,24 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+$quoteId = $block->getQuoteId();
+$quotationId = $block->getQuotationId($quoteId);
+?>
+<div class="block redington-quote-success">
+    <?php if ($quoteId): ?>
+        <div class="success-wrap">
+			<h3 class="success-txt"><?=__('Your quotation request has been received')?></h3>
+			<div class="success-content">
+				<div class="thankyou-txt">
+					<p><?=__('Thank you for your quotation request.')?></p>
+				</div>
+
+				<p><?=__('Your quotation request no. is <a href = "%1"> %2 </a>', $block->getUrl('negotiable_quote/quote/view/quote_id/' . $quoteId), $quotationId)?></p>
+
+			</div>
+		</div>
+    <?php endif;?>
+</div>

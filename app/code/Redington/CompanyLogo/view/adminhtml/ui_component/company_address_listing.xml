@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Redington. All rights reserved.
+ * 
+ */
+ -->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">company_address_listing.company_address_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>company_address_columns</spinner>
+        <deps>
+            <dep>company_address_listing.company_address_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="company_address_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <dataProvider class="Redington\CompanyLogo\Ui\Component\DataProvider" name="company_address_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>main_table.entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+     <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+
+       <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add New</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/addnew</item>
+            </item>
+        </item>
+      
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+        <filterSearch name="partner_id"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="company_address_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="table_css_class" xsi:type="string">data table</item>
+            </item>
+        </argument>
+        <column name="entity_id" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Id</label>
+            </settings>
+        </column>
+        <column name="company_code" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Comapny Code</label>
+            </settings>
+        </column>
+        <column name="company_address" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Comapny Address</label>
+            </settings>
+        </column>
+		<column name="accountname" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Account Name</label>
+            </settings>
+        </column>
+		<column name="onlinetransfer" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Bank Transfer Details</label>
+            </settings>
+        </column>
+         <actionsColumn name="actions" class="Redington\CompanyLogo\Ui\Component\Listing\Column\Action">
+           <argument name="data" xsi:type="array">
+               <item name="config" xsi:type="array">
+                   <item name="resizeEnabled" xsi:type="boolean">false</item>
+                   <item name="resizeDefaultWidth" xsi:type="string">107</item>
+                   <item name="indexField" xsi:type="string">entity_id</item>
+               </item>
+           </argument>
+       </actionsColumn>
+    </columns>
+</listing>

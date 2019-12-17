@@ -1,0 +1,4 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <preference for="Magento\InventoryAdminUi\Controller\Adminhtml\Source\Save" type ="Redington\Warehouse\Controller\Adminhtml\Source\Save"/>
+    <preference for="Magento\InventoryAdminUi\Ui\DataProvider\SourceDataProvider" type="Redington\Warehouse\Ui\DataProvider\SourceDataProvider"/>
+</config>

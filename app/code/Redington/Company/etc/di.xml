@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Company
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Redington\Company\Api\CompanyInterface" type="Redington\Company\Model\Company"/>
+    <type name="Magento\Company\Model\Action\SaveCustomer">
+        <plugin name="Redington_Company_AfterCreateCustomer" type="Redington\Company\Model\Action\SaveCustomer" sortOrder="10" disabled="false"  />
+    </type>
+    <preference for="Magento\Company\Block\Company\CompanyProfile" type="Redington\Company\Block\Company\CompanyProfile"/>
+    <preference for="Magento\Company\Model\Email\Sender" type="Redington\Company\Model\EmailSender"/>
+    <preference for="Magento\Customer\Model\EmailNotification" type="Redington\Company\Model\CustomerEmailNotification"/>
+    <preference for="\Magento\Company\Model\ResourceModel\Order\CollectionFactory" type="Redington\Company\Model\ResourceModel\Order\CollectionFactory"/>
+    <preference for="Magento\NegotiableQuote\Controller\Order\OrderViewAuthorization" type="Redington\Company\Controller\Order\OrderViewAuthorization" />
+    <preference for="Magento\Company\Plugin\Sales\Controller\Order\ViewPlugin" type="Redington\Company\Plugin\Sales\Controller\Order\ViewPlugin" />
+    <preference for="Magento\Company\Ui\Component\Listing\Column\CompanyUsersActions" type="Redington\Company\Ui\Component\Listing\Column\CompanyUsersActions" />
+   <preference for="Magento\Company\Controller\Customer\Get" type="Redington\Company\Controller\Customer\Get" />
+   <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="role_listing_data_source" xsi:type="string">Magento\Company\Model\ResourceModel\Role\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\Company\Model\ResourceModel\Role\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">company_user_roles</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Company\Model\ResourceModel\Role</argument>
+        </arguments>
+    </virtualType>
+    <preference for="Magento\Company\Controller\Customer\Create" type="Redington\Company\Controller\Customer\Create"/>
+    <preference for="Magento\Company\Controller\Customer\Save" type="Redington\Company\Controller\Customer\Save"/>
+    <preference for="Magento\Company\Controller\Customer\Delete" type="Redington\Company\Controller\Customer\Delete"/>
+    <preference for="Magento\Company\Controller\Customer\PermanentDelete" type="Redington\Company\Controller\Customer\PermanentDelete"/>
+    <preference for="Magento\Company\Model\Customer" type="Redington\Company\Model\Customer"/>
+</config>

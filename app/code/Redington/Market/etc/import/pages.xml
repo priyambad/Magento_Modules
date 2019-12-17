@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<root>
+	<pages>
+		<cms_item>
+			<title>Promotions</title>
+			<identifier>promotions</identifier>
+			<content_heading/>
+			<content>
+				<![CDATA[<div class="coming-soon"><h3>Coming Soon</h3></div>]]>
+			</content>
+			<is_active>1</is_active>
+			<page_layout>1column</page_layout>
+			<layout_update_xml>
+				<![CDATA[]]>
+			</layout_update_xml>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Top Deals</title>
+			<identifier>top-deals</identifier>
+			<content_heading/>
+			<content>
+				<![CDATA[<div class="coming-soon"><h3>Coming Soon</h3></div>]]>
+			</content>
+			<is_active>1</is_active>
+			<page_layout>1column</page_layout>
+			<layout_update_xml>
+				<![CDATA[]]>
+			</layout_update_xml>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Quick Order</title>
+			<identifier>quick-order</identifier>
+			<content_heading/>
+			<content>
+				<![CDATA[<div class="coming-soon"><h3>Coming Soon</h3></div>]]>
+			</content>
+			<is_active>1</is_active>
+			<page_layout>1column</page_layout>
+			<layout_update_xml>
+				<![CDATA[]]>
+			</layout_update_xml>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Redington Home</title>
+			<identifier>reg-home</identifier>
+			<content_heading/>
+			<content>
+				<![CDATA[<div data-content-type="row" data-appearance="full-width" data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin-left: 0px; margin-top: 0px; margin-right: 0px; padding-top: 10px;"><div class="row-full-width-inner" data-element="inner"><div class="pagebuilder-column-group" style="display: flex;" data-content-type="column-group" data-grid-size="12" data-element="main"><div class="pagebuilder-column" data-content-type="column" data-appearance="full-height" data-background-images="{}" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; width: 75%; margin: 0px; padding: 10px 0px; align-self: stretch;"><div class="pagebuilder-slider" data-content-type="slider" data-appearance="default" data-autoplay="true" data-autoplay-speed="4000" data-fade="true" data-infinite-loop="true" data-show-arrows="false" data-show-dots="true" data-element="main" style="min-height: 420px; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;"><div data-content-type="slide" data-slide-name="" data-appearance="poster" data-show-button="never" data-show-overlay="never" data-element="main" style="margin: 0px;"><div data-element="empty_link"><div class="pagebuilder-slide-wrapper" data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=wysiwyg/2.jpg}}\&quot;}" data-element="wrapper" style="background-position: left top; background-size: cover; background-repeat: no-repeat; border-style: none; border-width: 1px; border-radius: 0px;"><div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="" data-element="overlay" style="padding: 40px; background-color: transparent;"><div class="pagebuilder-poster-content"><div data-element="content"></div></div></div></div></div></div><div data-content-type="slide" data-slide-name="" data-appearance="poster" data-show-button="never" data-show-overlay="never" data-element="main" style="margin: 0px;"><div data-element="empty_link"><div class="pagebuilder-slide-wrapper" data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=wysiwyg/3.jpg}}\&quot;}" data-element="wrapper" style="background-position: left top; background-size: cover; background-repeat: no-repeat; border-style: none; border-width: 1px; border-radius: 0px;"><div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="" data-element="overlay" style="padding: 40px; background-color: transparent;"><div class="pagebuilder-poster-content"><div data-element="content"></div></div></div></div></div></div><div data-content-type="slide" data-slide-name="" data-appearance="poster" data-show-button="never" data-show-overlay="never" data-element="main" style="margin: 0px;"><div data-element="empty_link"><div class="pagebuilder-slide-wrapper" data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=wysiwyg/1.jpg}}\&quot;}" data-element="wrapper" style="background-position: left top; background-size: cover; background-repeat: no-repeat; border-style: none; border-width: 1px; border-radius: 0px;"><div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="" data-element="overlay" style="padding: 40px; background-color: transparent;"><div class="pagebuilder-poster-content"><div data-element="content"></div></div></div></div></div></div></div></div><div class="pagebuilder-column" data-content-type="column" data-appearance="full-height" data-background-images="{}" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; width: 25%; margin: 0px; padding: 10px 0px 10px 15px; align-self: stretch;"><div data-content-type="banner" data-appearance="poster" data-show-button="never" data-show-overlay="never" data-element="main" style="margin: 0px 0px 15px;"><div data-element="empty_link"><div class="pagebuilder-banner-wrapper" data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=wysiwyg/tablet-banner.jpg}}\&quot;}" data-element="wrapper" style="background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px;"><div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="" data-element="overlay" style="border-radius: 0px; background-color: transparent; padding: 40px;"><div class="pagebuilder-poster-content"><div data-element="content"></div></div></div></div></div></div><div data-content-type="banner" data-appearance="poster" data-show-button="never" data-show-overlay="never" data-element="main" style="margin: 0px 0px 15px;"><div data-element="empty_link"><div class="pagebuilder-banner-wrapper" data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=wysiwyg/ipad-banner.jpg}}\&quot;}" data-element="wrapper" style="background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px;"><div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="" data-element="overlay" style="border-radius: 0px; background-color: transparent; padding: 40px;"><div class="pagebuilder-poster-content"><div data-element="content"></div></div></div></div></div></div><div data-content-type="banner" data-appearance="poster" data-show-button="never" data-show-overlay="never" data-element="main" style="margin: 0px;"><div data-element="empty_link"><div class="pagebuilder-banner-wrapper" data-background-images="{\&quot;desktop_image\&quot;:\&quot;{{media url=wysiwyg/mobile-banner.jpg}}\&quot;}" data-element="wrapper" style="background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px;"><div class="pagebuilder-overlay pagebuilder-poster-overlay" data-overlay-color="" data-element="overlay" style="border-radius: 0px; background-color: transparent; padding: 40px;"><div class="pagebuilder-poster-content"><div data-element="content"></div></div></div></div></div></div></div></div></div></div><div data-content-type="row" data-appearance="contained" data-element="main"><div data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-element="inner" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin: 0px 0px 10px; padding: 10px;"><div data-content-type="block" data-appearance="default" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;">{{widget type="Magento\Cms\Block\Widget\Block" template="widget/static_block/default.phtml" block_id="7" type_name="CMS Static Block"}}</div></div></div><div data-content-type="row" data-appearance="full-width" data-enable-parallax="0" data-parallax-speed="0.5" data-background-images="{}" data-element="main" style="justify-content: flex-start; display: flex; flex-direction: column; background-position: left top; background-size: cover; background-repeat: no-repeat; background-attachment: scroll; border-style: none; border-width: 1px; border-radius: 0px; margin-left: 0px; margin-top: 0px; margin-right: 0px; padding-top: 10px; padding-bottom: 10px;"><div class="row-full-width-inner" data-element="inner"><div data-content-type="block" data-appearance="default" data-element="main" style="border-style: none; border-width: 1px; border-radius: 0px; margin: 0px; padding: 0px;">{{widget type="Magento\Cms\Block\Widget\Block" template="widget/static_block/default.phtml" block_id="150" type_name="CMS Static Block"}}</div></div></div>]]>
+			</content>
+			<is_active>1</is_active>
+			<page_layout>1column</page_layout>
+			<layout_update_xml>
+				<![CDATA[]]>
+			</layout_update_xml>
+			<store_id>0</store_id>
+		</cms_item>
+	</pages>
+</root>

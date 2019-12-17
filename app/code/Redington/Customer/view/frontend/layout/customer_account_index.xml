@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Customer
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <body>
+    	<referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Account Information</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="customer_account_dashboard_info" template="Redington_Customer::account/dashboard/info.phtml" />
+        <block class="Redington\Customer\Block\Order\Recent" name="customer_account_dashboard_top" template="Redington_Customer::order/recent.phtml"/>
+        <referenceBlock name="customer_account_dashboard_address" template="Redington_Customer::account/dashboard/address.phtml" />
+    </body>
+    <move element="customer_account_dashboard_top" destination="content" before="-"/>
+</config>

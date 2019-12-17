@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-md-8 col-xs-12">
+        <div class="credit-available">
+            <div class="credit-txt">Available credit balance</div>
+            <div class="credit-amount large-amount"><?= $block->escapeHtml($block->getAvailableCredit()) ?></div>
+        </div>
+    </div>
+    <div class="col-md-4 col-xs-12">
+		<div class="pull-right">
+			<div class="credit-lastupdate">
+				<div class="credit-txt">Last added credit limit</div>
+				<div class="credit-amount"><?= $block->getLastAddedCredit() ?></div>
+			</div>
+			<div class="credit-btn">
+				<a href="<?= $block->getUrl('customer/credit/newcredit') ?>" class="btn btn btn-outline-success btn-outline-green">Request for credit</a>
+			</div>
+		</div>
+    </div>
+</div>
+<div class="credit-tabs tabs-wrapper">
+    <ul class="nav nav-tabs">
+        <li class="credit-request active"><a href="#"><h4>Credit requests</h4>
+			<div class="line-bold"></div></a>
+        </li>
+        <li class="payment-history"><a href="#"><h4>Payment History</h4>
+			<div class="line-bold"></div>
+            </a>
+        </li>
+    </ul>
+</div>
+<script type="text/x-magento-init">
+    {
+        "body" : {
+            "transaction_listing" : {
+            }
+        }
+    }
+</script>

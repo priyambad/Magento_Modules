@@ -1,0 +1,14 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    
+    <preference for="Plumrocket\CartReservation\Helper\Product" type="Redington\Catalog\Plugin\Helper\CartReservation\Product"/>
+    <type name="Magento\Checkout\Model\Cart">
+        <plugin name="interceptUpdateProductToCart" type="Redington\Catalog\Plugin\ProductQtyUpdate"/>
+    </type>
+    <type name="Sm\ListingTabs\Block\ListingTabs">
+        <plugin name="interceptDisplayProduct" type="Redington\Catalog\Plugin\FilterProduct"/>
+    </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="interceptDisplayProductQty" type="Redington\Catalog\Plugin\Product"/>
+    </type>
+    <preference for="Magento\ProductAlert\Model\Observer" type="Redington\Catalog\Model\Observer"/>
+</config>

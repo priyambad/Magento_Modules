@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Company
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="redington" translate="label" sortOrder="200">
+            <label>Redington</label>
+        </tab>
+        <section id="redington_site_config" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Site Config</label>
+            <tab>redington</tab>
+            <resource>Redington_Market::config_redington_site_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+				<field id="available_credit_api_url" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Available Credit API Url</label>
+                </field> 
+            </group>
+			<group id="theme_install" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Theme Installation</label>
+				<field id="import_blocks_heading" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Import Static Blocks</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+
+                <field id="import_blocks" translate="button_label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <button_label>Static Blocks</button_label>
+                    <attribute type="action_url">redington_market_admin/system_config_cms/import</attribute>
+                    <attribute type="import_type">blocks</attribute>
+                    <frontend_model>Sm\Market\Block\System\Config\Form\Button\Import\Cms</frontend_model>
+					<comment><![CDATA[Click this button to create all static blocks provided with this theme.]]></comment>
+                </field>	
+				
+				<!--<field id="overwrite_blocks" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Overwrite Existing Blocks</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>If set to "Yes", imported blocks will overwrite existing blocks with the same identifiers (if any blocks with the same identifiers already exist). To change value of this field, save the configuration (without saving, the option will remain unchanged after you refresh the page).</comment>
+				</field>-->
+
+				<field id="import_pages_heading" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Import Pages</label>
+					<frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+				</field>
+
+				<field id="import_pages" translate="button_label" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+					<button_label>Pages</button_label>
+					<attribute type="action_url">redington_market_admin/system_config_cms/import</attribute>
+                    <attribute type="import_type">pages</attribute>
+                    <frontend_model>Sm\Market\Block\System\Config\Form\Button\Import\Cms</frontend_model>
+					<comment><![CDATA[Click this button to create CMS pages provided with this theme.]]></comment>	
+				</field>				
+				
+				<!--<field id="overwrite_pages" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Overwrite Existing Pages</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>If set to "Yes", imported pages will overwrite existing pages with the same identifiers (if any pages with the same identifiers already exist). To change value of this field, save the configuration (without saving, the option will remain unchanged after you refresh the page).</comment>
+				</field>-->
+				
+				<field id="import_demo_heading" translate="label comment" sortOrder="35" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Import Redington Configuration</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                </field>
+                <field id="import_redingtonconfig" translate="button_label" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <button_label>Redington Configuration</button_label>
+                    <attribute type="action_url">redington_market_admin/system_config_demo/import</attribute>
+                    <attribute type="demo_version">redingtonconfig</attribute>
+                    <frontend_model>Sm\Market\Block\System\Config\Form\Button\Import\Demo</frontend_model>
+                </field>
+			</group>
+        </section>
+    </system>
+</config>

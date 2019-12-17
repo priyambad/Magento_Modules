@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">credit_listing.credit_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>credit_columns</spinner>
+        <deps>
+            <dep>credit_listing.credit_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="credit_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_id</param>
+            </storageConfig>
+            <updateUrl path="company_credit/ui/render"/>
+        </settings>
+        <dataProvider class="Redington\Transactions\Ui\Component\Credit\DataProvider" name="credit_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>main_table.entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <columns name="credit_columns" component="uiB2bListing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="table_css_class" xsi:type="string">data table</item>
+            </item>
+        </argument>
+        <settings>
+            <childDefaults>
+                <param name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">credit_listing.credit_listing.credit_listing_top.bookmarks</item>
+                    <item name="root" xsi:type="string">columns.${ $.index }</item>
+                    <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                </param>
+            </childDefaults>
+            <storageConfig>
+                <namespace>current</namespace>
+                <provider>credit_listing.credit_listing.credit_listing_top.bookmarks</provider>
+            </storageConfig>
+        </settings>
+        <column name="request_date" sortOrder="81">
+            <settings>
+                <filter>dateRange</filter>
+                <label translate="true">Request Date</label>
+                <bodyTmpl>Magento_CompanyCredit/date-field</bodyTmpl>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="requester" class="Redington\Transactions\Ui\Component\CreditApproval\Listing\Column\CompanyUser" sortOrder="82">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Requested by</label>
+            </settings>
+        </column>
+        <column name="requested_credit_limit" class="Redington\Transactions\Ui\Component\Credit\Listing\Column\RequestedLimit" sortOrder="83">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Requested credit limit</label>
+            </settings>
+        </column>
+        
+        <column name="available_credit_limit" class="Redington\Transactions\Ui\Component\Credit\Listing\Column\CreditLimit" sortOrder="84">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Available Credit Limit</label>
+            </settings>
+        </column>
+        <column name="sap_acc_no" sortOrder="85">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Sap account number</label>
+            </settings>
+        </column>
+        <column name="action_date" sortOrder="87">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Action taken date</label>
+            </settings>
+        </column>
+        <column name="status" class="Redington\Transactions\Ui\Component\Credit\Listing\Column\Status" sortOrder="88">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                </item>
+            </argument>
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+    </columns>
+    <container name="credit_listing_top">
+        <paging name="listing_paging" component="uiB2bPaging">
+            <settings>
+                <selectProvider>credit_listing.transaction_listing.role_columns.ids</selectProvider>
+                <storageConfig>
+                    <namespace>current.paging</namespace>
+                    <provider>credit_listing.transaction_listing.credit_listing_top.bookmarks</provider>
+                </storageConfig>
+            </settings>
+        </paging>
+    </container>
+</listing>

@@ -1,0 +1,14 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+?>
+<?php /** @var $block \Redington\Checkout\Block\Onepage\Success\Extrainfo */ ?>
+<?php if($block->getLponumber()){?>
+<div class="block block-order-details-lponumber lpo-block">
+    <div class="block-title-custom"><strong><?= __('LPO Number') ?></strong>: <span class='block-content-lponumber'><?= $block->getLponumber() ?></div>
+</div>
+<?php } ?>
+

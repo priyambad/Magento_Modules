@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Catalog
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <redington_otp>
+            <general>
+                <enabled>1</enabled> 
+                <otp_expire_time>5</otp_expire_time>    
+				<otp_email_template>redington_otp_general_otp_email_template</otp_email_template>
+				<otp_sms_api_url>https://test.api.r-exchange.net:4453/exchange/CONNECT_INTERNAL_WS?source=redington_NotificationService</otp_sms_api_url>
+				<otp_sms_content>Your OTP (One Time Password) for completing your place order is {{otp_val}}. Please do not share this with anyone.</otp_sms_content>
+            </general>  
+			<message_note>
+				<otp_expiration>Your OTP is expire. Please Resend OTP.</otp_expiration>
+				<otp_not_matched>OTP is not match.</otp_not_matched>
+				<otp_resend_successfully>OTP resend successfully.</otp_resend_successfully>
+				<otp_system_error>There was some error.</otp_system_error>
+				<otp_send_note>6 digit code has been sent via {{otp_type}} on</otp_send_note>
+			</message_note>
+        </redington_otp>
+    </default>
+</config>

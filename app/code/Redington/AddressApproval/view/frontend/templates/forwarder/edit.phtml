@@ -1,0 +1,285 @@
+<?php
+   /**
+    * Copyright � Magento, Inc. All rights reserved.
+    * See COPYING.txt for license details.
+    */
+   
+   // @codingStandardsIgnoreFile
+   
+   
+   ?>
+<?php $_company = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Company') ?>
+<?php $_telephone = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Telephone') ?>
+<?php $_fax = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Fax') ?>
+<?php $addressData = $block->getForwarderData()?>
+<nav class="navigation-org">
+   <div class="row">
+      <div class="col-md-8">
+         <div class="row">
+            <div class="col-md-9">
+               <div class="nav nav-tabs nav-fill custom-nav-fill" id="nav-tab">
+                  <div class="nav-item nav-link active" id="nav-information-tab" ><span class="tabnumber">1 </span><span class="check-ic" style="display: none;"><i class="fa fa-check"></i></span>  Address Details</div>
+                  <div class="nav-item nav-link" id="nav-documents-tab" ><span class="tabnumber">2</span> Address Documents</div>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div>
+                  <a id="comment-button" class="btn btn btn-outline-success btn-outline-green" href="<?= $block->escapeUrl($block->getUrl('customer/forwarder/view', ['entity_id' => $block->getRequestId(),'address_id'=>$block->getAddress()->getId()])) ?>">Comments</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+</nav>
+<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+   <div class="tab-pane fade show active" id="nav-information" role="tabpanel" aria-labelledby="nav-information-tab">
+      <div class="infotab-wrap tabs-grup">
+         <form class="form-address-edit"
+            action="<?= $block->escapeUrl($block->getSaveUrl()) ?>"
+            method="post"
+            id="form-validate"
+            enctype="multipart/form-data"
+            data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+            <div class="form-group">
+               <?= $block->getBlockHtml('formkey') ?>
+               <input type="hidden" name="is_forwarder" value="true">
+               <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>">
+               <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>">
+               <input type="hidden" name="firstname" value="<?php echo $addressData['firstname'] ?>">
+               <input type="hidden" name="lastname" value="<?php echo $addressData['lastname'] ?>">
+               <input type="hidden" id ="street1" value="<?php echo $addressData['street1']?>">
+               <input type="hidden" id ="street2" value="<?php echo $addressData['street2']?>">
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="custom-form">
+                        <label class="control-label required">Forwarder Name</label>
+                        <input type="text" maxlength="70" name="company"class="form-control" id ="company-input" title="Company" value="<?php echo $addressData['company']?>" required>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-8">
+                     <div class="control">
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="custom-form">
+                                 <label class="label required" for="street_1">
+                                 <span>Street Address 1</span>
+                                 </label>
+                                 <input type="text" maxlength="40" name="street[]" class="street" value="" title="Street Address" id="street_1" class="form-control input-text required-entry" aria-required="true" value="<?php echo $addressData['street1']?>" required>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="nested">
+                                 <div class="field additional">
+                                    <div class="custom-form">
+                                       <label class="label" for="street_2">
+                                       <span>Street Address 2</span>
+                                       </label>
+                                       <div class="control">
+                                          <input type="text" maxlength="40" name="street[]" class="street" value="" title="Street Address 2" id="street_2" class="form-control input-text " aria-required="true" value="<?php echo $addressData['street2']?>">
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="custom-form">
+                        <label class="control-label required">Country</label>
+                        <?= $block->getCountryHtmlSelect() ?>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="custom-form">
+                        <label class="control-label required">Region</label>
+                        <select type="select" id ="region_code" name="region_id"class="form-control" title="Region"  required>
+                              <option value="">Please select region</option>
+                        </select>
+                     </div>
+                  </div>
+            </div>
+            <div class="row">
+                  <div class="col-md-4">
+                     <div class="custom-form">
+                        <label class="control-label required">City</label>
+                        <input type="text" maxlength="20" name="city"class="form-control" title="City" value="<?php echo $addressData['city']?>" required>
+                     </div>
+                  </div>
+            </div>
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="custom-form">
+                        <label class="control-label">Postal code</label>
+                        <input type="number" id="postalCode" name="postcode" class="form-control" title="Postal code" placeholder="" value="<?php echo $addressData['postcode']?>">
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="custom-form">
+                        <label class="control-label required">Mobile </label>
+                        <div class="countrycode-grp">
+                           <div class="country-code">
+                              <?php if($addressData['country_id'] !='') { ?>
+                              <img id ="country-flag" src="">
+                              <?php }else { ?>
+                              <img id ="country-flag" >
+                              <?php } ?>
+                              <span class="countryCode"></span>
+                           </div>
+                           <input type="number" id="telephone" maxlength="10" name="telephone" class="form-control mobilenumber" title="" placeholder="" required value="<?php echo $addressData['telephone']?>">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-md-12">
+                     <div class="margin-btm">
+                        <a class="action back btn btn btn-outline-success btn-outline-green" href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+                        <span><?= /* @escapeNotVerified */ __('Cancel') ?></span>
+                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a id='next-address' class="btn btn-primary btn-green-filled btn-success">Save &amp; next</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="tab-pane fade" id="nav-documents" role="tabpanel" aria-labelledby="nav-documents-tab" style="display: none">
+      <form id="document-form">
+         <?php $documents = $block->getDocuments();?>
+         <?php if($documents) { ?>
+         <?php foreach($documents as $keyId => $document ):
+            $documentName = $document['documentName'];
+            $uploadedfileName = $document['fileName'];
+            if(strlen($uploadedfileName) > 50){
+               $uploadedfileName = substr($uploadedfileName,0,16).'....';
+            }
+            $documentCaption = $document['documentCaption'];
+            $documentNumber = $document['documentNumber'];
+            $docUrl = $document['docUrl'];
+            $docRequiredClass = $document['isDocumentRequired'] == "true" ? 'required' : '';
+            $dateRequiredClass = $document['isDateRequired'] == "true" ? 'required' : '';
+            $issueDate = $document['documentIssue'];
+            $expiryDate = $document['documentExpiry'];
+            try{
+               $docAttribute = $document['docAttribute'];
+            }catch(\Exception $e){
+               $docAttribute = 'Document Number';
+            }
+            $docAttrClass = $docAttribute == "Trade license number" ? 'required' : '' ;
+            $docCode = $block->getCodeFromDocumentName($documentName);
+            $formId = $keyId;?>
+         <div class="form-group" id=<?php echo $formId ?> >
+            <input type="hidden" name="documentCode" value="<?php echo $formId ?>">
+            <input type="hidden" name="documentName" value="<?php echo $documentName ?>">
+            <input type="hidden" name="isDocumentRequired" value="<?php echo $document['isDocumentRequired'] ?>"  >
+            <input type="hidden" name="isDateRequired" value= "<?php echo $document['isDateRequired'] ?>" >
+            <input type="hidden" name="addressId" value="<?php echo $block->getAddress()->getId() ?>">
+            <input type="hidden" name="fileName" class="fileName" value="<?php echo $uploadedfileName ?>">
+            <input type="hidden" name="is_forwarder" value="true">
+            <input type="hidden" name="docAttribute" value="<?= $docAttribute ?>">
+            <div class="row">
+               <div class="col-md-8">
+                  <div class="docUpload-wrapper active">
+                     <div class= "tabs-title cs-uploaded <?php echo $docRequiredClass ?>">
+                        <span class="tabnumber" style="display: none;">1 </span> <span class="check-ic"><i class="fa fa-check"></i> <?php echo $documentName ?> </span>
+                        <div class="cs-uploadContainer"></div>
+                     </div>
+                     <div class="document-form-content" style="display:none">
+                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                           <div class="upload-txt">Upload document</div>
+                           <span class="btn btn-primary btn-file">
+                           <img src="img/upload-pin-icon.png" alt="" width="20" height="20"> <span class="fileupload-new">Choose document</span>
+                           <span class="fileupload-exists">Upload document</span>         
+                           <input id= <?php echo $formId ?> class="document-file" name="documentFile"type="file" <?php echo $docRequiredClass ?>>
+                           <input type="hidden" name="docUrl" id="doc-url-input" value="<?php echo $docUrl ?>" <?php echo $docRequiredClass ?>>
+                           </span>
+                           <a class="fileupload-preview" target="blank" href="<?php echo $docUrl ?>"><?php echo $uploadedfileName ?></a>
+                           <a href="#" class="clear-doc-data" style="float: none">X</a>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="custom-form">
+                                 <label class="control-label">Document caption</label>
+                                 <input name="documentCaption" type="name" class="form-control documentName" title="" placeholder="" <?php echo $docRequiredClass ?> value="<?php echo $documentName ?>" readonly>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="custom-form">
+                                 <label class="control-label <?= $docAttrClass ?>"><?= $docAttribute ?></label>
+                                 <input name="documentNumber" <?= $docAttrClass ?> maxlength="15" type="name" class="form-control documentNumber" title="" placeholder=""  value="<?php echo $documentNumber ?>">
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="custom-form">
+                                 <label class="control-label <?php echo $dateRequiredClass ?>">Issue date</label>
+                                 <input name="documentIssue" <?php echo $dateRequiredClass ?> type="name" class="form-control documentIssue" title="" placeholder="mm/dd/yyyy" value="<?php echo $issueDate ?>">
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="custom-form">
+                                 <label class="control-label <?php echo $dateRequiredClass ?>">Expiry date</label>
+                                 <input name="documentExpiry" <?php echo $dateRequiredClass ?> type="name" class="form-control documentExpiry" title="" placeholder="mm/dd/yyyy"  value="<?php echo $expiryDate ?>">
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="pull-right">
+                                 <button class="next-document btn btn btn-outline-success btn-outline-green" type="button"> Upload </button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <?php  
+            endforeach; } ?>
+      </form>
+   </div>
+</div>
+<script type="text/x-magento-init">
+   {
+       "#form-validate": {
+           "addressValidation": {}
+       },
+       "#country": {
+           "regionUpdater": {
+               "optionalRegionAllowed": <?= /* @noEscape */ $block->getConfig('general/region/display_all') ? 'true' : 'false' ?>,
+               "regionListId": "#region_id",
+               "regionInputId": "#region",
+               "postcodeId": "#zip",
+               "form": "#form-validate",
+               "regionJson": <?= /* @noEscape */ $this->helper(\Magento\Directory\Helper\Data::class)->getRegionJson() ?>,
+               "defaultRegion": "<?= (int) $block->getRegionId() ?>",
+               "countriesWithOptionalZip": <?= /* @noEscape */ $this->helper(\Magento\Directory\Helper\Data::class)->getCountriesWithOptionalZip(true) ?>
+           }
+       },
+       "body" : {
+           "addressapproval" : {
+               "saveController" : "<?php echo $block->getSaveUrl()?>"
+           }
+       }
+   }
+</script>
+<script>
+   window.setDocUrl = "<?php echo $block->getUrl('customer/address/setdocdata');?>";
+   window.uploadDocUrl = "<?php echo $block->getUrl('customer/address/uploaddoc');?>";
+   window.documentFetchApi = "<?php echo $block->getDocumentsApi()?>";
+   window.getCountryCodeUrl ="<?php echo $block->getUrl('customer/country/code')?>";
+   window.regionDataUrl ="<?php echo $block->getUrl('customer/country/region')?>";
+   window.regionId = "<?php echo $block->getAddress()->getRegionId()?>";
+   window.docConfigurationType = 'ForwarderDocuments';
+   window.phonePattern = "<?php echo $block->getTelephonePattern()?>";
+   window.postalPattern = "<?php echo $block->getPostalPattern()?>";
+   window.imageUrl = "<?= $block->getViewFileUrl('images/'); ?>"
+   window.submitUrl ="<?php echo $block->getUrl('customer/address/saverequest')?>";
+   window.bookUrl = "<?php echo $block->getUrl('customer/forwarder/edit')?>";
+</script>

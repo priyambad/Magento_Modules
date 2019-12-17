@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">company_users_listing.company_users_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>company_users_columns</spinner>
+        <deps>
+            <dep>company_users_listing.company_users_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="company_users_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="cacheRequests" xsi:type="boolean">false</param>
+            </storageConfig>
+            <updateUrl path="company/ui/render"/>
+        </settings>
+        <dataProvider class="Magento\Company\Ui\DataProvider\Users\DataProvider" name="company_users_listing_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <filters name="listing_filters" class="Magento\Company\Ui\Component\Filters\Status" component="Magento_Company/js/users/grid/filters/filters">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="params" xsi:type="array">
+                    <item name="filters_modifier" xsi:type="array"/>
+                    <item name="statusActive" xsi:type="string"/>
+                    <item name="statusInactive" xsi:type="string"/>
+                </item>
+                <item name="applied" xsi:type="array">
+                    <item name="status" xsi:type="string">1</item>
+                </item>
+            </item>
+        </argument>
+        <settings>
+            <statefull>
+                <property name="applied" xsi:type="boolean">false</property>
+            </statefull>
+        </settings>
+    </filters>
+    <columns name="company_users_columns" component="uiB2bListing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="table_css_class" xsi:type="string">data table</item>
+            </item>
+        </argument>
+        <settings>
+            <childDefaults>
+                <param name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">company_users_listing.company_users_listing.listing_top.bookmarks</item>
+                    <item name="root" xsi:type="string">columns.${ $.index }</item>
+                    <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                </param>
+            </childDefaults>
+            <storageConfig>
+                <namespace>current</namespace>
+                <provider>company_users_listing.company_users_listing.listing_top.bookmarks</provider>
+            </storageConfig>
+        </settings>
+        <column name="entity_id">
+            <settings>
+                <label translate="true">ID</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="name">
+            <settings>
+                <label translate="true">Name</label>
+                <sortable>false</sortable>
+                <fieldClass>
+                    <class name="long-text-field">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="email">
+            <settings>
+                <label translate="true">Email</label>
+                <sortable>false</sortable>
+                <fieldClass>
+                    <class name="long-text-field">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+        <column name="role_name">
+            <settings>
+                <label translate="true">Role</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="team" component="Magento_Company/js/users/grid/columns/text-with-dash-placeholder">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Teams</label>
+                <sortable>false</sortable>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="status" class="Magento\Company\Ui\Component\Listing\Column\CustomerStatus">
+            <settings>
+                <filter>select</filter>
+                <options class="Magento\Company\Model\Customer\Source\Status"/>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Magento\Company\Ui\Component\Listing\Column\CompanyUsersActions" component="Magento_Company/js/users/grid/columns/actions">
+            <settings>
+                <fieldClass>
+                    <class name="col actions">true</class>
+                </fieldClass>
+                <label>Actions</label>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+    <container name="listing_top">
+        <paging name="listing_paging" component="uiB2bPaging">
+            <settings>
+                <selectProvider>company_users_listing.company_users_listing.company_users_columns.ids</selectProvider>
+                <storageConfig>
+                    <namespace>current.paging</namespace>
+                    <provider>company_users_listing.company_users_listing.listing_top.bookmarks</provider>
+                </storageConfig>
+            </settings>
+        </paging>
+    </container>
+</listing>

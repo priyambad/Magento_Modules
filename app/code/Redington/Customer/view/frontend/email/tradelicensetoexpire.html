@@ -1,0 +1,22 @@
+<!--@subject {{trans "Trade license will expire soon "}}@-->
+
+{{template config_path="design/email/header_template"}}
+<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting" style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;"><b>{{trans "Dear"}} {{var companyAdmin}},</b> </p>
+            <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+                {{trans "Your trade license is going to expire in "}}{{var remainingDays}}{{trans " days, please update the new trade license certificate"}}
+            </p>
+        </td>
+    </tr>
+	<tr>
+		<td style="font-family:Arial, Open Sans, Helvetica, sans-serif; vertical-align:top; padding:0; font-size:12px;">
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px; margin-top:20px;">Thank You</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:0;">Regards,</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:0; margin-bottom:20px;">Redington Team</p>
+		</td>
+	</tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

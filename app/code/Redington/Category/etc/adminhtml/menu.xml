@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Copyright © Redington. All rights reserved.
+ * 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add action="category/category/index" id="Redington_Category::Category" sortOrder="120" module="Redington_Category" parent="Redington::menu" resource="Redington_Category::category" title="Category Permission"/>
+	</menu>
+</config>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- pass custom variable to checkout page -->
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="Redington_paymentgroup" xsi:type="object">Redington\PaymentGroup\Model\AdditionalConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+	<!--<preference for="Magento\Customer\Model\Customer" type="Redington\Checkout\Model\Customer" />-->
+	<!--<type name="Magento\Customer\Model\Customer">
+        <plugin name="Redington_Customer_AddressesCollection_Plugin" type="Redington\Checkout\Plugin\Model\AddressesCollection\Customer" sortOrder="10" disabled="false"  />
+    </type>-->
+</config>

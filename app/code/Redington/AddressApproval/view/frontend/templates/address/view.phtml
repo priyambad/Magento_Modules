@@ -1,0 +1,27 @@
+<h3>Comments</h3>
+<div class="comments-container">
+    <?php
+    $comments = $block->getComments();
+    if($comments){
+        foreach ($comments as $key => $comment) {
+        ?>
+        <div class="comments">
+            <p><strong><?php echo $comment['time'].", ( ".$comment['author']." )"?></strong></p>
+            <p><?php echo $comment['content'] ?></p>
+        </div>
+        <hr>
+        <?php
+        }
+    }else {
+    ?>
+        <div class="comments">
+            <p>There are no comments</p>
+        </div>
+    <?php }?>
+</div>
+<div class="item actions">
+    <a class="action back btn btn btn-outline-success btn-outline-green" href="<?= $block->getUrl('customer/address/index') ?>"><span><?= $block->escapeHtml(__('Address book')) ?></span></a>
+    <?php if ($block->canShowAction()) : ?>
+        <a class="action edit btn btn btn-outline-success btn-outline-green" href="<?= $block->escapeUrl($block->getUrl('customer/address/edit', ['id' => $block->getAddressId()])) ?>"><span><?= $block->escapeHtml(__('Edit Address')) ?></span></a>
+    <?php endif;?>
+</div>

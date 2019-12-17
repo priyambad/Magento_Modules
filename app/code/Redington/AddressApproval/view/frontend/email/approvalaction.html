@@ -1,0 +1,88 @@
+<!--@subject {{trans "Request for "}}{{var requestType}}{{trans " has been "}}{{var approvalAction}}@-->
+
+{{template config_path="design/email/header_template"}}
+<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+    <tr class="email-intro">
+        <td>
+            <p class="greeting" style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">{{trans "Dear"}} <b>{{var companyAdmin}}</b>,</p>
+            <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:20px;">
+                
+                    {{trans "The "}}{{var requestType}}{{trans " requested by you"}}, {{var status}}.
+               
+            </p>
+           		
+			<div>
+				<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+					<tr>
+						<td colspan="2"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:2px;"><b>{{var requestType}} </b></p></td>
+					</tr>
+					{{if isForwarder}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Forwarder Name"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-top:2px; margin-bottom:2px;">: {{var company}}</p></td>
+					</tr>
+					{{else}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Company Name"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var company}}</p></td>
+					</tr>
+					{{/if}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Street1"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var street1}}</p></td>
+					</tr>
+					{{if street2}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Street2"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var street2}}</p></td>
+					</tr>
+					{{/if}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Region"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var region}}</p></td>
+					</tr>
+					{{if city}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "City"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var city}}</p></td>
+					</tr>
+					{{/if}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Country"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var country}}</p></td>
+					</tr>
+					{{if postalcode}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Postal Code"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var postalcode}}</p></td>
+					</tr>
+					{{/if}}
+					<tr>
+						<td style="padding-left:30px;"><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;"><b>{{trans "Telephone"}}</b></p></td>
+						<td><p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:2px; margin-bottom:2px;">: {{var mobile}}</p></td>
+					</tr>
+					<tr>
+						<td colspan="2" height="10px">&nbsp;</td>
+					</tr>
+				</table>
+            </div>
+			
+			
+            {{if isApproved}}
+                <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;"><b>Below are the comments entered by Redington while approving this request:</b></p>
+            {{else}}
+                <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:4px;"><b>Please take care of below comments and submit again for approval:</b></p>
+            {{/if}}
+				<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">{{var comment}}</p>
+        </td>
+    </tr>
+	<tr>
+		<td style="font-family:'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif; vertical-align:top; padding:0; font-size:12px;">
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px; margin-top:20px;">Thank You</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:0;">Regards,</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:0; margin-bottom:20px;">Redington Team</p>
+		</td>
+	</tr>
+	</table>
+
+{{template config_path="design/email/footer_template"}}

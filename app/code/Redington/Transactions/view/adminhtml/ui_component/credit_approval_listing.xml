@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">credit_approval_listing.credit_approval_listing_data_source</item>
+        </item>
+        <item name="filter_url_params" xsi:type="array">
+            <item name="customer_name" xsi:type="string">*</item>
+        </item>
+                
+    </argument>
+    <settings>
+        <spinner>credit_approval_columns</spinner>
+        <deps>
+            <dep>credit_approval_listing.credit_approval_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="credit_approval_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">entity_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <dataProvider class="Redington\Transactions\Ui\Component\CreditApproval\DataProvider" name="credit_approval_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>main_table.entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filters name="listing_filters" />
+        <filterSearch name="fulltext"/>
+        
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="credit_approval_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="table_css_class" xsi:type="string">data table</item>
+            </item>
+        </argument>
+        <settings>
+            <childDefaults>
+                <param name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">credit_approval_listing.credit_approval_listing.credit_approval_listing_top.bookmarks</item>
+                    <item name="root" xsi:type="string">columns.${ $.index }</item>
+                    <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                </param>
+            </childDefaults>
+            <storageConfig>
+                <namespace>current</namespace>
+                <provider>credit_approval_listing.credit_approval_listing.credit_approval_listing_top.bookmarks</provider>
+            </storageConfig>
+        </settings>
+        <column name="entity_id" sortOrder="80">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Request Id</label>
+            </settings>
+        </column>
+        <!--<column name="company_name" sortOrder="81">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Company Name</label>
+            </settings>
+        </column>-->
+         <column name="account_name" sortOrder="81">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Account Name</label>
+            </settings>
+        </column>
+        <column name="requester" sortOrder="82" class="Redington\Transactions\Ui\Component\CreditApproval\Listing\Column\CompanyUser">
+            <settings>
+                
+                <label translate="true">Requester Name</label>
+            </settings>
+        </column>
+        <column name="request_date" sortOrder="83">
+            <settings>
+                <filter>dateRange</filter>
+                <label translate="true">Request Date</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="requested_credit_limit" sortOrder="84">
+            <settings>
+              
+                <filter>text</filter>
+                <label translate="true">Requested credit limit</label>
+            </settings>
+        </column>
+        <column name="available_credit_limit"  sortOrder="85">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Available Credit Limit</label>
+            </settings>
+        </column>
+        <column name="sap_acc_no" sortOrder="86">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Sap account number</label>
+            </settings>
+        </column>
+       
+        <column name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Redington\Transactions\Ui\Component\CreditApproval\Listing\Column\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                     <item name="editor" xsi:type="array">
+                        <item name="editorType" xsi:type="string">select</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">false</item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <actionsColumn name="actions" class="Redington\Transactions\Ui\Component\CreditApproval\Listing\Column\Action">
+           <argument name="data" xsi:type="array">
+               <item name="config" xsi:type="array">
+                   <item name="resizeEnabled" xsi:type="boolean">false</item>
+                   <item name="resizeDefaultWidth" xsi:type="string">107</item>
+                   <item name="indexField" xsi:type="string">entity_id</item>
+               </item>
+           </argument>
+       </actionsColumn>
+    </columns>
+</listing>

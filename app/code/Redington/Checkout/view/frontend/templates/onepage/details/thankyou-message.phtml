@@ -1,0 +1,33 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+?>
+<?php /** @var $block \Redington\Checkout\Block\Onepage\Success\Extrainfo */ ?>
+<?php if($block->getOrderStatus()){ 
+		if($block->getOrderStatus()=='failed'){?>
+			<div class="page-title-wrapper">
+				<h2 class="page-title">
+					<span class="base" data-ui-id="page-title-wrapper">Your order got failed!</span> 
+			   </h2>
+			</div>
+    
+		<?php }
+		if($block->getOrderStatus()=='pending'){ ?>
+			<div class="page-title-wrapper">
+				<h2 class="page-title">
+					<span class="base" data-ui-id="page-title-wrapper">Thank you for your purchase!</span> 
+			   </h2>
+			</div>
+		<?php }
+		if($block->getOrderStatus()=='processing'){ ?>
+			<div class="page-title-wrapper">
+				<h2 class="page-title">
+					<span class="base" data-ui-id="page-title-wrapper">Thank you for your purchase!</span> 
+			   </h2>
+			</div>
+<?php }
+ } ?>
+

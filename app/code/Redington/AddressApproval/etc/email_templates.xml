@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="redington_approval_general_approval_action" label="Approval Action" file="approvalaction.html" type="html" module="Redington_AddressApproval" area="frontend"/>
+    <template id="redington_approval_general_request_partner" label="Approval Request Company Admin" file="approvalrequestcompany.html" type="html" module="Redington_AddressApproval" area="frontend"/>
+    <template id="redington_approval_general_request_admin" label="Approval Request Redington Admin" file="approvalrequestredington.html" type="html" module="Redington_AddressApproval" area="frontend"/>
+</config>

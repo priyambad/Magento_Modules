@@ -1,0 +1,21 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_product_add_after">
+        <observer name="periodicity_restrict_on_addtocart" instance="Redington\Catalog\Observer\RestrictOnAddToCart" />
+    </event>
+<!--    <event name="controller_action_predispatch_checkout_cart_updatePost">
+        <observer name="periodicity_restrict_on_updatecart" instance="Redington\Catalog\Observer\RestrictOnUpdateCart" />
+    </event>-->
+    <event name="checkout_cart_update_items_after">
+        <observer name="periodicity_restrict_on_configurecart" instance="Redington\Catalog\Observer\RestrictOnUpdateCart" />
+    </event>
+    <event name="controller_action_predispatch_checkout_index_index">
+        <observer name="periodicity_restrict_on_checkout" instance="Redington\Catalog\Observer\RestrictOnUpdateCart" />
+    </event>
+    <event name="sales_order_place_before">
+        <observer name="periodicity_restrict_on_ordersave" instance="Redington\Catalog\Observer\RestrictOnOrderSave" />
+    </event>
+    <event name="catalog_block_product_list_collection">
+        <observer name="FilterOnProductCollection" instance="Redington\Catalog\Observer\FilterProduct" />
+    </event>
+    
+</config>

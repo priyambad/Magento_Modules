@@ -1,0 +1,57 @@
+{
+    "quote": {
+        "column": {
+            "is_review": true,
+            "is_quotation": true,
+            "quotation_id": true
+        }
+    },
+    "redington_inventory_reservation": {
+        "column": {
+            "reservation_id": true,
+            "plant_code": true,
+            "sku": true,
+            "quantity": true
+        },
+        "index": {
+            "REDINGTON_INVENTORY_RESERVATION_PLANT_CODE_SKU_QUANTITY": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "redington_quote_reservation": {
+        "column": {
+            "reservation_id": true,
+            "quote_id": true,
+            "created_at": true,
+            "company_id": true,
+            "is_review": true,
+            "status": true
+        },
+        "index": {
+            "REDINGTON_QUOTE_RESERVATION_RESERVATION_ID_QUOTE_ID_COMPANY_ID": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "REDINGTON_QUOTE_RESERVATION_QUOTE_ID_QUOTE_ENTITY_ID": true,
+            "REDINGTON_QUOTE_RESERVATION_COMPANY_ID_COMPANY_ENTITY_ID": true
+        }
+    },
+    "quote_item": {
+        "column": {
+            "proposed_price": true,
+            "proposed_qty": true
+        }
+    },
+    "negotiable_quote": {
+        "column": {
+            "quotation_id": true
+        }
+    },
+    "negotiable_quote_grid": {
+        "column": {
+            "quotation_id": true
+        }
+    }
+}

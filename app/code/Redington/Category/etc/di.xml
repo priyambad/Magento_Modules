@@ -1,0 +1,39 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="category_listing_data_source" xsi:type="string">Redington\Category\Model\ResourceModel\Category\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+      <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="category_category_listing_data_source" xsi:type="string">Redington\Category\Model\ResourceModel\Category\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+   <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="category_category_view_data_source" xsi:type="string">Redington\Category\Model\ResourceModel\Category\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Redington\Category\Model\ResourceModel\Category\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">redington_category_data</argument>
+            <argument name="resourceModel" xsi:type="string">Redington\Category\Model\ResourceModel\Category</argument>
+        </arguments>
+    </virtualType>
+    <preference for="Magento\Catalog\Controller\Category\View" type="Redington\Category\Controller\Category\CategoryView" /> 
+     <preference for="Magento\Catalog\Controller\Product\View" type="Redington\Category\Controller\Product\View" /> 
+    <type name="Sm\ListingTabs\Block\ListingTabs">
+        <plugin name="homepage_category_filter" type="Redington\Category\Plugin\ListingTabsPlugin" sortOrder="10" disabled="false"  />
+    </type>
+     <type name="Sm\SearchBox\Block\SearchBox">
+        <plugin name="homepage_category_search_filter" type="Redington\Category\Plugin\SearchBoxPlugin" sortOrder="20" disabled="false"  />
+    </type>
+     <!--preference for="Amasty\Shopby\Block\Navigation\SwatchRenderer" type="Redington\Category\Block\Navigation\SwatchRenderer"/--> 
+</config>

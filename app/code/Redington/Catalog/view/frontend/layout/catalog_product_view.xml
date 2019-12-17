@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Catalog
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-right"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="alert.urls">
+            <block class="Magento\ProductAlert\Block\Product\View\Price" name="productalert.price" as="productalert_price" template="Redington_Catalog::product/view.phtml">
+                <action method="setHtmlClass">
+                    <argument name="value" xsi:type="string">price</argument>
+                </action>
+                <action method="setSignupLabel">
+                    <argument translate="true" name="value" xsi:type="string">Notify me when the price drops</argument>
+                </action>
+            </block>
+            <block class="Magento\ProductAlert\Block\Product\View\Stock" name="productalert.stock" as="productalert_stock" template="Redington_Catalog::product/view.phtml">
+                <action method="setHtmlClass">
+                    <argument name="value" xsi:type="string">stock</argument>
+                </action>
+                <action method="setSignupLabel">
+                    <argument translate="true" name="value" xsi:type="string">Notify me</argument>
+                </action>                
+                <block class="Redington\Catalog\Block\Product\View\Stock" name="productalert.stockblock" as="productalert_stockblock">
+                    <action method="getCustomerEmail">
+                    </action>
+                </block>
+            </block>
+<!--            <referenceBlock name="productalert.stock">
+                <block class="Redington\Catalog\Block\Product\View\Stock" name="productalert.stockblock" as="productalert_stockblock">
+                    <action method="getCustomerEmail">
+                    </action>
+                </block>
+            </referenceBlock>-->
+        </referenceContainer>
+    </body>
+</page>

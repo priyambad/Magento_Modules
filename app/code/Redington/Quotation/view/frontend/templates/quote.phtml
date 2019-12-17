@@ -1,0 +1,596 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+$quote = $block->getQuote();
+?>
+<div class="block block-checkout-quote">    
+    <?php
+    $items = $quote->getAllItems();
+    if (count($items)) {
+        ?>
+        <div class="negotiable-quote-errors messages">
+            <div class="message error-wrap error" data-role="error-wrap"></div>
+        </div>
+        <form class="form form-quote-popup"
+              id="add-quote-form"
+              method="post"
+              data-action="comment-form"
+              enctype="multipart/form-data"
+
+              action="<?= $block->getUrl('rquotation/quote/create/'); ?>"
+              >
+            <input type="hidden"  name="quote_id" id="quote_id" class="input-text" value="<?= $quote->getId() ?>"/>
+
+            <div class="cart table-wrapper detailed">
+                <?php if ($block->getPagerHtml()): ?>
+                    <div class="cart-products-toolbar cart-products-toolbar-top toolbar" data-attribute="cart-products-toolbar-top"><?= $block->getPagerHtml() ?></div>
+
+                <?php endif ?>
+                <div class="cart-container">
+                    <div class="form form-cart">
+                        <div class="cart table-wrapper">
+                        <table id="shopping-cart-table"
+                               class="cart items data table quotation-table"
+                               >
+                            <caption class="table-caption"><?= /* @escapeNotVerified */ __('Shopping Cart Items') ?></caption>
+                            <thead>
+                                <tr>
+                                    <th class="col item" scope="col"><span><?= /* @escapeNotVerified */ __('Item') ?></span></th>                        
+                                    <th class="col qty" scope="col"><span><?= /* @escapeNotVerified */ __('Qty') ?></span></th>
+                                    <th class="col price" scope="col"><span><?= /* @escapeNotVerified */ __('Unit Price') ?></span></th>
+                                    <th class="col subtotal" scope="col"><span><?= /* @escapeNotVerified */ __('Subtotal') ?></span></th>
+                                </tr>
+                            </thead>
+                            <?php foreach ($items as $item): 
+                                $quoteCurrency = $item->getQuote()->getCurrency()->getQuoteCurrencyCode();
+								$currencyRate = $item->getQuote()->getCurrency()->getBaseToQuoteRate();
+                                ?>
+                                <tbody class="cart item">
+                                    <tr class="item-info">
+                                        <td data-th="<?= $block->escapeHtml(__('Item')) ?>" class="col item">
+                                            <div class="product-item-photo">
+                                                <span class="product-image-container">
+                                                    <span class="product-image-wrapper">
+                                                        <?php $image = $block->getProductImageUrl($item, 400, 400) ?>
+                                                        <img class="product-image-photo" src ="<?= $image; ?>" />
+                                                    </span>
+                                                </span>
+                                            </div>                                           
+                                            <div class="product-item-details">
+                                                <strong class="product-item-name">   
+                                                    <?= $block->escapeHtml($item->getName()) ?>                                       
+                                                </strong>
+                                            </div>
+                                        </td>
+                                        <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+                                            <div class="field qty">
+                                                <label class="label" for="cart-<?= /* @escapeNotVerified */ $item->getId() ?>-qty">
+                                                    <span><?= /* @escapeNotVerified */ __('Qty') ?></span>
+                                                </label>
+                                                <div class="control qty">
+                                                <input id="cart-<?= /* @escapeNotVerified */ $item->getId() ?>-qty"
+												name="cart[<?= /* @escapeNotVerified */ $item->getId() ?>][qty]" 
+                                                data-cart-item-id="<?= /* @escapeNotVerified */ $item->getSku() ?>" 
+                                                value="<?= /* @escapeNotVerified */ $item->getQty() ?>"
+                                                type="number" 
+                                                size="4"
+												title="Quantity" 
+                                                class="input-text qty item-qty" 
+												data-validate="{required:true,'validate-greater-than-zero':true}"
+												oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+												maxlength = "5"
+                                                data-role="cart-item-qty"/>
+												 <!--div class="qty_control">
+													<button type="button"  id="<?= /* @escapeNotVerified */ $item->getId() ?>-upt" class="increaseQty"></button>
+													<button type="button"   id="<?= /* @escapeNotVerified */ $item->getId() ?>-dec"  class="decreaseQty"></button>
+												</div-->
+                                                    <!--span class="item-qty" id="item-qty"><?= /* @escapeNotVerified */ $item->getQty() ?></span-->
+                                                </div>
+                                            </div>
+                                        </td>   
+										<input type="hidden" name="item-id[<?= /* @escapeNotVerified */ $item->getId() ?>]" class="item-id" value="<?= /* @escapeNotVerified */ $item->getId() ?>"/>
+                                        <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
+                                            <span class="price-including-tax" data-label="<?= $block->escapeHtml(__('Excl. Tax')) ?>">
+                                                <span class="cart-price">
+                                                    <?= /* @escapeNotVerified */ $this->helper('Magento\Checkout\Helper\Data')->formatPrice($item->getProduct()->getPrice() * $currencyRate) ?>                                                    
+                                                </span>
+                                                <input type="hidden" id="convertedCurrency" value="<?php echo $item->getCalculationPrice()/ 3.67;?>" />
+                                                <span class="item-id" style="display:none"><?= /* @escapeNotVerified */ $item->getId();?></span>
+                                                <span class="item-unitprice" style="display:none"><?= /* @escapeNotVerified */ ($item->getProduct()->getPrice() * $currencyRate);?></span>
+												<input class="cart-item-unitprice" type="hidden" id="cart-item-unitprice" value="<?= /* @escapeNotVerified */ $item->getCalculationPrice();?>"/>
+                                            </span>
+                                            <div class="propose-txt">Proposed Unit Price</div>
+                                            <div class="amount-input field subject required" style="display: none">
+                                                <div class="control">
+                                                    <select id="expected-type-<?= $item->getId(); ?>" 
+													onkeypress="return handleEnter(this, event)" name="expected-type-<?= $item->getId(); ?>"data-validate="{required:true}" class="expected-type"/>
+                                                    <option value="amount" selected>Amount</option>
+                                                    <option value="percentage">Percentage</option>                                                
+                                                    </select> 
+                                                </div>
+                                            </div>                                        
+                                            <div class=" unitprice-input field">                           
+                                                <div class="control">    
+                                                 <span class = 'quotecurrency'><?php echo $quoteCurrency;?></span>                                                 
+                                                    <input type="number" name="expected-price-<?= $item->getId(); ?>" onkeypress="return handleEnter(this, event)" id="expected-price-<?= $item->getId(); ?>" 
+                                                           value="<?= /* @escapeNotVerified */ number_format((float)$item->getCalculationPrice(), 2, '.', '');?>" title="<?= $block->escapeHtml(__('Expected Price')) ?>" class="input-text expected-price custom_price"
+                                                           data-validate="{required:true}"/>
+														   
+                                                </div>                                                                    
+                                            </div>
+                                        </td>                           
+                                        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+                                            <span class="price-excluding-tax" data-label="<?= $block->escapeHtml(__('Excl. Tax')) ?>">
+                                                <span class="cart-price">
+                                                    <?= /* @escapeNotVerified */ $this->helper('Magento\Checkout\Helper\Data')->formatPrice(($item->getProduct()->getPrice() * $item->getQty()) * $currencyRate) ?>
+                                                </span>
+                                            </span>
+                                            <div class="propose-txt">Proposed Subtotal</div>
+                                            <div id = "proposed-subtotal" class="proposed-subtotal" >
+                                                <?= /* @escapeNotVerified */ $this->helper('Magento\Checkout\Helper\Data')->formatPrice($item->getRowTotal()) ?>
+                                            </div>
+                                        </td>
+                                    </tr> 
+                                    <tr class="item-actions">
+                                        <td colspan="4">
+                                            <?php if ($block->isAllowedManage()): ?>
+                                                <div class="actions-toolbar">
+                                                    <a href="<?= /* @noEscape */ $block->getUrl('checkout/cart/configure/id/' . $item->getId() . '/product_id/' . $item->getProductId()) ?>"
+                                                       title="<?= $block->escapeHtml(__('Edit')) ?>"                                       
+                                                       class="action action-edit">
+                                                        <span>
+                                                            <?= $block->escapeHtml(__('Edit')) ?>
+                                                        </span>
+                                                    </a>
+													<a href="<?= /* @noEscape */ $block->getUrl('rquotation/quote/itemdelete/quote_id/' . $quote->getId() . '/quote_item_id/' . $item->getId()) ?>"
+                                                       title="<?= $block->escapeHtml(__('Remove item')) ?>"                                    
+                                                       class="action action-delete">
+                                                        <span>
+                                                            <?= $block->escapeHtml(__('Remove item')) ?>
+                                                        </span>
+                                                    </a>
+												
+                                                </div>                                              
+                                            <?php endif ?>
+                                        </td>
+                                    </tr>                       
+                                </tbody>
+								
+								
+                            <?php endforeach ?>
+                        </table>
+                        <?php if ($block->getPagerHtml()): ?>
+                            <div class="cart-products-toolbar cart-products-toolbar-bottom toolbar" data-attribute="cart-products-toolbar-bottom"><?= $block->getPagerHtml() ?></div>
+                        <?php endif ?>  
+                        </div>
+                        <div class="cart main actions">
+                            <?php if ($block->getContinueShoppingUrl()): ?>
+                                <a class="action continue primary"
+                                   href="<?= $block->escapeUrl($block->getContinueShoppingUrl()) ?>"
+                                   title="<?= $block->escapeHtml(__('Continue Shopping')) ?>">
+                                    <span><?= /* @escapeNotVerified */ __('Continue Shopping') ?></span>
+                                </a>
+                            <?php endif; ?>                            
+                            <a class="action continue primary updateQuote"                                  
+                               title="<?= $block->escapeHtml(__('Update Quotation')) ?>">
+                                <span><?= /* @escapeNotVerified */ __('Update Quotation') ?></span>
+                            </a>
+                            <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
+                        </div>
+                    </div>
+                   
+                        <div class="cart-summary">
+                            <strong class="summary title"><?= /* @noEscape */ __('Quote Summary') ?></strong>
+                            <div class="cart-totals">
+                                <div class="table-wrapper">
+                                    <table class="data table totals">
+                                        <tbody>
+                                            <tr class="totals sub">
+                                                <th class="mark" scope="row"><?= /* @noEscape */ __('Subtotal') ?></th>
+                                                <td class="amount">
+                                                    <span class="price"><?= /* @escapeNotVerified */ $this->helper('Magento\Checkout\Helper\Data')->formatPrice($quote->getSubtotal()); ?></span>
+                                                </td>
+                                            </tr>
+                                            <tr class="grand totals">
+                                                <th class="mark" scope="row">
+                                                    <strong><?= /* @noEscape */ __('Quote Total') ?></strong>
+                                                </th>
+                                                <td class="amount" data-th="Order Total">
+                                                    <strong><?= /* @escapeNotVerified */ $this->helper('Magento\Checkout\Helper\Data')->formatPrice($quote->getSubtotal()); ?></strong>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        <div class="quoteright-summary">
+                            <div class="custom-form"> 
+                                <label class="control-label" for="quote-message">
+                                    <span><?= /* @noEscape */ __('Comments') ?></span>
+                                </label>
+                                <div class="control">
+                                    <textarea name="quote-message" id="quote-message" rows="4" maxlength="300"  onkeypress="return handleEnter(this, event)" class="textarea" ></textarea>
+                                   
+                                </div>                          
+                            </div>
+                            <div class="custom-form">
+                                <label class="control-label" for="quote-name">
+                                    <span><?= /* @noEscape */ __('Quote name (for personal reference)') ?></span>
+                                </label>
+                                <div class="control">
+                                    <input type="text" name="quote-name" id="quote-name" value="" maxlength="20" onkeypress="return handleEnter(this, event)"
+                                           title="<?= $block->escapeHtml(__('Quote name')) ?>" class="input-text">
+                                           <span class="requiredMessage" style="color:red;"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="actions-toolbar">
+                            <div class="primary">
+                                <button type="submit" class="action save primary btn btn-primary btn-green-filled btn-success" data-action="save-quote"
+                                        title="<?= $block->escapeHtml(__('Send Request')) ?>">
+                                    <span><?= /* @noEscape */ __('Send Request') ?></span>
+                                </button>
+                            </div>
+<!--                            <div class="secondary">
+                                <button class="cancel-quote-request action back btn btn btn-outline-success btn-outline-green"
+                                        title="<?= $block->escapeHtml(__('Cancel')) ?>">
+                                    <span><?= /* @noEscape */ __('Cancel') ?></span>
+                                </button>
+                            </div>           -->
+                        </div>
+                        </div>
+                        </div>
+                    
+                
+            </div> 
+        </form>
+    <?php } else { ?>
+        <div class="negotiable-quote-errors">
+            <span><?= /* @noEscape */ __('No Any Quote Items') ?></span>
+        </div>
+    <?php } ?>
+    
+</div>
+<script type="text/x-magento-init">
+    {
+        "#add-quote-form": {
+            "validation": {}
+        }
+    }
+</script>
+<script>
+    require([
+        "jquery", 
+        "mage/mage",
+		"jquery/ui",
+        "Magento_Catalog/js/price-utils",
+		'Magento_Ui/js/modal/confirm'
+    ], function ($, mage, ui,priceUtils,confirmation) {
+    
+        //var dataForm = $('#add-quote-form');
+		//dataForm.mage('validation', {});
+        var priceFormat = <?= /* @escapeNotVerified */ $this->helper('Magento\Tax\Helper\Data')->getPriceFormat($block->getStore()) ?>;
+        var currencyRate = <?= /* @escapeNotVerified */ $this->helper('Redington\Quotation\Helper\Data')->getCurrencyRate();?>;
+         $(".expected-price").keypress(function(e){
+            expectedPrice = $('.expected-price').val();
+            
+         if ((e.which != 46 ) && (e.which < 48 || e.which > 57) ) {
+                e.preventDefault();
+              }
+        });
+		$(".qty").keypress(function(e){
+            expectedPrice = $('.qty').val();
+            
+         if ((e.which != 46 ) && (e.which < 48 || e.which > 57) ) {
+                e.preventDefault();
+              }
+        });
+		$('.custom_price').keyup(function(e){
+          var valueData = this.value.split('.');
+          var decimalData,intData;
+          intData = valueData[0];
+          if(intData.length > 9){
+            intData = intData.slice(0, -1);
+          }
+          if(valueData.length >1){
+            decimalData = valueData[1];
+            if(decimalData.length > 2 ){
+              decimalData = decimalData.slice(0, -1);
+            }
+          }
+          var finalValue = decimalData != undefined ? intData+'.'+decimalData : intData;
+          $(this).val(finalValue);
+          e.preventDefault();
+        });
+		
+        $('.expected-price').on('change', function () {
+            var proposedPrice = this.value;  
+			var itemId = $(this).closest('.cart.item').find('.item-id').val();
+			console.log(itemId);
+            var type = $(this).closest('.col.price').find('#expected-type-'+itemId).val();
+			var qty = $('#cart-'+itemId+'-qty').val();
+            var unitPrice =  $(this).closest('.col.price').find('.item-unitprice').text(); 
+            var subtoal =  $(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').text();
+
+            var updatedProposedPrice = proposedPrice;
+            
+            if(type == 'amount') {    
+                 if(proposedPrice < 1 || proposedPrice >= unitPrice) {
+                     
+                    updatedProposedPrice = unitPrice;
+                    
+                    $(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+                }              
+            } else if(type == 'percentage') {  
+           
+                proposedPrice =  proposedPrice  * currencyRate;
+               
+                if(proposedPrice < 1 || proposedPrice > 100) {
+                  updatedProposedPrice = 0;     
+                    $(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+                } 
+                
+                var percentageamount = unitPrice * proposedPrice/100;
+                updatedProposedPrice = unitPrice - percentageamount; //(updatedProposedPrice/100)*unitPrice;
+            }
+            var calculatedPrice = qty * updatedProposedPrice;
+            var calculatedsubTotal = priceUtils.formatPrice(calculatedPrice, priceFormat, false);   
+
+            $(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').html(calculatedsubTotal);
+            /*
+            var totalPrice = 0;
+           
+            jQuery('.proposed-subtotal .price').each(function(){
+                currentPrice = jQuery(this).text().split(' ');
+                formattedPrice = parseFloat(currentPrice[currentPrice.length-1].replace(',',''));
+                totalPrice += formattedPrice;
+            });
+            var calculatedsubTotal = priceUtils.formatPrice(totalPrice, priceFormat, false);
+
+            $('.totals .sub .amount .price .price').html(calculatedsubTotal);
+            $('.grand .amount .price').html(calculatedsubTotal);
+           */
+             
+        });
+        $('.item-qty').on('change', function () {  
+			var itemId = $(this).closest('.cart.item').find('.item-id').val();
+			var proposedPrice = $('#expected-price-'+itemId).val();
+            var type = $(this).closest('.col.price').find('#expected-type-'+itemId).val();
+			var qty = $('#cart-'+itemId+'-qty').val();
+            var unitPrice =  $(this).closest('.col.price').find('.item-unitprice').text(); 
+            var subtoal =  $(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').text();
+            var updatedProposedPrice = proposedPrice;
+            
+            if(type == 'amount') {    
+                 if(proposedPrice < 1 || proposedPrice >= unitPrice) {
+                     
+                    updatedProposedPrice = unitPrice;
+                    
+                    $(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+                }              
+            } else if(type == 'percentage') {  
+           
+                proposedPrice =  proposedPrice  * currencyRate;
+               
+                if(proposedPrice < 1 || proposedPrice > 100) {
+                  updatedProposedPrice = 0;     
+                    $(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+                } 
+                
+                var percentageamount = unitPrice * proposedPrice/100;
+                updatedProposedPrice = unitPrice - percentageamount; //(updatedProposedPrice/100)*unitPrice;
+            }
+            var calculatedPrice = qty * updatedProposedPrice;
+            var calculatedsubTotal = priceUtils.formatPrice(calculatedPrice, priceFormat, false);   
+
+            $(this).closest('.cart.item').find('#proposed-subtotal').find('.price').html(calculatedsubTotal);
+            /*
+            var totalPrice = 0;
+           
+            jQuery('.proposed-subtotal .price').each(function(){
+                currentPrice = jQuery(this).text().split(' ');
+                formattedPrice = parseFloat(currentPrice[currentPrice.length-1].replace(',',''));
+                totalPrice += formattedPrice;
+            });
+            var calculatedsubTotal = priceUtils.formatPrice(totalPrice, priceFormat, false);
+            
+
+            $('.totals .sub .amount .price .price').html(calculatedsubTotal);
+            $('.grand .amount .price').html(calculatedsubTotal);
+			*/
+		});
+       /* $('.expected-type').on('change', function () {
+            var type = this.value;
+            var proposedPrice = $(this).closest('.col.price').find('.expected-price').val();
+            var unitPrice =  $(this).closest('.col.price').find('.item-unitprice').text();  
+            var qty = $(this).closest('.col.price').prev().find('.item-qty').val();
+            
+            if(type == 'amount') {    
+                if(proposedPrice < 1 || proposedPrice > unitPrice) {
+                    proposedPrice = unitPrice;
+                    $(this).closest('.col.price').find('.expected-price').val(proposedPrice);
+                }                
+            } else if(type == 'percentage') {  
+                if(proposedPrice < 1 || proposedPrice > 100) {
+                    proposedPrice = 0;     
+                    $(this).closest('.col.price').find('.expected-price').val(proposedPrice);
+                }                
+                proposedPrice = unitPrice - (proposedPrice/100)*unitPrice;
+            }        
+            var calculatedPrice = qty * proposedPrice;
+            var calculatedsubTotal = priceUtils.formatPrice(calculatedPrice, priceFormat, false);     
+
+            $(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').html(calculatedsubTotal);
+            $('.totals .sub .amount .price .price').html(calculatedsubTotal);
+            $('.grand .amount .price').html(calculatedsubTotal);
+        });*/
+       
+	   
+	   
+       /*
+	    $('.increaseQty, .decreaseQty').on("click",function(){ 
+        var $this = $(this);
+        var ctrl = ($(this).attr('id').replace('-upt','')).replace('-dec','');          
+        var currentQty = $("#cart-"+ctrl+"-qty").val();
+		
+        if($this.hasClass('increaseQty')){
+            var newAdd = parseInt(currentQty)+parseInt(1);
+             $("#cart-"+ctrl+"-qty").val(newAdd);
+			 var qty = newAdd;
+			
+            //console.log($('#convertedCurrency').val());
+			var itemId = $('.item-id').val();
+            //var itemId =  $(this).closest('.col.price').find('.item-id').text();  
+            var type = $(this).closest('.col.price').find('#expected-type-'+itemId).val();
+            //var qty = $(this).closest('.col.price').prev().find('.item-qty').val();
+            //var unitPrice =  $(this).closest('.col.price').find('.item-unitprice').text(); 
+			var unitPrice = $('.cart-item-unitprice').val();
+            var subtoal =  $(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').text();
+            var proposedPrice = $('#expected-price-'+itemId).val();
+			
+            //unitPrice = unitPrice * currencyRate;
+            var updatedProposedPrice = proposedPrice;
+             
+                if(proposedPrice < 1 || proposedPrice >= unitPrice) {
+                     
+                    updatedProposedPrice = unitPrice;
+                    
+                    $(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+                }else{
+					$(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+				}     
+			
+            var calculatedPrice = qty * updatedProposedPrice;
+			
+            var calculatedsubTotal = priceUtils.formatPrice(calculatedPrice, priceFormat, false);   
+
+            //$(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').html(calculatedsubTotal);
+			$('#proposed-subtotal-'+itemId+' .price').html(calculatedsubTotal);
+            var totalPrice = 0;
+           
+            jQuery('.proposed-subtotal .price').each(function(){
+                currentPrice = jQuery(this).text().split(' ');
+                formattedPrice = parseFloat(currentPrice[currentPrice.length-1].replace(',',''));
+                totalPrice += formattedPrice;
+            });
+            var calculatedsubTotal = priceUtils.formatPrice(totalPrice, priceFormat, false);
+            
+
+            $('.totals .sub .amount .price .price').html(calculatedsubTotal);
+            $('.grand .amount .price').html(calculatedsubTotal);
+        }else{
+             if(currentQty>1){
+                var newAdd = parseInt(currentQty)-parseInt(1);
+                $("#cart-"+ctrl+"-qty").val(newAdd);
+				var qty = newAdd;
+			
+            //console.log($('#convertedCurrency').val());
+			var itemId = $('.item-id').val();
+            //var itemId =  $(this).closest('.col.price').find('.item-id').text();  
+            var type = $(this).closest('.col.price').find('#expected-type-'+itemId).val();
+            //var qty = $(this).closest('.col.price').prev().find('.item-qty').val();
+            //var unitPrice =  $(this).closest('.col.price').find('.item-unitprice').text(); 
+			var unitPrice = $('.cart-item-unitprice').val();
+            var subtoal =  $(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').text();
+            var proposedPrice = $('#expected-price-'+itemId).val();
+			
+            //unitPrice = unitPrice * currencyRate;
+            var updatedProposedPrice = proposedPrice;
+             
+                if(proposedPrice < 1 || proposedPrice >= unitPrice) {
+                     
+                    updatedProposedPrice = unitPrice;
+                    
+                    $(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+                }else{
+					$(this).closest('.col.price').find('.expected-price').val(updatedProposedPrice);
+				}     
+			
+            var calculatedPrice = qty * updatedProposedPrice;
+			
+            var calculatedsubTotal = priceUtils.formatPrice(calculatedPrice, priceFormat, false);   
+
+            $(this).closest('.col.price').next().find('#proposed-subtotal').find('.price').html(calculatedsubTotal);
+			//$('.proposed-subtotal .price').html(calculatedsubTotal);
+            var totalPrice = 0;
+           
+            jQuery('.proposed-subtotal .price').each(function(){
+                currentPrice = jQuery(this).text().split(' ');
+                formattedPrice = parseFloat(currentPrice[currentPrice.length-1].replace(',',''));
+                totalPrice += formattedPrice;
+            });
+            var calculatedsubTotal = priceUtils.formatPrice(totalPrice, priceFormat, false);
+            
+
+            $('.totals .sub .amount .price .price').html(calculatedsubTotal);
+            $('.grand .amount .price').html(calculatedsubTotal);
+             }
+        }
+		
+		
+    });*/
+	   $('.updateQuote').on('click',function(){
+			var body = $('body').loader();
+			body.loader('show');
+			 $.ajax({
+				 url: "<?php echo $block->getUrl('rquotation/quote/quoteupdateitem/')?>",
+				 type: "POST",
+				 loader:true,
+				 data: $("#add-quote-form").serialize(),
+				 success: function(result){
+					 window.location.reload();
+					 body.loader('hide');
+					 $('.messages').html(result.message);
+				}});
+		   
+		});
+		
+		$('.action-delete').click(function (event) {
+            event.preventDefault();
+			 var totalPrice = 0;
+			 jQuery('.proposed-subtotal .price').each(function(){
+                currentPrice = jQuery(this).text().split(' ');
+                formattedPrice = parseFloat(currentPrice[currentPrice.length-1].replace(',',''));
+                totalPrice += formattedPrice;
+            });
+            var calculatedsubTotal = priceUtils.formatPrice(totalPrice, priceFormat, false);
+            
+
+            $('.totals .sub .amount .price .price').html(calculatedsubTotal);
+            $('.grand .amount .price').html(calculatedsubTotal);
+            var url = event.currentTarget.href;
+			window.location.href = url;
+            /*confirmation({
+                title: 'Remove item',
+                content: 'Do you wish to remove this item?',
+                actions: {
+                    confirm: function () {
+                        window.location.href = url;
+                    },
+                    cancel: function () {},
+                    always: function () {}
+                }
+            });
+            return false;*/
+        }); 
+		
+	 });
+    function handleEnter (field, event) {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
+        if (keyCode == 13) {
+            var i;
+            for (i = 0; i < field.form.elements.length; i++)
+                if (field == field.form.elements[i])
+                    break;
+            i = (i + 1) % field.form.elements.length;
+            field.form.elements[i].focus();
+            return false;
+        } 
+        else
+        return true;
+    }
+</script>

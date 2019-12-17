@@ -1,0 +1,67 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var $block \Magento\NegotiableQuote\Block\Quote\Info\Links */
+?>
+<?php $dataHelper = $this->helper('Redington\Quotation\Helper\Data');
+
+
+?>
+<div class="actions quote-view-links quote-view-buttons">
+    <?php if ($block->isAllowedManage()): ?>
+	
+	<?php 
+	 $data = $block->getProceedToCheckoutParams();
+	 $data = json_decode($data, true);
+	  if(isset($data)){
+		 $quoteId = $data['data']['quote_id'];
+		 $status = $dataHelper->getStatus($quoteId);
+	  }
+		?>
+        <button type="button"
+                data-mage-init='{
+                    "Magento_NegotiableQuote/js/quote/submit-form": {
+                        "watchField" : "[data-role=cart-item-qty]",
+                         "enableBtn" : "[data-role=quote-update]"
+                         }
+                    }'
+                title="<?= $block->escapeHtml(__('Send for Review')) ?>"
+                class="action primary send<?= /* @noEscape */ $block->isSendAvailable() ? '' : ' _disabled' ?>"
+                <?= /* @noEscape */ $block->isSendAvailable() ? '' : 'disabled' ?>
+                <?php if($status=='declined'){echo 'disabled';}?>
+				
+				<?php if($status=='created'){echo 'disabled';}?>
+                data-mobile-label="<?= /* @noEscape */ $block->escapeHtml(__('Send Updated Quote')) ?>">
+            <span><?= $block->escapeHtml(__('Send Updated Quote')) ?></span>
+        </button>
+	<?php endif; ?>
+    <?php if ($block->isCheckoutLinkVisible()): ?>
+    <button type="button"
+            data-mage-init='{
+                "Magento_NegotiableQuote/js/quote/check-expired":{
+                    "isExpired":"<?= $block->escapeJs($block->isExpirationPopupDisplayed()) ?>",
+                    "removeNegotiationUrl": "<?= $block->escapeJs($block->getRemoveNegotiationUrl()) ?>"
+                }
+            }'
+            title="<?= $block->escapeHtml(__('Proceed to Checkout')) ?>"
+            data-post='<?= /* @noEscape */ $block->getProceedToCheckoutParams(); ?>'
+            class="action checkout<?= /* @noEscape */ $block->isProceedToCheckoutAvailable() ? '' : ' _disabled' ?>"
+            <?= /* @noEscape */ $block->isProceedToCheckoutAvailable() ? '' : 'disabled' ?>
+			<?php if($status=='declined'){echo 'disabled';}?>
+			data-mobile-label="<?= /* @noEscape */ $block->escapeHtml(__('Proceed to Checkout')) ?>">
+        <span><?= $block->escapeHtml(__('Proceed to Checkout')) ?></span>
+    </button>
+    <?php endif; ?>
+    <button type="button" 
+            class="action cancel" 
+            title="<?= $block->escapeHtml(__('Cancel')) ?>"
+            >
+        <span>
+            <a href = "<?= $block->getUrl('negotiable_quote/quote')?>"> <?= $block->escapeHtml(__('Cancel')) ?> </a>
+        </span>        			
+    </button>
+</div>

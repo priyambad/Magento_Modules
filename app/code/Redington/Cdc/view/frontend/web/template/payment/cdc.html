@@ -1,0 +1,60 @@
+<!--
+/**
+ * @author Redington Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Cdc
+ */
+-->
+<div class="payment-method cdc" data-bind="css: {'_active': (getCode() == isChecked())}"><div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+                <div class="payment-method-title field choice"><input type="radio" name="payment[method]" class="radio"           
+                 data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()" /><label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+         </div>
+                <div class="payment-method-content">
+                        <!-- ko foreach: getRegion('messages') -->
+                        <!-- ko template: getTemplate() -->
+                        <!-- /ko -->
+                        <!--/ko-->
+                        <div class="field am-checkout-pdocument">
+                                <form name="cdc_document_upload" class="checkout_document_upload form-group"
+                                        id="cdc_document_upload" method="post" enctype="multipart/form-data">
+                                        <div class="cdc-no-container">
+                                                <label class="required" data-bind="i18n: 'Payment Reference Number'">Payment Reference Number</label>
+                                                <input type="text" name="cdc_reference_no" onkeypress="return isNumber(event);" onpaste="return isNumber(event);" maxlength="6" id="cdc-payment-reference-no" value="">
+                                        </div>
+                                         <div class="cdc-reference-error-message"></div>       
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                                <div class="upload-txt required">CDC Document</div>
+                                                <span class="btn btn-primary btn-file">
+                                                        <span class="fileupload-new">Upload document</span>
+                                                        <span class="fileupload-exists">Upload document</span>
+                                                        <input id="cdc_document"  class="document-file cdc_document" name="cdc_document"
+                                                                type="file"
+                                                                data-bind="event: { change: function() { uploadImage($element.files[0],'cdc_document') } }" />
+                                                        <input type="hidden" name="cdc_document_blob_url"
+                                                                id="cdc_document_blob_url" value="">
+                                                </span>
+                                                <div id="cdc_document_preview" class="doc-name-txt" style="display: none">
+                                                        <span class="fileupload-preview" id="cdc_document_docname"></span>
+                                                        <a href="#" class="clear-doc-data" id="cdc_document_remove"
+                                                                data-bind="click: deleteUploadedRefdoc">X</a>
+                                                </div>
+                                                <div id="cdc_document_message_section"  class="cdc-document-message-section"></div>
+                                        </div>
+                                </form>
+                        </div>
+						<!-- ko if: getBankDetails() -->
+                        <div class="cdc-note">Please prepare cheque with following beneficiary: "<span class="bankname" data-bind="text: getBankDetails()"></span>"</div>
+						<!-- /ko -->
+                        <div class="actions-toolbar">
+                                <div class="primary">
+                                        <button class="action primary checkout" type="submit"
+                                            data-bind="click: placeOrder,
+                                                attr: {title: $t('Place Order')},
+                                                css: {disabled: !isPlaceOrderActionAllowed()},
+                                                enable: (getCode() == isChecked())" disabled>
+                                                <span data-bind="i18n: 'Place Order'"></span>
+                                        </button>
+                                </div>
+                        </div>
+                </div>
+        </div>

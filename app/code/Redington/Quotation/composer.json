@@ -1,0 +1,21 @@
+{
+    "name": "Redington/Quotation",
+    "description": "Redington Quotation module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "",
+            "name": "Spadeworx"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Redington\\Quotation\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

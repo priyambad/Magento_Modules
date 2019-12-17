@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+?>
+<?= /* @noEscape */ $block->getChildHtml('negotiable.quote.errors.grid') ?>
+<section id="order-additional_area" class="admin__page-section order-additional" style="display: none">
+    <?= /* @noEscape */ $block->getChildHtml('additional_area') ?>
+</section>
+<section id="order-items" class="admin__page-section order-items">
+    <!--button id="show-sku-form" data-action="show-sku-form"
+            data-mage-init='{"Magento_NegotiableQuote/js/quote/actions/toggle-show":{
+                            "toggleBlockId": "order-additional_area", "hideSelf": true}}'
+            <?= /* @noEscape */ !$block->canEdit() ? 'disabled' : '' ?>
+            class="action-default action-add action-secondary show-sku-form">
+        <span><?= $block->escapeHtml(__('Add Product By SKU')) ?></span>
+    </button-->
+    <div class="admin__page-section-title">
+        <strong class="title"><?= $block->escapeHtml($block->getHeaderText()) ?></strong>
+    </div>
+    <?= /* @noEscape */ $block->getChildHtml('negotiable.quote.items.grid') ?>
+</section>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+	<acl>
+		<resources>
+			<resource id="Magento_Backend::admin">
+				<resource id="Redington_Transactions::credit_index" sortOrder="10" title="Credit approval">
+					<resource id="Redington_Transactions::credit_view" sortOrder="10" title="Request view"/>
+					<resource id="Redington_Transactions::credit_save" sortOrder="10" title="Request action"/>
+				</resource>
+			</resource>
+		</resources>
+	</acl>
+</config>

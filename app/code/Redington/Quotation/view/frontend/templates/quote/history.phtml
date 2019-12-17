@@ -1,0 +1,369 @@
+<?php
+/**
+* Copyright © Magento, Inc. All rights reserved.
+* See COPYING.txt for license details.
+*/
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var  $block \Magento\NegotiableQuote\Block\Quote\History */ ?>
+<div class="quote-history-log-block">
+    <ul class="history-log-block-list">
+        <?php foreach ($block->getQuoteHistory() as $historyLog): ?>
+            <?php
+            if(!$block->isCanSubmit() && $historyLog->getIsDraft()) {
+                continue;
+            }
+            ?>
+            <?php /** @var $historyLog \Magento\NegotiableQuote\Model\History */?>
+			
+         <li class="history-log-block-item">
+                <p class="history-log-block-item-create-update-quote">
+                    <b>
+                        <?php
+                            echo $block->escapeHtml(
+                                $block->formatDate($historyLog->getCreatedAt(), \IntlDateFormatter::MEDIUM, true)
+                            )
+                        ?>
+                        <?php
+                            $authorName = $block->getLogAuthor($historyLog);
+                            if ($historyLog->getIsSeller()) {
+                                $authorName = __('Seller') . ': ' . $authorName;
+                            }
+                            echo '(' . $block->escapeHtml($authorName) . ')';
+                        ?>
+                    </b>
+                    <?= $block->escapeHtml($block->getLogStatusMessage($historyLog)) ?>
+                </p>
+                <?php $updates = $block->getUpdates($historyLog->getId()) ?>
+                <?php if ($updates->hasStatus()): ?>
+                    <?php $status = $updates->getStatus() ?>
+                    <div class="history-log-block-item-action-describe">
+                        <div class="history-log-block-item-title">
+                            <b><?= $block->escapeHtml(__('Status')) ?></b>
+                        </div>
+                        <?php
+                            if (isset($status['new_value']) && isset($status['old_value'])) {
+                                $statuses = $block->checkMultiStatus($status['old_value'], $status['new_value']);
+                            }
+                            if (!isset($statuses) || empty($statuses)) {
+                                $statuses[] = $status;
+                            }
+                        ?>
+                        <?php foreach ($statuses as $statusLine): ?>
+                            <p class="history-log-block-item-info">
+                                <?php if (isset($statusLine['old_value'])): ?>
+                                    <span class="history-log-block-item-old">
+                                                <?php
+                                                echo $block->escapeHtml(
+                                                    $block->getStatusLabel($statusLine['old_value'])
+                                                );
+                                                ?>
+                                    </span>
+                                <?php endif; ?>
+                                <?php
+                                    if (isset($statusLine['new_value'])) {
+                                        echo $block->escapeHtml(
+                                            $block->getStatusLabel($statusLine['new_value'])
+                                        );
+                                    }
+                                ?>
+                            </p>
+                        <?php endforeach ?>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasExpirationDate()): ?>
+                    <?php $expirationDate = $updates->getExpirationDate() ?>
+                    <div class="history-log-block-item-action-describe">
+                        <div class="history-log-block-item-title">
+                            <b><?= $block->escapeHtml(__('Expiration Date')) ?></b>
+                        </div>
+                        <p class="history-log-block-item-info">
+                            <?php if (isset($expirationDate['old_value'])): ?>
+                                <span class="history-log-block-item-old">
+                                    <?php
+                                        echo ($expirationDate['old_value'] !=
+                                            \Magento\NegotiableQuote\Model\Expiration::DATE_QUOTE_NEVER_EXPIRES) ?
+                                            $block->escapeHtml($block->formatDate(
+                                                $expirationDate['old_value'],
+                                                \IntlDateFormatter::MEDIUM
+                                            )) : __('Never');
+                                    ?>
+                                </span>
+                            <?php endif ?>
+                            <?php
+                                echo ($expirationDate['new_value'] !=
+                                    \Magento\NegotiableQuote\Model\Expiration::DATE_QUOTE_NEVER_EXPIRES) ?
+                                    $block->escapeHtml(
+                                        $block->formatDate(
+                                            $expirationDate['new_value'],
+                                            \IntlDateFormatter::MEDIUM
+                                        )
+                                    ) : __('Never');
+                            ?>
+                        </p>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasUpdatedInCart()): ?>
+                    <?php $updatedInCart = $updates->getUpdatedInCart() ?>
+                    <?php foreach ($updatedInCart as $sku => $values): ?>
+                        <div class="history-log-block-item-action-describe history-log-product-updated">
+                            <div class="history-log-block-item-title">
+                                <?php if (isset($updatedInCart[$sku]['product_id'])): ?>
+                                    <b><?= $block->escapeHtml(
+                                            $block->getProductNameById($updatedInCart[$sku]['product_id'])
+                                        ) ?></b>
+                                <?php else: ?>
+                                    <b><?= $block->escapeHtml($block->getProductName($sku)) ?></b>
+                                <?php endif; ?>
+                                <?= $block->escapeHtml(__('(Updated)')) ?>
+                            </div>
+                            <p class="history-log-block-item-info">
+                                <?= /* @noEscape */ $block->getProductUpdateStringHtml($values) ?>
+                            </p>
+                        </div>
+                    <?php endforeach ?>
+                <?php endif ?>
+                <?php if ($updates->hasRemovedFromCart() || $updates->hasAddedToCart() || $updates->hasRemovedFromCatalog()): ?>
+                    <div class="history-log-block-item-action-describe history-log-products-changed">
+                        <?php if ($updates->hasRemovedFromCatalog()): ?>
+                            <?php $productsRemoved = $updates->getRemovedFromCatalog(); ?>
+                            <?php foreach ($productsRemoved as $product): ?>
+                                <div class="history-log-block-item-title history-log-product-removed">
+                                    <?= /* @noEscape */ $block->getDeletedSkuMessage($product['sku']) ?>
+                                </div>
+                            <?php endforeach ?>
+                        <?php endif; ?>
+                        <?php if ($updates->hasRemovedFromCart()): ?>
+                            <?php $productsRemoved = $updates->getRemovedFromCart(); ?>
+                            <?php foreach ($productsRemoved as $product): ?>
+                                <div class="history-log-block-item-title history-log-product-removed">
+                                    <?= /* @noEscape */ $block->getRemovedProductMessage($product) ?>
+                                </div>
+                            <?php endforeach ?>
+                        <?php endif; ?>
+                        <?php if ($updates->hasAddedToCart()): ?>
+                            <?php $productsAdded = $updates->getAddedToCart(); ?>
+                            <?php foreach ($productsAdded as $sku => $values): ?>
+                                <p class="history-log-block-item-info history-log-product-added">
+                                    <?php if (isset($productsAdded[$sku]['product_id'])): ?>
+                                        <b><?= $block->escapeHtml(
+                                                $block->getProductNameById($productsAdded[$sku]['product_id'])
+                                            ) ?></b>
+                                    <?php else: ?>
+                                        <b><?= $block->escapeHtml($block->getProductName($sku)) ?></b>
+                                    <?php endif; ?>
+                                    <?= $block->escapeHtml(__('(Added)')) ?>
+                                </p>
+                                <p>
+                                    <?= /* @noEscape */ $block->getProductAddStringHtml($values) ?>
+                                </p>
+                            <?php endforeach ?>
+                        <?php endif ?>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasAddress()): ?>
+                    <?php $address = $updates->getAddress(); ?>
+                    <div class="history-log-block-item-action-describe">
+                        <div class="history-log-block-item-title">
+                            <b><?= $block->escapeHtml(__('Shipping address')) ?></b>
+                        </div>
+                        <p class="history-log-block-item-info">
+                            <?php if (isset($address['old_value'])): ?>
+                                <span class="history-log-block-item-old">
+                                    <?php
+                                        echo (!empty($address['old_value']) && !empty($address['old_value']['id'])) ?
+                                            /* @noEscape */
+                                            $block->getAddressHtml($address['old_value']['array']) :
+                                            $block->escapeHtml(__('None'));
+                                    ?>
+                                </span>
+                            <?php endif ?>
+                            <?php if (isset($address['new_value'])): ?>
+                                <p>
+                                    <?= (!empty($address['new_value']) && !empty($address['new_value']['id'])) ?
+                                        /* @noEscape */
+                                        $block->getAddressHtml($address['new_value']['array']) :
+                                        $block->escapeHtml(__('None'));
+                                    ?>
+                                </p>
+                            <?php endif ?>
+                        </p>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasShipping()): ?>
+                    <?php $shipping = $updates->getShipping(); ?>
+                    <div class="history-log-block-item-action-describe">
+                        <div class="history-log-block-item-title">
+                            <?php if (isset($shipping['old_value']) && !isset($shipping['new_value'])): ?>
+                                <b><?= $block->escapeHtml(__('Proposed shipping price')) ?></b>
+                            <?php else: ?>
+                                <b><?= $block->escapeHtml(__('Shipping method')) ?></b>
+                            <?php endif ?>
+                        </div>
+                        <p class="history-log-block-item-info">
+                            <?php if (isset($shipping['old_value']) && isset($shipping['new_value'])): ?>
+                                <span class="history-log-block-item-old">
+                                    <?php
+                                        echo $block->escapeHtml(
+                                            $block->getShippingMethodName($shipping['old_value'])
+                                        );
+                                        /* @noEscape */
+                                        echo ' - ' . $block->formatPrice($shipping['old_value']['price']);
+                                    ?>
+                                </span>
+                            <?php endif ?>
+                            <?php if (isset($shipping['old_value']) && !isset($shipping['new_value'])): ?>
+                                <span class="history-log-block-item-old">
+                                    <?= $block->formatPrice($shipping['old_value']['price']) ?>
+                                </span>
+                            <?php endif ?>
+                            <?php
+                                if (isset($shipping['new_value'])) {
+                                    echo $block->escapeHtml(
+                                        $block->getShippingMethodName($shipping['new_value'])
+                                    );
+                                    /* @noEscape */
+                                    echo ' - ' . $block->formatPrice($shipping['new_value']['price']);
+                                } else {
+                                    echo ' - ' . $block->escapeHtml(__('removed'));
+                                }
+                            ?>
+                        </p>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasComment()): ?>
+                    <div class="history-log-block-item-action-describe">
+                        <div class="history-log-block-item-title">
+                            <b><?= $block->escapeHtml(__('Comment')) ?></b>
+                        </div>
+                        <?php if ($block->getCommentText($updates->getComment()) != ''): ?>
+                        <p class="history-log-block-item-info">
+                            "<?= $block->escapeHtml($block->getCommentText($updates->getComment())) ?>"
+                        </p>
+                        <?php endif; ?>
+                        <?php foreach ($block->getCommentAttachments($updates->getComment()) as $file): ?>
+                            <p class="history-log-block-item-info">
+                                <a href="<?php
+                                    echo $block->escapeHtml($block->getAttachmentUrl($file->getAttachmentId())) ?>"
+                                   title="<?= $block->escapeHtml($file->getFileName()) ?>">
+                                    <?= $block->escapeHtml($file->getFileName()) ?>
+                                </a>
+                            </p>
+                        <?php endforeach ?>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasNegotiatedPrice()): ?>
+                    <?php $negotiatedPrice = $updates->getNegotiatedPrice(); ?>
+                    <div class="history-log-block-item-action-describe">
+                        <div class="history-log-block-item-title">
+                            <b><?= $block->escapeHtml(__('Negotiated Price')) ?></b>
+                        </div>
+                        <p class="history-log-block-item-info">
+                            <?php if (isset($negotiatedPrice['old_value'])): ?>
+                                    <?php if (!isset($negotiatedPrice['new_value'])): ?>
+                                        <?php
+                                            $priceData = $block->getRemovedPriceValues($negotiatedPrice['old_value']);
+                                            if (isset($priceData['method'])) {
+                                                echo $block->escapeHtml($priceData['method'] . ' - ');
+                                            }
+                                        ?>
+                                        <?php if (isset($priceData['value'])): ?>
+                                            <span class="history-log-block-item-old">
+                                                <?= $block->escapeHtml($priceData['value']) ?>
+                                            </span>
+                                            <?= $block->escapeHtml(__(' - removed')) ?>
+                                        <?php endif; ?>
+                                    <?php else: ?>
+                                        <span class="history-log-block-item-old">
+                                        <?php /* @noEscape */
+                                            echo $block->getPriceValue($negotiatedPrice['old_value'])
+                                        ?>
+                                        </span>
+                                    <?php endif ?>
+                            <?php endif ?>
+                            <?php
+                                if (isset($negotiatedPrice['new_value'])) {
+                                    /* @noEscape */
+                                    echo $block->getPriceValue($negotiatedPrice['new_value']);
+                                }
+                            ?>
+                        </p>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasSubtotal()): ?>
+                    <?php $subtotal = $updates->getSubtotal(); ?>
+                    <div class="history-log-block-item-action-describe">
+                        <div class="history-log-block-item-title">
+                            <b><?= $block->escapeHtml(__('Quote Subtotal')) ?></b>
+                        </div>
+                        <p class="history-log-block-item-info">
+                            <?php if (isset($subtotal['old_value'])): ?>
+                                <span class="history-log-block-item-old">
+                                    <?php /* @noEscape */
+                                        echo $block->formatPrice($subtotal['old_value'])
+                                    ?>
+                                </span>
+                            <?php endif ?>
+                            <?php
+                                if (isset($subtotal['new_value'])) {
+                                    /* @noEscape */
+                                    echo $block->formatPrice($subtotal['new_value']);
+                                }
+                            ?>
+                        </p>
+                    </div>
+                <?php endif ?>
+                <?php if ($updates->hasCustomLog()): ?>
+                    <?php $customLog = $updates->getCustomLog(); ?>
+                    <?php if (is_array($customLog)): ?>
+                        <?php foreach ($customLog as $customLogRecord): ?>
+                            <div class="history-log-block-item-action-describe">
+                                <?php
+                                    $fieldTitle = '';
+                                    if (isset($customLogRecord['product_id']) && $customLogRecord['product_id']) {
+                                        $fieldTitle = $block->getProductNameById(
+                                            $customLogRecord['product_id']
+                                        );
+                                    } elseif (isset($customLogRecord['product_sku']) && $customLogRecord['product_sku']) {
+                                        $fieldTitle = $block->getProductName(
+                                            $customLogRecord['product_sku']
+                                        );
+                                    }
+                                ?>
+                                <?php if (isset($customLogRecord['field_title']) || $fieldTitle != ''): ?>
+                                    <?php
+                                        if ($fieldTitle == '' && isset($customLogRecord['field_title'])) {
+                                            $fieldTitle = $customLogRecord['field_title'];
+                                        }
+                                    ?>
+                                    <div class="history-log-block-item-title">
+                                        <b><?= $block->escapeHtml($fieldTitle) ?></b>
+                                    </div>
+                                <?php endif ?>
+                                <?php if (isset($customLogRecord['values']) && !empty($customLogRecord['values'])): ?>
+                                    <?php foreach ($customLogRecord['values'] as $customLogValue): ?>
+                                        <p class="history-log-block-item-info">
+                                            <?php if (isset($customLogValue['field_subtitle'])): ?>
+                                                <?= $block->escapeHtml($customLogValue['field_subtitle']) ?>
+                                            <?php endif ?>
+                                            <?php if (isset($customLogValue['old_value'])): ?>
+                                                <span class="history-log-block-item-old">
+                                                    <?= $block->escapeHtml($customLogValue['old_value']) ?>
+                                                </span>
+                                            <?php endif ?>
+                                            <?php if (isset($customLogValue['new_value'])): ?>
+                                                <?= $block->escapeHtml($customLogValue['new_value']) ?>
+                                            <?php endif ?>
+                                        </p>
+                                    <?php endforeach ?>
+                                <?php endif; ?>
+                            </div>
+                        <?php endforeach ?>
+                    <?php endif ?>
+                <?php endif ?>
+            </li>
+        <?php endforeach ?>
+    </ul>
+</div>

@@ -1,0 +1,21 @@
+{
+    "name": "Redington/Otp",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "",
+            "name": ""
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Redington\\Otp\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

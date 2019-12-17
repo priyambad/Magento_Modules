@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">negotiable_quote_grid.negotiable_quote_grid_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>negotiable_quote_columns</spinner>
+        <deps>
+            <dep>negotiable_quote_grid.negotiable_quote_grid_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="negotiable_quote_grid_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Magento_NegotiableQuote::view_quotes</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="negotiable_quote_grid_data_source">
+            <settings>
+                <requestFieldName>quote_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters"/>
+        <massaction name="listing_massaction">
+            <action name="Decline">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="validateUrl" xsi:type="url" path="quotes/quote/massDeclineCheck"/>
+                    </item>
+                </argument>
+                <settings>
+                    <callback>
+                        <target>decline</target>
+                        <provider>negotiable_quote_grid.negotiable_quote_grid.listing_top.action_decline</provider>
+                    </callback>
+                    <url path="quotes/quote/massDecline"/>
+                    <type>decline</type>
+                    <label translate="true">Decline</label>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+        <!--negotiable_quote_grid.negotiable_quote_grid.listing_top.action_decline -->
+        <component name="action_decline" component="Magento_NegotiableQuote/quote/mass-decline"/>
+    </listingToolbar>
+    <columns name="negotiable_quote_columns">
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">negotiable_quote_grid.negotiable_quote_grid.negotiable_quote_columns.actions</item>
+                    <item name="target" xsi:type="string">applyAction</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">view</item>
+                        <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>quotation_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="quotation_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Quotation ID</label>
+				<visible>false</visible>
+            </settings>
+        </column>
+		<column name="entity_id">
+          <argument name="data" xsi:type="array">
+				<item name="config" xsi:type="array">
+					<item name="componentDisabled" xsi:type="boolean">true</item>
+				</item>
+			</argument>
+		</column>
+        <column name="quote_name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Name</label>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created Date</label>
+            </settings>
+        </column>
+        <column name="company_name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Company</label>
+            </settings>
+        </column>
+        <column name="submitted_by">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Submitted By</label>
+            </settings>
+        </column>
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Last Updated</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="sales_rep">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Sales Rep</label>
+            </settings>
+        </column>
+        <column name="grand_total" class="Magento\NegotiableQuote\Ui\Component\Listing\Column\PriceAdmin">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Quote Total (Base)</label>
+            </settings>
+        </column>
+        <column name="negotiated_grand_total" class="Magento\NegotiableQuote\Ui\Component\Listing\Column\PriceAdmin">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Quote Total (Negotiated)</label>
+            </settings>
+        </column>
+        <column name="status" class="Magento\NegotiableQuote\Ui\Component\Listing\Column\Status">
+            <settings>
+                <filter>select</filter>
+                <options class="Magento\NegotiableQuote\Model\Quote\Source\Status"/>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Magento\Sales\Ui\Component\Listing\Column\ViewAction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="viewUrlPath" xsi:type="string">quotes/quote/view</item>
+                    <item name="urlEntityParamName" xsi:type="string">quote_id</item>
+                </item>
+            </argument>
+            <settings>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

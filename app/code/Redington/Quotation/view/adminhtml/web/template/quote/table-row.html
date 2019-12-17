@@ -1,0 +1,91 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<tbody data-role="items-quoted-body" class="product-item" data-product-id="<%- data.item.id %>">
+    <tr data-role="item-quoted">
+        <td class="col-product">
+            <span id="order_item_<%- data.item.id %>_title">
+                <a href="<%- data.item.url %>"><%- data.item.name %></a>
+            </span>
+            <div class="product-sku-block">
+                <span><%- data.translate.sku %>: </span><%- data.item.sku %>
+                <% if (data.item.options.length) { %>
+                <dl class="item-options">
+                    <% _.each(data.item.options, function(options) { %>
+                    <dt><%- options.label %></dt>
+                    <dd><%- options.value %></dd>
+                    <% }); %>
+                </dl>
+                <% } %>
+				<input type="hidden" data-role="oldproposedprice" class="item-product-sku"
+                       name="item[<%- data.item.id %>][oldproposedprice]" value="<%- data.item.oldproposedprice %>">
+					   
+                <input type="hidden" data-role="sku-name" class="item-sku"
+                       name="item[<%- data.item.id %>][sku]" value="<%- data.item.sku %>">
+                <input type="hidden" data-role="product-sku" class="item-product-sku"
+                       name="item[<%- data.item.id %>][productSku]" value="<%- data.item.productSku %>">
+                <input type="hidden" name="item[<%- data.item.id %>][config]"
+                       value="<%- data.item.config %>"
+                       id="product-<%- data.item.id %>"
+                       data-role="config-options"/>
+                <% if (data.item.canConfig) { %>
+                    <div class="sku-configure-button">
+                        <button title="<%- data.translate.configure %>" type="button"
+                                data-role="configure-sku"
+                                class="action-default action-configure <%- data.disabledClass %>"
+                                data-product-id="<%- data.item.productId %>"
+                                data-product-sku="<%- data.item.productSku %>"
+                                data-id="<%- data.item.id %>">
+                            <span><%- data.translate.configure %></span>
+                        </button>
+                    </div>
+                <% } %>
+            </div>
+        </td>
+        <td class="col-stock">
+            <%- data.item.stock %>
+        </td>
+        <td class="col-cost">
+            <span class="price"><%- data.item.cost %></span>
+        </td>
+         
+        <td class="col-proposed-price">
+            <span class="price"><%- data.item.proposedPrice %></span>
+        </td>
+        <td class="col-qty">
+            <input name="item[<%- data.item.id %>][qtyOld]" data-role="qty-amount-old" type="hidden"
+                   value="<%- data.item.qty %>">
+            <input name="item[<%- data.item.id %>][qty]" data-role="qty-amount"
+                   class="input-text item-qty admin__control-text <%- data.disabledClass %>" type="number"
+                   value="<%- data.item.qty %>" maxlength="12" disabled="disabled">
+        </td>
+        <td class="col-row-total">
+            <span class="price"><%- data.item.subtotal %></span>
+        </td>
+        <td class="col-row-tax-amount">
+            <span class="price"><%- data.item.tax %></span>
+        </td>
+        <td class="col-row-subtotal-tax">
+            <span class="price"><%- data.item.subtotalTax %></span>
+        </td>
+        <td class="col-actions last">
+            <div class="actions-toolbar">
+                <button class="action action-delete <%- data.disabledClass %>" data-role="del-button"
+                        title="<%- data.translate.del %>" <%- data.disabled %>>
+                    <span><%- data.translate.del %></span>
+                </button>
+            </div>
+        </td>
+    </tr>
+    <% _.each(data.item.messages, function(message) { %>
+        <tr data-role="error" class="row-messages-error">
+            <td colspan="10">
+                <div class="message message-<%- message.type %>"><%- message.message %></div>
+            </td>
+        </tr>
+    <% }); %>
+</tbody>
+

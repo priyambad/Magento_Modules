@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Redington, Inc. All rights reserved.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	
+	
+	<table name="company" resource="default" engine="innodb" comment="Company Table">
+		<column xsi:type="varchar" name="company_name" nullable="true" length="70" comment="Company Name"/>
+        <column xsi:type="varchar" name="street" nullable="true" length="80" comment="Street"/>
+	</table>
+</schema>

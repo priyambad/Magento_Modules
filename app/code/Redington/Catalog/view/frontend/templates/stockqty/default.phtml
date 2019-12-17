@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var $block \Magento\CatalogInventory\Block\Stockqty\DefaultStockqty
+ */
+?>
+<?php 
+	if ($block->shouldShowThreshold()): 
+			if($block->getStockQtyLeftInPlant()>0):
+		?>
+			<div class="availability only" title="<?= /* @escapeNotVerified */ __('Only %1 left', ($block->getStockQtyLeftInPlant())) ?>">
+					<?= /* @escapeNotVerified */ __('Only %1 left', "<strong>{$block->getStockQtyLeftInPlant()}</strong>") ?>
+			</div>
+		<?php
+		endif;
+	endif;?>

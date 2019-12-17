@@ -1,0 +1,150 @@
+/****Checkout Popup****/
+.margin-btm {
+	margin-bottom:20px;
+}
+.modal-checkout h1.modal-title {
+	font-family: 'montserratbold', 'Helvetica Neue', Arial, sans-serif;
+	color:#000;
+	font-weight: normal;
+	border: 0;
+	padding: 0;
+	min-height: auto;
+	font-size: 20px;
+}
+.modal-checkout .modal-header {
+    padding-bottom: 2rem;
+    padding-top: 1rem;
+}
+.modal-header {
+	border: 0;
+}
+.custom-control-label::before {
+	top: 1px;
+	background-color: #dee2e6;
+	cursor: pointer;
+	border: 0;
+	width: 2rem;
+    height: 2rem;
+	left: -2.5rem;
+}
+.checkout-custom-form .custom-control {
+	border: 0;
+	margin:10px 30px 10px 0;
+	display: inline-block;
+}
+.custom-control-label::after {
+	top: 1px;
+	cursor: pointer;
+	width: 2rem;
+    height: 2rem;
+	left: -2.5rem;
+}
+.custom-control-label {
+	cursor: pointer;
+}
+.checkout-custom-form {
+	margin:15px 0;
+}
+.checkout-custom-form label {
+    font-family: 'montserratsemibold', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px !important;
+	margin-left:10px;
+	line-height: 25px;
+}
+.custom-control-label::before, .custom-file-label, .custom-select {
+    transition: background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.otp-msg {
+	font:14px 'montserratsemibold', 'Helvetica Neue', Arial, sans-serif;
+	line-height:20px;
+}
+.otpmsg-display .otpmsg-txt {
+	margin: 10px 0;
+}
+.otpmsg-email-number {
+	margin: 50px 0;
+}
+.otpmsg-email-number a {
+	color: #0077EE ;
+} 
+.form-group .form-control {
+    margin-bottom: 10px;
+}
+.resend-txt {
+	margin: 52px 0 0 0;
+}
+.resend-txt a, .resend-txt a:focus, .resend-txt a:visited {
+    color: #007bff;
+    font: 14px 'montserratsemibold', 'Helvetica Neue', Arial, sans-serif;
+}
+.otpmsg-txt span {
+	font: 18px "montserratsemibold", "Arial", Helvetica, sans-serif;
+	color: #016938;
+	text-align: left;
+}
+input.input-otpnumber {
+  padding-left: 18px;
+  letter-spacing: 42px;
+  border: 0;
+  background-image: linear-gradient(to left, #9d9d9d 70%, rgba(255, 255, 255, 0) 0%);
+  background-position: bottom;
+  background-size: 50px 1px;
+  background-repeat: repeat-x;
+  background-position-x: 38px;
+  width: 346px;
+  outline:none;
+}
+.divInner{
+  left: 0;
+  position: sticky;
+}
+.divOuter{
+  width:304px; 
+  overflow:hidden;
+  position: relative;
+  padding: 5px;
+}
+.divOuter:focus, .divOuter:hover, .divOuter:visited, .divOuter:active  {
+	color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+.otp-timing {
+	display: block;
+	margin-top: 15px;
+}
+.modal-checkout .btn-green-filled {
+    background: #016938;
+    font-size: 14px;
+    color: #FFF;
+    text-align: center;
+    font-family: 'montserratsemibold', 'Helvetica Neue', Arial, sans-serif;
+    border: 1px solid #016938;
+    padding: 8px 25px 6px 25px;
+    margin: 0;
+    line-height: 20px;
+}
+.modal-checkout .btn-primary:not(:disabled):not(.disabled):active, .modal-checkout .btn-primary:focus {
+	box-shadow: 0 0 0 0.2rem rgba(1, 105, 56, 0.5);
+	color: #fff;
+    background-color: #016938;
+    border-color:#016938;
+}
+.modal-checkout .modal-footer {
+	border: 0;
+	display:none;
+}
+.modal-checkout .modal-content {
+	border-radius: 0;
+}
+.email-txt {
+	color: #006838;
+}
+.otp-error-message {
+	color:#ff0000;
+}
+.otp-success-message {
+	color:#3b9c00;
+}

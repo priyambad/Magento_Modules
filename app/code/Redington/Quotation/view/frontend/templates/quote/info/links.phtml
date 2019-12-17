@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\NegotiableQuote\Block\Quote\Info\Links */
+?>
+<div class="actions quote-view-links">
+    <?php //if($block->isAllowedManage()): ?>
+<!--        <a href="#"
+           data-post='<?= /* @noEscape */ $block->getCloseParams() ?>'
+           title="<?= $block->escapeHtml(__('Close quote')) ?>"
+           class="btn-close action close<?= /* @noEscape */ $block->isCloseAvailable()?'':' _disabled' ?>"
+           data-mobile-label="<?= /* @noEscape */ $block->escapeHtml(__('Close quote')) ?>">
+            <span><?= $block->escapeHtml(__('Close quote')) ?></span>
+        </a>
+        <a class="action delete<?= /* @noEscape */ $block->isDeleteAvailable() ? '' : ' _disabled' ?>" href="#"
+           data-mage-init='{"Magento_NegotiableQuote/js/negotiable-quote": {"deleteLinkSelector": "#deleteLink"}}'
+           role="delete-quote" data-quote="1"
+            <?= /* @noEscape */ $block->isDeleteAvailable() ? '' : 'tabindex="-1"' ?>
+           data-mobile-label="<?= /* @noEscape */ $block->escapeHtml(__('Delete')) ?>">
+            <span><?= $block->escapeHtml(__('Delete')) ?></span>
+        </a>
+        <a href="#" id="deleteLink"
+            <?= /* @noEscape */ $block->isDeleteAvailable() ? '' : 'tabindex="-1"' ?>
+           data-post='<?= /* @noEscape */ $block->getDeleteParams() ?>' ></a>-->
+    <?php //endif; ?>
+    <!--<a class="action print"
+       href="<?= /* @escapeNotVerified */ $block->getPrintUrl() ?>"
+       data-mobile-label="<?= /* @noEscape */ $block->escapeHtml(__('Print')) ?>"
+       target="_blank">
+        <span><?= /* @escapeNotVerified */ __('Print') ?></span>
+    </a>-->
+</div>

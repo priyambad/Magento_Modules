@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Otp
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="redington_otp_general_otp_email_template" label="OTP Email" file="otptemplate.html" type="html" module="Redington_Otp" area="frontend"/>
+</config>

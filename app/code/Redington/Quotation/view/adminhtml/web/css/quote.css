@@ -1,0 +1,3 @@
+.quotes-quote-view tbody._even.product-item .message-error,.quotes-quote-view tbody._odd.product-item .message-error {
+    display: none;
+}

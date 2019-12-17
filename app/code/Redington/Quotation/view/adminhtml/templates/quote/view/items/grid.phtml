@@ -1,0 +1,302 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * @var $block \Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Items\Grid
+ */
+
+$items = $block->getItems();
+$quoteHelper = $this->helper('Magento\NegotiableQuote\Helper\Quote');
+$configHelper = $this->helper('Magento\Catalog\Helper\Product\Configuration');
+$quotationHelper = $this->helper('Redington\Quotation\Helper\Data');
+
+
+?>
+<div class="admin__table-wrapper" id="order-items_grid">
+    <table class="data-table admin__table-primary order-tables" data-role="items-quoted-table">
+        <thead>
+        <tr class="headings">
+            <th class="col-product"><span><?= $block->escapeHtml(__('Name & SKU')) ?></span></th>
+            <th class="col-stock"><span><?= $block->escapeHtml(__('Available Stock in SAP')) ?></span></th>
+            <th class="col-cost"><span><?= $block->escapeHtml(__('Unit Price')) ?></span></th>
+			<th class="col-proposed-price"><span><?= $block->escapeHtml(__('Proposed Price')) ?></span></th>
+			<!--th class="col-proposed-price"><span><?= $block->escapeHtml(__('Admin Approved Price')) ?></span></th-->
+            <th class="col-qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></th>
+            <th class="col-row-total"><span><?= $block->escapeHtml(__('Subtotal')) ?></span></th>
+            <!--<th class="col-row-tax-amount"><span><?= $block->escapeHtml(__('Estimated Tax')) ?></span></th>-->
+            <!-- <th class="col-row-subtotal-tax">
+                <span><?= $block->escapeHtml($block->getSubtotalTaxLabel()) ?></span>
+            </th> -->
+            <th class="col-action"></th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <td colspan="11" class="quote-actions">
+                <button class="action-default update-button recalculate"
+                        type="button"
+                        data-role="update-quote"
+                        disabled
+                        data-update-qty-url="<?= $block->escapeUrl($block->getUrl('*/*/update/')) ?>"
+                        data-update-errors-url="<?= $block->escapeUrl($block->getUrl('*/*/updateErrors')) ?>"
+                        title="<?= $block->escapeHtml(__('Update Prices')) ?>"
+                        data-mage-init='{ "Magento_NegotiableQuote/quote/actions/update-quote": {
+                            "disabled" : "<?= /* @noEscape */ !$block->canEdit() ? "_disabled" : "" ?>"
+                            
+                        } }' style="display:none;">
+                </button>
+                <button class="action-default update-order-prices-button"
+                        type="button"
+                        data-role="price-quote"
+                        <?= /* @noEscape */ !$block->canEdit() ? ' disabled' : '' ?>
+                        data-update-qty-url="<?= $block->escapeUrl($block->getUrl('*/*/update/')) ?>"
+                        data-update-errors-url="<?= $block->escapeUrl($block->getUrl('*/*/updateErrors')) ?>"
+                        title="<?= $block->escapeHtml(__('Update Prices')) ?>">
+                    <span><?= $block->escapeHtml(__('Update Prices')) ?></span>
+                </button>
+            </td>
+        </tr>
+        </tfoot>
+        <?php $i = 0 ?>
+		
+        <?php foreach ($items as $item):$i++ ?>
+		
+		<?php $storeId = $quotationHelper->getCustomerStore($item['quote_id']);
+			  $curencyCode = $quotationHelper->getStoreById($storeId);
+			  $curencyRate = $quotationHelper->getCurrencyRateByCode($curencyCode);
+			  $plantCode = $quotationHelper->getCustomerDetails($item['quote_id']);
+			  $qty = $quotationHelper->getProductQtyInPlant($item->getSku(),$plantCode);
+		?>
+            <tbody data-role="items-quoted-body" class="_<?= /* @noEscape */ ($i % 2) ? 'even' : 'odd' ?> product-item"
+                   data-product-id="<?= $block->escapeHtml($item->getId()) ?>">
+            <tr class="item-quoted-row" data-role="item-quoted" data-mage-init='{ "Magento_NegotiableQuote/quote/actions/delete-item": {} }'>
+                <td class="col-product">
+                        <span id="order_item_<?= $block->escapeHtml($item->getId()) ?>_title">
+                            <a href="<?php /* @noEscape */
+                            echo $block->getProductUrlByItem($item) ?>"><?= $block->escapeHtml(
+                                    $item->getName()
+                                ) ?></a>
+                        </span>
+
+                    <div class="product-sku-block">
+                        <span><?= $block->escapeHtml(__('SKU')) ?>:</span>
+                        <?= $block->escapeHtml($item->getSku()) ?>
+                        <?php $requestItem = $item->getBuyRequest(); ?>
+                        <?php if ($options = $block->getProductOptions($item)):?>
+                            <dl class="item-options">
+                                <?php foreach ($options as $option) : ?>
+                                    <?php $formatedOptionValue = $configHelper->getFormattedOptionValue($option, $block->getParamsForCustomOptions()) ?>
+                                    <dt><?= $block->escapeHtml($option['label']) ?></dt>
+                                    <dd>
+                                        <?php if (isset($formatedOptionValue['full_view'])): ?>
+                                            <?= /* @noEscape */ $formatedOptionValue['full_view'] ?>
+                                        <?php else: ?>
+                                            <?= /* @noEscape */ $formatedOptionValue['value'] ?>
+                                        <?php endif; ?>
+                                    </dd>
+                                <?php endforeach; ?>
+                            </dl>
+                        <?php endif;?>
+                        <input type="hidden" class="item-product-sku" name="item[<?= $block->escapeHtml($item->getId()) ?>][productSku]"
+                               value="<?= $block->escapeHtml($item->getProduct()->getData('sku')) ?>"
+                               data-role="product-sku"/>
+							   
+                        <input type="hidden" class="item-sku" name="item[<?= $block->escapeHtml($item->getId()) ?>][sku]"
+                               value="<?= $block->escapeHtml($item->getSku()) ?>"
+                               data-role="sku-name"/>
+                        <input type="hidden" name="item[<?= $block->escapeHtml($item->getId()) ?>][config]"
+                               id="product-<?= /* @noEscape */ $item->getId() ?>"
+                               value="<?= $block->escapeHtml($quoteHelper->retrieveCustomOptions($item)) ?>"
+                               data-role="config-options"/>
+                        <?php if ($item->getProduct()->canConfigure()) :?>
+                            <div class="sku-configure-button">
+                                <button title="Configure" type="button"
+                                        class="action-default action-configure
+										<?php  /* @noEscape */ echo !$block->canEdit() ? ' _disabled' : '';?>"
+                                        onclick="addBySku.configure(<?php
+                                        /* @noEscape */ echo $item->getProduct()->getId()
+                                        ?>, '<?php
+                                        echo $block->escapeHtml($item->getProduct()->getData('sku'))
+                                        ?>', '<?php
+                                        /* @noEscape */ echo $item->getId()
+                                        ?>')"
+                                        <?= /* @noEscape */ !$block->canEdit() ? '_disabled' : '' ?> >
+                                    <span><?= $block->escapeHtml(__('Configure')) ?></span>
+                                </button>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </td>
+                <td class="col-stock">
+                    <?= /* @noEscape */ number_format($qty) ?>
+                </td>
+                <td class="col-item-cost">
+                    <?php /* @noEscape */  
+					
+					echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currencyByStore($item->getProduct()->getPrice(),$storeId, $format = true, $includeContainer = true);
+					?>
+					
+                </td>
+				<!--td class="col-proposed-price">
+					<span class="ProposedPrice"><?php //echo $item->getProposedPrice();?></span>	
+				</td-->
+                <td class="col-proposed-price">
+                    <span><?=$curencyCode;?></span>
+                    <input name="item[<?= $block->escapeHtml($item->getId()) ?>][oldproposedprice]"
+                           data-role="oldproposedprice" type="hidden" class="input-text admin__control-text old-proposed-price" id="old-proposed-price"
+                           value="<?= $block->escapeHtml(number_format($quotationHelper->getProuductCustomPrice($item->getId()),2)); ?>"/>
+						   
+						   
+			       <input name="item[<?= $block->escapeHtml($item->getId()) ?>][proposedprice]"
+                           class="proposed-price-field input-text admin__control-text <?= /* @noEscape */ !$quoteHelper->isSubmitAvailable() ? '_disabled' : '' ?>"
+                           type="text"
+                           data-role="proposed"
+						   id="proposedPrice"
+                           value="<?= $block->escapeHtml(number_format($quotationHelper->getProuductCustomPrice($item->getId()), 2, '.', '')); ?>"/>
+                    <p class="proposed-price-error" style="color:red"></p>
+                </td>                
+                <td class="col-qty">
+                    <input name="item[<?= $block->escapeHtml($item->getId()) ?>][qtyOld]"
+                           data-role="qty-amount-old" type="hidden"
+                           value="<?= $block->escapeHtml($item->getQty() * 1) ?>">
+                    <input name="item[<?= $block->escapeHtml($item->getId()) ?>][qty]"
+                           class="input-text item-qty admin__control-text"
+                           type="number"
+                           data-role="qty-amount"
+                           value="<?= $block->escapeHtml($item->getQty() * 1) ?>"
+                           data-mage-init='{ "Magento_NegotiableQuote/quote/actions/validate-field" : {} }'
+                           disabled="disabled"
+                           maxlength="12"/>
+                </td>
+                <td class="col-row-total">
+                    <?php /* @noEscape */
+						echo $curencyCode .' ';
+						$rowtotal = $quotationHelper->getProuductCustomPrice($item->getId()) * $item->getQty();
+						echo number_format($rowtotal,2);
+                    ?>
+                </td>
+               <!-- <td class="col-row-tax-amount">
+                   <?php 
+						$rowtotal = $quotationHelper->getProuductCustomPrice($item->getId()) * $item->getQty();	
+						$percent = $item->getTaxPercent();
+						$tax = $curencyCode .' ';
+						$tax = ($rowtotal * $percent)/100 ;
+						echo number_format($tax,2);
+				   ?>
+                </td>-->
+                <!-- <td class="col-row-subtotal-tax">
+                    <?php 	
+						$rowtotal = $quotationHelper->getProuductCustomPrice($item->getId()) * $item->getQty();
+						/*$percent = $item->getTaxPercent();						
+						$taxamount = ($rowtotal * $percent)/100;
+						echo $curencyCode.' ';*/
+						echo number_format($rowtotal,2);
+					
+				    ?>
+                </td> -->
+                <td class="col-actions last">
+                    <div class="actions-toolbar">
+                        <button class="action action-delete<?php /* @noEscape */ echo !$block->canEdit() ? ' _disabled' : '';?>"
+                           data-role="del-button"
+                            <?= /* @noEscape */ !$block->canEdit() ? 'disabled' : ''; ?>
+                            title="<?= $block->escapeHtml(__('Delete Action')) ?>Remove"
+                            >
+                            <span><?= $block->escapeHtml(__('Delete Action')) ?></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+
+            <?php $messageErrorClass = ''; ?>
+            <?php foreach ($item->getMessage(false) as $messageError): ?>
+                <?php if (empty($messageError)) {
+                    $messageErrorClass = ' hidden';
+                }
+                ?>
+            <?php endforeach; ?>
+
+            <tr data-role="error" class="row-messages-error<?= /* @noEscape */ $messageErrorClass ?>">
+                <td colspan="100">
+                    <?php foreach ($item->getMessage(false) as $message):
+                        if (empty($message)) {
+                            continue;
+                        }
+                        ?>
+                        <div class="message <?php
+                        /* @noEscape */ echo $item->getHasError()? 'message-error' : 'message-notice';
+                        ?>">
+                            <?= $block->escapeHtml($message) ?>
+                        </div>
+                    <?php endforeach; ?>
+                </td>
+            </tr>
+            </tbody>
+			<script type="text/javascript">
+			require(['jquery'], function($){
+				$('.update-order-prices-button').on("click", function(){
+					
+					var proposedPrice = $("input[name='item[<?php echo $block->escapeHtml($item->getId()) ?>][proposedprice]']").val();
+					
+					var approvedPrice = $("input[name='item[<?php echo $block->escapeHtml($item->getId()) ?>][oldproposedprice]']").val(proposedPrice);
+					
+				});
+				
+			});
+		</script>
+        <?php endforeach; ?>
+		
+    </table>
+</div>
+<?php if(count($items) < 1 ){ ?> 
+<script type="text/javascript">
+	require(['jquery'], function($){
+		$('document').ready(function(){	
+			$("#quote_send").attr("disabled", "disabled");
+		});
+	});
+</script>		
+<?php } ?>
+
+<style>
+    .col-cost{
+        width: 10% !important;    
+    }
+    .col-row-total{
+        width: 10% !important;    
+    }
+    .proposed-price-field{
+        width: calc(100% - 50px);
+    }
+    
+</style>
+<script type="text/javascript">
+require(['jquery'], function($){
+	$('document').ready(function(){
+		$('.proceed').on("click", function(){
+			console.log('proceed');
+			if($('.proceed').length){
+				$('.update-order-prices-button').prop('disabled', true);
+			}else{
+				$('.update-order-prices-button').prop('disabled', false);
+			}
+		});
+        $('.proposed-price-field').on('change',function(){
+            $('.proposed-price-error').text('');
+            var proposedPrice = parseFloat(this.value);
+            var unitPrice = parseFloat($(this).closest('.item-quoted-row').find('.price').text().split(' ')[1].replace(",", ""));
+            if(proposedPrice > unitPrice){
+                $(this).closest('.item-quoted-row').find('.proposed-price-field').val(unitPrice.toFixed(2));
+                $(this).closest('.item-quoted-row').find('.proposed-price-error').text('Proposed price could not be more than unit price');
+            }
+        });	
+	});
+	
+});
+</script>

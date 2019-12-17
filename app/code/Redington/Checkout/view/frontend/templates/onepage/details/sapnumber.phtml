@@ -1,0 +1,18 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+?>
+<?php /** @var $block \Redington\Checkout\Block\Onepage\Success\Extrainfo */ ?>
+<?php if($block->getSapRefNumber()){ ?>
+<div class="block block-order-details-sapnumber sapnumber-block">
+					 <div class="block-title-custom"><strong>
+					 <?= __('Your order confirmation number') ?></strong>: <span class="sap-order-number">
+   <?= $block->getSapRefNumber() ?></span>
+ </div>
+</div>
+<p class="emailmessage"><strong><?= __('We\'ll email you an order confirmation with details and tracking info.') ?></strong></p>
+<?php } ?>
+

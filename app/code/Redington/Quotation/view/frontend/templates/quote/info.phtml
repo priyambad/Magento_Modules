@@ -1,0 +1,92 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<?php /** @var $block \Magento\NegotiableQuote\Block\Quote\Info */ ?>
+<?php $quote = $block->getQuote() ?>
+<?php $snapshot = $block->getQuote(true) ?>
+<?php $addresses = $block->getAllAddresses() ?>
+<div class="block block-order-details-view quote-shipping-info" style="display: none;">
+    <div class="block-title">
+        <strong><?= $block->escapeHtml(__('Shipping Information')) ?></strong>
+    </div>
+    <div class="block-content">
+        <div class="box box-order-billing-address">
+            <div class="box-content">
+                <div class="box box-shipping-address">
+                    <strong class="box-title">
+                        <span><?= $block->escapeHtml(__('Shipping Address')) ?></span>
+                    </strong>
+                    <div class="box-content" id="quote-address">
+                        <?= /* @noEscape */ $block->getChildHtml('quote.address') ?>
+                    </div>
+                    <div class="box-actions">
+                        <?php if($block->isAllowedManage()): ?>
+                            <?php if(count($addresses)): ?>
+                                <a class="action edit<?= /* @noEscape */ $block->canEdit() ? '' : ' _disabled' ?>" href="#"
+                                    <?= /* @noEscape */ $block->canEdit() ? '' : 'tabindex="-1"' ?>
+                                   data-role="edit-address"
+                                   data-mobile-label="<?= /* @noEscape */ $block->escapeHtml(__('Select Existing Address')) ?>">
+                                    <span><?= $block->escapeHtml(__('Select Existing Address')) ?></span>
+                                </a>
+                            <?php endif; ?>
+                            <!--a class="action edit<?= /* @noEscape */ $block->canEdit() ? '' : ' _disabled' ?>"
+                                <?= /* @noEscape */ $block->canEdit() ? '' : 'tabindex="-1"' ?>
+                                href="<?= $block->escapeHtml($block->getAddShippingAddressUrl()) ?>">
+                                <span><?= $block->escapeHtml(__('Add New Address')) ?></span>
+                            </a-->
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="box box-order-shipping-method">
+                    <strong class="box-title">
+                        <span><?= $block->escapeHtml(__('Shipping Method')) ?></span>
+                    </strong>
+                    <div class="box-content">
+                        <?php if ($snapshot->getShippingAddress()->getShippingDescription()): ?>
+                            <?= $block->escapeHtml($snapshot->getShippingAddress()->getShippingDescription()) ?>
+                        <?php else: ?>
+                            <?= $block->escapeHtml(__('No shipping information available')) ?>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="edit-address-popup" data-mage-init='{
+    "Magento_NegotiableQuote/js/edit-address": {
+            "quoteId": "<?= $block->escapeHtml($quote->getId()) ?>",
+            "updateUrl": "<?= $block->escapeHtml($block->getUpdateShippingAddressUrl()) ?>",
+            "msg": "<?= $block->escapeHtml(__('Select a shipping address from your address book.')) ?>",
+            "addressId": "<?= /* @noEscape */ $block->getQuoteShippingAddressId() ?>"
+        }
+    }' data-role="edit-address-popup" class="modal-container">
+    <div class="wrap-text">
+        <p class="modal-text"></p>
+    </div>
+    <form class="form form-quote-popup" id="change-address-form" method="post"
+          data-mage-init='{"validation": {"errorClass": "mage-error"}}'>
+        <fieldset class="fieldset info">
+            <div class="field address">
+                <div class="control">
+                    <select id="quote_address" name="quote_address">
+                        <?php foreach($addresses as $address): ?>
+                            <option value="<?= $block->escapeHtml($address->getId()) ?>"
+                                <?= /* @noEscape */ $block->isDefaultAddress($address->getId()) ? 'selected' : '' ?>>
+                                <?= /* @noEscape */ $block->getLineAddressHtml($address->getId()) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

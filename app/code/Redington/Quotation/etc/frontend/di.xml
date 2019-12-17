@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd"> 
+    <preference for="Magento\NegotiableQuote\Ui\Component\Listing\Column\Status" type="Redington\Quotation\Ui\Component\Listing\Column\Status"/>
+    <preference for="Magento\NegotiableQuote\Ui\Component\Listing\Column\Actions" type="Redington\Quotation\Ui\Component\Listing\Column\Actions"/>        
+    <preference for="Plumrocket\CartReservation\Cron\QuoteRemoveItem" type="Redington\Quotation\Cron\CartReservation\QuoteRemoveItem"/>        
+    <!--preference for="Magento\NegotiableQuote\Model\NegotiableQuoteManagement" type="Redington\Quotation\Model\NegotiableQuote\NegotiableQuoteManagement"/-->        
+	<preference for="Magento\NegotiableQuote\Block\Quote\Totals" type="Redington\Quotation\Block\Quote\Totals"/>
+    <preference for="Magento\Reward\Observer\EarnForOrder" type="Redington\Quotation\Observer\EarnForOrder"/> 
+	<preference for="Magento\NegotiableQuote\Controller\Quote\ItemUpdate" type="Redington\Quotation\Controller\Quote\ItemUpdate"/>  
+	<preference for="Magento\NegotiableQuote\Block\Quote\Message" type="Redington\Quotation\Block\Message"/>
+
+</config>

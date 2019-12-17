@@ -1,0 +1,55 @@
+<?php
+
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Customer
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var Redington\Customer\Block\Home\Form $block */
+
+?>
+<?php if ($block->customerLoggedIn()) : ?>
+<div>
+	<?php
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('banner-volume-website')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('banner-telco-website')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('banner-main-website')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('banner-volume-website')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('featured_list')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('recommended_cat')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('quick_order')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('interested_cat')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('premium_brands')->toHtml();
+	echo $block->getLayout()->createBlock("Magento\Reports\Block\Product\Widget\Viewed")->setDisplayType("recently.view.products")->setProductsCount("2")->setTemplate("widget/viewed/content/viewed_grid.phtml")->toHtml(); 
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('id-1-block-2')->toHtml(); 
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('id-1-block-2-volume')->toHtml();
+	echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-links-login')->toHtml();
+	
+	?>
+</div>
+<?php else: ?>
+		<?php
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('before -login-banner')->toHtml();
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('redington-promise')->toHtml(); 
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('become-partner')->toHtml();
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('onboarding-process')->toHtml();
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('what-sets-us-apart')->toHtml();
+		//echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('what-they-say-about-us')->toHtml();
+		?>
+		<div id="testimonials">
+			<?php
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('testimonials -banner')->toHtml();
+		?>
+		</div>
+		<?php
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('frequently-asked-questions')->toHtml();
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('brand-catalog')->toHtml();
+		echo $block->getLayout()->createBlock('Redington\Contact\Block\ContactForm')->setTemplate("Redington_Contact::form.phtml")->toHtml(); 
+		echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('footer-links')->toHtml();
+		?>
+<?php endif; ?>
+
+

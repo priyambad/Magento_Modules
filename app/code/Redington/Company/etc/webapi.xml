@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Company
+ */
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route method="POST" url="/V1/redington-company/post">
+        <service class="Redington\Company\Api\CompanyInterface" method="createCompany"/>
+        <resources>
+            <resource ref="Magento_Company::company"/>
+        </resources>
+    </route>
+</routes>

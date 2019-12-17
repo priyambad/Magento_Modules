@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Customer
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <body>
+        <referenceContainer name="sidebar.main" remove="true"/>
+            <referenceBlock name="content">    
+                <block class="Redington\Customer\Block\Navigation" name="navigation_menu" template="Redington_Customer::account/navigationmenu.phtml"/>
+            </referenceBlock>
+    </body>
+</config>    

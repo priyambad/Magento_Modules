@@ -1,0 +1,116 @@
+<nav class="navigation-org">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="nav nav-tabs nav-fill custom-nav-fill" id="nav-tab">
+                        <div class="nav-item nav-link active" id="nav-information-tab" ><span class="tabnumber">1 </span><span class="check-ic" style="display: none;"><i class="fa fa-check"></i></span>  Credit Details</div>
+                        <div class="nav-item nav-link" id="nav-documents-tab" ><span class="tabnumber">2</span> Credit Documents</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-information" role="tabpanel" aria-labelledby="nav-information-tab">
+        <div class="infotab-wrap tabs-grup">
+            <form class="form-address-edit"
+                action="<?= $block->escapeUrl($block->getUrl('customer/credit/save')) ?>"
+                method="post"
+                id="form-validate"
+                enctype="multipart/form-data"
+                data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+                <div class="form-group">
+                    <?= $block->getBlockHtml('formkey') ?>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="custom-form">
+                                <label class="control-label disabled">Available credit</label>
+                                <div class="requestcredit-grp">
+                                    <div class="requestcredit">
+                                        <span class="requestcredit-txt"><?php echo $block->getCreditCurrency() ?></span>
+                                    </div>
+                                    <input type="text" class="form-control" title="Available credit amount" value="<?= $block->getAvailableCredit() ?>" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="custom-form">
+                                <label class="control-label required">Requested Credit</label>
+                                <div class="requestcredit-grp">
+                                    <div class="requestcredit">
+                                        <span class="requestcredit-txt"><?php echo $block->getCreditCurrency() ?></span>
+                                    </div>
+                                    <input type="number" maxlength="7" id="requested_credit" name="requested-credit"class="form-control" title="Requested credit amount" value="" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="custom-form">
+                                <label class="control-label disabled">Redington account number</label>
+                                <input type="text" class="form-control" title="Sap account number" value="<?= $block->getSapAccountNumber() ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="custom-form">
+                                <label class="control-label disabled">Account name</label>
+                                <input type="text" name="account-name"class="form-control" title="Account name" value="<?= $block->getComapanyName();?>" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="margin-btm">
+                                <a class="action back btn btn btn-outline-success btn-outline-green" href="<?= $block->getUrl('customer/credit/index') ?>">
+                                    <span><?= /* @escapeNotVerified */ __('Cancel') ?></span>
+                                </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <a id='next-address' class="btn btn-primary btn-green-filled btn-success">Save &amp; next</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="nav-documents" role="tabpanel" aria-labelledby="nav-documents-tab" style="display: none">
+    <form id="document-form">
+        
+</div>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "body" : {
+            "credit_request" : {
+            }
+        }
+    }
+</script>
+<script>
+    window.setDocUrl = "<?php echo $block->getUrl('customer/credit/setdocdata');?>";
+    window.uploadDocUrl = "<?php echo $block->getUrl('customer/credit/uploaddoc');?>";
+    window.documentFetchApi = "<?php echo $block->getDocumentsApi()?>";
+    window.submitUrl ="<?php echo $block->getUrl('customer/credit/saverequest')?>";
+    window.docConfigurationType = 'CreditLimitDocuments';
+    window.countryId = "<?php echo $block->getCountryId()?>";
+    window.cancelUrl = "<?php echo $block->getUrl('customer/credit/index')?>";
+</script>
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        $(document).ready(function () {
+            $('#requested_credit').keypress(function(evt){
+                if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+                {
+                    evt.preventDefault();
+                }
+            });
+        });
+    });
+</script>

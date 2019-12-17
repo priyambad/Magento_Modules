@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd"> 
+    <preference for="Magento\NegotiableQuote\Model\QuoteUpdatesInfo" type="Redington\Quotation\Model\NegotiableQuote\QuoteUpdatesInfo"/>
+    <preference for="Magento\NegotiableQuote\Model\QuoteItemsUpdater" type="Redington\Quotation\Model\NegotiableQuote\QuoteItemsUpdater"/>
+	<preference for="Magento\NegotiableQuote\Controller\Adminhtml\Quote\Send" type="Redington\Quotation\Controller\Adminhtml\Quote\Send"/>
+	<preference for="Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Totals" type="Redington\Quotation\Block\Adminhtml\Quote\View\Totals"/>
+	<preference for="Magento\NegotiableQuote\Controller\Adminhtml\Quote\View" type="Redington\Quotation\Controller\Adminhtml\Quote\View"/>
+</config>

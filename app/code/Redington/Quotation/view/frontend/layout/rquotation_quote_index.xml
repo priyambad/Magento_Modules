@@ -1,0 +1,33 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <body>
+        
+        <referenceContainer name="content">
+            <!--<block class="Magento\Framework\View\Element\Messages" name="messages" as="messages" template="Magento_Theme::messages.phtml"/>-->
+            <block class="Redington\Quotation\Block\Quote" name="redington_quote" template="Redington_Quotation::quote.phtml" cacheable="false" >
+<!--                <block class="Magento\Checkout\Block\Cart\Totals" name="checkout.cart.totals" template="cart/totals.phtml">
+                    <arguments>
+                        <argument name="jsLayout" xsi:type="array">
+                            <item name="components" xsi:type="array">
+                                <item name="block-totals" xsi:type="array">
+                                    <item name="component" xsi:type="string">Magento_Checkout/js/view/cart/totals</item>
+                                    <item name="displayArea" xsi:type="string">totals</item>
+                                    <item name="config" xsi:type="array">
+                                        <item name="template" xsi:type="string">Magento_Checkout/cart/totals</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </argument>
+                    </arguments>
+                </block>-->
+            </block>					            
+        </referenceContainer>        
+    </body>
+</config>

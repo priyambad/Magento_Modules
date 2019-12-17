@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Redington. All rights reserved.
+ * 
+ */
+ -->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">payment_group_listing.payment_group_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>payment_group_columns</spinner>
+        <deps>
+            <dep>payment_group_listing.payment_group_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="payment_group_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">group_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <dataProvider class="Redington\PaymentGroup\Ui\Component\Group\DataProvider" name="payment_group_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>main_table.group_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+     <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters" />
+        <filterSearch name="partner_id"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="payment_group_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="table_css_class" xsi:type="string">data table</item>
+            </item>
+        </argument>
+        <column name="group_id" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Group Id</label>
+            </settings>
+        </column>
+        <column name="partner_id" class="Redington\PaymentGroup\Ui\Component\Listing\Column\PartnerName">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Partner Name</label>
+            </settings>
+        </column>
+        <column name="sap_ref_code" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Sap Reference Code</label>
+            </settings>
+        </column>
+        <column name="payment_method_group" component="Magento_Ui/js/grid/columns/column">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Available Payment Methods</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

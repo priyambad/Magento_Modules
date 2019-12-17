@@ -1,0 +1,25 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+?>
+<form class="form negotiable-quote request" id="negotiable-quote-form">
+			<button type="button"
+                data-role="create-negotiable-quote"
+                title="<?php $block->escapeHtml(__('Request a Quote')) ?>"
+                class="action<?php if(!$block->isQuoteRequestAllowed()): ?> disabled<?php endif; ?> ">
+				<span>
+					<?php /* @noEscape */  echo __('<a href = "%1" class = "requestquoteurl"> Request for a Quotation </a>', $block->getUrl('rquotation/quote/index')) ?>
+				</span>
+			</button> 
+    <?php if ($block->isQuoteRequestEnabled()): ?>
+           
+        <?php if(!$block->isQuoteRequestAllowed()): ?>
+            <div class="message-info message info">
+                <div><?= $block->escapeHtml($block->getDisallowMessage()) ?></div>
+            </div>
+        <?php endif; ?>
+    <?php endif; ?>
+</form>

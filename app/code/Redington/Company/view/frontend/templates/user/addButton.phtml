@@ -1,0 +1,84 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Company
+ */
+// @codingStandardsIgnoreFile
+/** @var $block Magento\Company\Block\Company\Management\Info */
+$helper = $this->helper('Redington\Company\Helper\Data');
+$totalUsers = $helper->getCompanyUserCount();
+$maxlimit = $helper->getMaxUsers();
+$totalUsers = $totalUsers - 1;
+if ($totalUsers < $maxlimit) {
+    $divShow = '';
+} else {
+    $divShow = 'style="display: none;"';
+}
+?>
+<?php if ($block->hasCustomerCompany() && $block->isUserEditAllowed()): ?>
+    <div class="countmessage">You can add maximum <?php echo $maxlimit; ?> Users.</div>
+    <div class="actions add-new-user" <?= /* @noEscape */ $divShow; ?>>
+        <button type="button"
+                title="<?= $block->escapeHtml(__('Add New User')) ?>"
+                class="action primary btn-outline-green add-user-btn"
+                data-mage-init='{"Magento_Company/js/user-edit":{"gridProvider":"company_users_listing.company_users_listing_data_source"}}'
+                data-mobile-label="<?= /* @noEscape */$block->escapeHtml(__('Add New User')) ?>">
+            <span><?= $block->escapeHtml(__('Add New User')) ?></span>
+        </button>
+    </div>
+<?php else : ?> 
+    <div class="actions add-new-user">
+    </div>
+<?php endif; ?>
+<?php //endif; ?>
+<script>
+    require([
+        'jquery',
+        'mage/mage'
+    ], function ($) {
+        $(".messages").show();
+        /** check user add limit **/
+        $(document).ajaxComplete(function (event, xhr, settings) {
+
+            if (settings.url === "<?= /* @noEscape */ $block->getBaseUrl() ?>company/customer/permanentDelete/" || settings.url === "<?= /* @noEscape */ $block->getBaseUrl() ?>company/customer/manage/") {                
+                /** Ajax call to check max users limit **/
+                var checkMaxUserUrl = '<?= /* @noEscape */ $block->getUrl('redingtoncompany/customer/checkuserlimit') ?>';
+                setTimeout(function () {
+                
+                    $.ajax({
+                        showLoader: true,
+                        url: checkMaxUserUrl,
+                        data: {"ajax": true},
+                        type: "POST"
+                    })
+                    .success(function (result) {
+                        if (result.status == 'ok') {
+                            $(".actions.add-new-user").show();
+                        } else if (result.status == 'notok') {
+                            $(".actions.add-new-user").hide();
+                        }
+                    })
+                    
+                }, 6000);
+                /** end of ajax**/
+            }
+        });
+        /** check user add limit **/
+
+        $(document).ready(function () {
+            $('body').on('click', 'a', function () {
+                $('.modal-inner-wrap').addClass('add-user-popup');
+                $('#additional_fields_edit').appendTo($('.fieldset.info'));
+                $('#additional_fields_create').appendTo($('.fieldset.info'));
+                $('.action.save.primary').addClass('companyuser-save-button');
+            });
+        });
+        $('.add-user-btn').click(function () {
+            $('.modal-inner-wrap').addClass('add-user-popup');
+            $('#additional_fields_edit').appendTo($('.fieldset.info'));
+            $('#additional_fields_create').appendTo($('.fieldset.info'));
+            $('.action.save.primary').addClass('companyuser-save-button');
+        });
+    });
+</script>

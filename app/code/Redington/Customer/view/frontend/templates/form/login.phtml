@@ -1,0 +1,50 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Customer
+ */
+
+/** @var \Magento\Customer\Block\Form\Login $block */
+?>
+<div class="block block-customer-login">
+    <div class="block-title">
+        <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Registered Customers')) ?></strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading">
+	<div class="field note">If you have an account, sign in with your email address.</div>	
+	<div class="actions-toolbar">
+            <div class="primary">
+				<a href="<?= $block->escapeUrl($block->getAdb2cSignInUrl()) ?>" class="action login primary" > 
+					<span><?= $block->escapeHtml(__('Sign in')) ?></span>
+				</a>
+			</div>
+        </div>
+    </div>
+	
+</div>
+<div class="block block-new-customer">
+    <div class="block-title">
+        <strong id="block-new-customer-heading" role="heading" aria-level="2">Partner Registration</strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-new-customer-heading">
+        <p>Creating an account has many benefits: check out faster, keep more than one address, track orders and more.</p>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <a id="changelinkvalue" href="<?= $block->escapeUrl($block->getAdb2cSignUpUrl()) ?>" class="action create primary"><span>Register now</span></a>
+            
+	    </div>
+        </div>
+    </div>
+</div>
+<script>
+//   require([
+//        'jquery',
+//        'domReady!'
+//    ], function ($) {  
+//        setTimeout(function ()
+//            {
+//                $(".messages").html('');
+//            }, 20000);
+//    });
+</script>

@@ -1,0 +1,155 @@
+<?php
+/**
+ * Copyright � Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var \Magento\Customer\Block\Address\Edit $block */
+?>
+<?php $_company = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Company') ?>
+<?php $_telephone = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Telephone') ?>
+<?php $_fax = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Fax') ?>
+<?php $addressData = $block->getAddressData()?>
+    <nav class="navigation-org">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="nav nav-tabs nav-fill custom-nav-fill" id="nav-tab">
+                        <div class="nav-item nav-link" id="nav-information-tab"><span class="tabnumber" style="display: none;">1 </span><span class="check-ic"><i class="fa fa-check"></i></span>  Address Details</div>
+                            <div class="nav-item nav-link" id="nav-documents-tab" ><span class="tabnumber">2</span> Address Documents</div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        </div>
+    </nav>    
+        <div class="tab-pane fade show active" id="nav-documents" role="tabpanel" aria-labelledby="nav-documents-tab">
+        <form id="document-form">
+            <?php $documents = $block->getDocuments();?>
+            <?php if($documents) { ?>
+            <?php foreach($documents as $keyId => $document ):
+
+                    $documentName = $document['documentName'];
+                    $uploadedfileName = $document['fileName'];
+                    if(strlen($uploadedfileName) > 20){
+                        $uploadedfileName = substr($uploadedfileName,0,16).'....';
+                    }
+                    $documentCaption = $document['documentCaption'];
+                    $documentNumber = $document['documentNumber'];
+                    $docUrl = $document['docUrl'];
+                    $docRequiredClass = $document['isDocumentRequired'] == "true" ? 'required' : '';
+                    $dateRequiredClass = $document['isDateRequired'] == "true" ? 'required' : '';
+                    $issueDate = $document['documentIssue'];
+                    $expiryDate = $document['documentExpiry'];
+                    try{
+                        $docAttribute = $document['docAttribute'];
+                    }catch(\Exception $e){
+                        $docAttribute = 'Document Number';
+                    }
+                    $docAttrClass = $docAttribute == "Trade license number" ? 'required' : '' ;
+                    $docCode = $block->getCodeFromDocumentName($documentName);
+                    $formId = $keyId;?>
+                    
+                    <div class="form-group" id=<?php echo $formId ?> >
+                        <input type="hidden" name="documentCode" value="<?php echo $formId ?>">
+                        <input type="hidden" name="documentName" value="<?php echo $documentName ?>">
+                        <input type="hidden" name="isDocumentRequired" value="<?php echo $document['isDocumentRequired'] ?>"  >
+                        <input type="hidden" name="isDateRequired" value= "<?php echo $document['isDateRequired'] ?>" >
+                        <input type="hidden" name="addressId" value="<?php echo $block->getAddress()->getId() ?>">
+                        <input type="hidden" name="fileName" class="fileName" value="<?php echo $uploadedfileName ?>">
+                        <input type="hidden" name="is_forwarder" value="false">
+                        <input type="hidden" name="docAttribute" value="<?= $docAttribute ?>">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="docUpload-wrapper active">
+                                    <div class= "tabs-title <?php echo $docRequiredClass ?>">
+                                        <span class="tabnumber" style="display: none;">1 </span> <span class="check-ic"><i class="fa fa-check"></i> <?php echo $documentName ?> </span>
+                                    <div class="cs-uploadContainer"></div>
+                                    </div>
+                                    <div class="document-form-content">
+                                        <div class="fileupload fileupload-new" data-provides="fileupload">
+                                            <div class="upload-txt">Upload document</div>
+                                              <span class="btn btn-primary btn-file">
+                                              <img src="img/upload-pin-icon.png" alt="" width="20" height="20"> <span class="fileupload-new">Choose document</span>
+                                              <span class="fileupload-exists">Upload document</span>         
+                                              <input id= <?php echo $formId ?> class="document-file" name="documentFile"type="file" >
+                                              <input type="hidden" name="docUrl" id="doc-url-input" value="<?php echo $docUrl ?>" <?php echo $docRequiredClass ?>>
+                                            </span>
+                                            <a class="fileupload-preview" target="blank" href="<?php echo $docUrl ?>"><?php echo $uploadedfileName ?></a>
+                                            <a href="#" class="clear-doc-data">X</a>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="custom-form">
+                                                    <label class="control-label">Document caption</label>
+                                                    <input name="documentCaption" type="text" class="form-control documentName" title="" placeholder="" <?php echo $docRequiredClass ?> value="<?php echo $documentName ?>" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="custom-form">
+                                                    <label class="control-label <?= $docAttrClass ?>"><?= $docAttribute ?></label>
+                                                    <input name="documentNumber" <?= $docAttrClass ?> maxlength="15" type="name" class="form-control documentNumber" title="" placeholder="" value="<?php echo $documentNumber ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="custom-form">
+                                                    <label class="control-label <?php echo $dateRequiredClass ?>">Issue date</label>
+                                                    <input name="documentIssue" <?php echo $dateRequiredClass ?> type="name" class="form-control documentIssue" title="" placeholder="mm/dd/yyyy" value="<?php echo $issueDate ?>">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="custom-form">
+                                                    <label class="control-label <?php echo $dateRequiredClass ?>">Expiry date</label>
+                                                    <input name="documentExpiry" <?php echo $dateRequiredClass ?> type="name" class="form-control documentExpiry" title="" placeholder="mm/dd/yyyy"  value="<?php echo $expiryDate ?>">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="pull-right">
+                                                    <button class="next-document btn btn btn-outline-success btn-outline-green" type="button"> Upload </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+            <?php  
+            endforeach; } ?>
+        </form>
+    </div>
+    </div>
+
+<script type="text/x-magento-init">
+    {
+        "body" : {
+            "addressupdate" : {
+                "saveController" : "<?php echo $block->getSaveUrl()?>"
+            }
+        }
+    }
+</script>
+<script>
+    window.setDocUrl = "<?php echo $block->getUrl('customer/address/setdocdata');?>";
+    window.uploadDocUrl = "<?php echo $block->getUrl('customer/address/uploaddoc');?>";
+    window.documentFetchApi = "<?php echo $block->getDocumentsApi()?>";
+    window.getCountryCodeUrl ="<?php echo $block->getUrl('customer/country/code')?>";
+    window.regionDataUrl ="<?php echo $block->getUrl('customer/country/region')?>";
+    window.regionId = "<?php echo $block->getAddress()->getRegionId()?>";
+    window.countryId = "<?php echo $block->getAddress()->getCountryId()?>";
+    window.compnayName = "<?php echo $block->getAddress()->getCompany()?>";
+    window.docConfigurationType = 'ShipToAddressDocuments';
+    window.phonePattern = "<?php echo $block->getTelephonePattern()?>";
+    window.postalPattern = "<?php echo $block->getPostalPattern()?>";
+    window.imageUrl = "<?= $block->getViewFileUrl('images/'); ?>"
+    window.submitUrl ="<?php echo $block->getUrl('customer/address/saverequest')?>";
+    window.bookUrl = "<?php echo $block->getUrl('customer/address/index')?>";
+</script>
+
+

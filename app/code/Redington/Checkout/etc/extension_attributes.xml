@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Sales\Api\Data\OrderInterface">
+        <attribute code="forwarder_address_id" type="string" />
+		<attribute code="lpo_reference_document" type="string" />
+		<attribute code="lpo_reference_no" type="string" />
+        <attribute code="cdc_document" type="string" />
+        <attribute code="pdc_document" type="string" />
+        <attribute code="cdc_ref_no" type="string" />
+        <attribute code="pdc_ref_no" type="string" />
+        <attribute code="cash_document" type="string" />
+        <attribute code="cash_ref_no" type="string" />
+    </extension_attributes>
+</config>

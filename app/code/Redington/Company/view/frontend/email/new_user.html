@@ -1,0 +1,44 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject Redington Armstrong: Sign-in details @-->
+
+{{template config_path="design/email/header_template"}}
+<table style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+	<tr>
+        <td style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">
+		<p class="greeting company-greeting" style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px;">{{trans "Dear"}} <strong>{{trans "%name" name=$customerName}}</strong>,</p>
+<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:20px;">{{trans
+        "Welcome to Redington Armstrong Marketplace Portal."}}</p>
+<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:20px;">{{trans
+    "You've been added to the"}} <strong>{{trans "%company_name" company_name=$companyName}}</strong> {{trans "as the company member.
+    Once you login,
+    the company's shared resources will be available to you."}}</p>
+    <p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">{{trans
+            "Please use below credentials to login"}}</p>
+    <ul style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+            <li style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+                <strong>{{trans "Url : " }}</strong><a href={{var accountUrl}}>{{var accountUrl}}</a>
+            </li>
+            <li style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+                <strong>{{trans "User Name : " }}</strong>{{var userName}}
+            </li>
+            <li style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px;">
+                <strong>{{trans "Temperory Password : " }}</strong>{{var password}}
+            </li>
+    </ul>
+</td>
+	</tr>
+	<tr>
+		<td style="font-family:Arial, Open Sans, Helvetica, sans-serif; vertical-align:top; padding:0; font-size:12px;">
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:10px; margin-top:20px;">Thank You</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-bottom:0;">Regards,</p>
+			<p style="font-family:Arial, Open Sans, Helvetica, sans-serif; font-size:12px; margin-top:0; margin-bottom:20px;">Redington Team</p>
+		</td>
+	</tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

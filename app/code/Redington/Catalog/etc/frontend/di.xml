@@ -1,0 +1,10 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">  
+    
+    <preference for="Magento\Catalog\Model\Layer" type="Redington\Catalog\Model\Layer"/>
+    <!--<type name="Magento\CatalogInventory\Block\Stockqty\DefaultStockqty">
+        <plugin name="interceptThresholdQty" type="Redington\Catalog\Plugin\DefaultStockqty"/>
+    </type> -->
+    <preference for="Magento\CatalogInventory\Block\Stockqty\DefaultStockqty" type="Redington\Catalog\Block\Stockqty\DefaultStockqty"/>
+
+    <preference for="Magento\ProductAlert\Controller\Add\Stock" type="Redington\Catalog\Controller\Add\Stock"/>
+</config>

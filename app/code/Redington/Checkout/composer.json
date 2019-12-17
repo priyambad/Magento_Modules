@@ -1,0 +1,21 @@
+{
+    "name": "Redington/Checkout",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "",
+            "name": ""
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Redington\\Checkout\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

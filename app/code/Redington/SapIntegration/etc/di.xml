@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<config>
+    <type name="Magento\Sales\Api\OrderManagementInterface">
+        <plugin name="RedingtonOrderPlaceAfterPlugin" type="Redington\SapIntegration\Plugin\Order\PlaceAfterPlugin" sortOrder="99" />
+    </type>
+	<preference for="Magento\Checkout\Controller\Cart\Index" type="Redington\SapIntegration\Controller\Cart\Index" />
+</config>

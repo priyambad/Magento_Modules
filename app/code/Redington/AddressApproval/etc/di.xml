@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_AddressApproval
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Customer\Controller\Address\FormPost" type="Redington\AddressApproval\Controller\Address\FormPost"/>
+    <preference for="Magento\Customer\Block\Address\Book" type="Redington\AddressApproval\Block\Customer\Address\Book" />
+    <preference for="\Magento\Customer\Block\Address\Edit" type="Redington\AddressApproval\Block\Customer\Address\Edit" />
+    <preference for="\Magento\Customer\Controller\Address\Index" type="Redington\AddressApproval\Controller\Address\Index" />
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="address_approval_listing_data_source" xsi:type="string">Redington\AddressApproval\Model\ResourceModel\Grid\AddressApproval\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Redington\AddressApproval\Model\ResourceModel\Grid\AddressApproval\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">redington_address_approval</argument>
+            <argument name="resourceModel" xsi:type="string">Redington\AddressApproval\Model\ResourceModel\AddressApproval</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="forwarder_approval_listing_data_source" xsi:type="string">Redington\AddressApproval\Model\ResourceModel\Grid\ForwarderApproval\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Redington\AddressApproval\Model\ResourceModel\Grid\ForwarderApproval\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">redington_forwarder_approval</argument>
+            <argument name="resourceModel" xsi:type="string">Redington\AddressApproval\Model\ResourceModel\ForwarderApproval</argument>
+        </arguments>
+    </virtualType>
+</config>

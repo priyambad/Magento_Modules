@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="redington_customer_tradelicense_expired" label="Trade license expired template" file="tradelicenseexpired.html" type="html" module="Redington_Customer" area="frontend"/>
+    <template id="redington_customer_tradelicense_to_expire" label="Trade license to expire template" file="tradelicensetoexpire.html" type="html" module="Redington_Customer" area="frontend"/>
+    <template id="redington_customer_tradelicense_to_expire_tomorrow" label="Trade license to expire tomorrow template" file="tradelicenseexpirestomorrow.html" type="html" module="Redington_Customer" area="frontend"/>
+</config>

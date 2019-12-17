@@ -1,0 +1,21 @@
+{
+    "name": "Redington/Catalog",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "",
+            "name": ""
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Redington\\Catalog\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

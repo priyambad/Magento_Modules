@@ -1,0 +1,235 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Checkout\Block\Cart\Item\Renderer */
+
+$item = $block->getItem();
+$product = $item->getProduct();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper('Magento\Msrp\Helper\Data');
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+/** @var \Magento\NegotiableQuote\Helper\Quote $quoteHelper */
+$quoteHelper = $this->helper('Magento\NegotiableQuote\Helper\Quote');
+$baseCurrency = $item->getQuote()->getCurrency()->getBaseCurrencyCode();
+$quoteCurrency = $item->getQuote()->getCurrency()->getQuoteCurrencyCode();
+$productUrl = $block->hasProductUrl() ? $block->getProductUrl() : '';
+$dataHelper = $this->helper('Redington\Quotation\Helper\Data');
+$quoteId = $item->getQuote()->getId();
+$status = $dataHelper->getStatus($quoteId);
+?>
+<tbody class="cart item">
+    <tr class="item-info">
+        <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
+            <?php if ($block->hasProductUrl()):?>
+                <a href="<?= $block->escapeHtml($productUrl) ?>"
+                   title="<?= $block->escapeHtml($block->getProductName()) ?>"
+                   tabindex="-1"
+                   class="product-item-photo">
+            <?php else:?>
+                <span class="product-item-photo">
+            <?php endif;?>
+            <?php if ($block->hasProductUrl()):?>
+                </a>
+            <?php else: ?>
+                </span>
+            <?php endif; ?>
+            <div class="product-item-details">
+                <strong class="product-item-name">
+                    <?php if ($block->hasProductUrl()):?>
+                        <a href="<?= $block->escapeHtml($productUrl) ?>">
+                            <?= $block->escapeHtml($block->getProductName()) ?>
+                        </a>
+                    <?php else: ?>
+                        <?= $block->escapeHtml($block->getProductName()) ?>
+                    <?php endif; ?>
+                </strong>
+                <?php if ($options = $block->getOptionList()):?>
+                    <dl class="item-options">
+                        <?php foreach ($options as $option) : ?>
+                            <?php $formatedOptionValue = $block->getFormatedOptionValue($option) ?>
+                            <dt><?= $block->escapeHtml($option['label']) ?></dt>
+                            <dd>
+                                <?php if (isset($formatedOptionValue['full_view'])): ?>
+                                    <?= /* @noEscape */ $formatedOptionValue['full_view'] ?>
+                                <?php else: ?>
+                                    <?= /* @noEscape */ $formatedOptionValue['value'] ?>
+                                <?php endif; ?>
+                            </dd>
+                        <?php endforeach; ?>
+                    </dl>
+                <?php endif;?>
+                <?php if ($messages = $block->getMessages()): ?>
+                    <?php foreach ($messages as $message): ?>
+                        <div class="cart item message <?= $block->escapeHtml($message['type']) ?>">
+                            <div><?= $block->escapeHtml($message['text']) ?></div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+                <?php if ($addInfoBlock): ?>
+                    <?= /* @noEscape */ $addInfoBlock->setItem($item)->toHtml() ?>
+                <?php endif;?>
+            </div>
+        </td>
+		<td class="col price" data-th="<?= $block->escapeHtml(__('Unit Price')) ?>">
+            <?= /* @noEscape */ $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($product->getPrice(),true,false); ?>
+            
+        </td>
+
+        <td class="col price" data-th="<?= $block->escapeHtml(__('Proposed Price')) ?>">
+            <div class="control">  
+            <span class="item-unitprice" style="display:none"><?= /* @noEscape */ $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($product->getPrice(),true,false); ?></span> 
+                <span class = 'quotecurrency'><?php echo $quoteCurrency;?></span>                                   
+                    <input type="text" name="cart[<?= $block->escapeHtml($item->getId()) ?>][custom_price]" id="custom_price-<?= $item->getId(); ?>" 
+                           value="<?= number_format($item->getCustomPrice(),2,'.', '');?>" 
+						   class="input-text custom_price <?= /* @noEscape */ !$quoteHelper->isSubmitAvailable() ? '_disabled' : '' ?>"
+						   <?= /* @noEscape */ !$quoteHelper->isSubmitAvailable() ? 'disabled' : '' ?>
+						   <?php if($status=='created'){echo 'disabled';}?>
+                           data-validate="{required:true}"/>
+                </div>
+           
+        </td>
+
+
+    <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+            <div class="field qty">
+                <label class="label" for="cart-<?= $block->escapeHtml($item->getId()) ?>-qty">
+                    <span><?= $block->escapeHtml(__('Qty')) ?></span>
+                </label>
+                <div class="control qty">
+                    <input id="cart-<?= $block->escapeHtml($item->getId()) ?>-qty"
+                           name="cart[<?= $block->escapeHtml($item->getId()) ?>][qty]"
+                           data-cart-item-id="<?= $block->escapeHtml($item->getSku()) ?>"
+                           value="<?= $block->escapeHtml($block->getQty()) ?>"
+                           type="number"
+                           size="4"
+                           title="<?= $block->escapeHtml(__('Ordered')) ?>"
+                           class="input-text qty"
+						   oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+						   maxlength = "5"
+                           data-validate='{
+                                    "validate-number": true,
+                                    "validate-greater-than-zero": true,
+                                    "required": true,
+                                    "integer": true
+                                    }'
+                           <?= /* @noEscape */ !$quoteHelper->isSubmitAvailable() ? 'disabled' : '' ?>
+						   <?php if($status=='created'){echo 'disabled';}?>
+                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                            <?php if (!$quoteHelper->isAllowedManage()): ?>
+                                disabled="disabled"
+                            <?php endif; ?>
+                           data-role="cart-item-qty"/>
+                </div>
+            </div>
+        </td>
+
+        <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+            <?php if ($canApplyMsrp): ?>
+                <span class="cart msrp subtotal">--</span>
+            <?php else: ?>
+                <span class = "store currency"><?php echo $quoteCurrency;?></span>
+                <span class = "subtotal proposedprice"><?= number_format($item->getCustomPrice() * $block->getQty(),2); ?></span>
+            <?php endif; ?>
+        </td>
+<!--        <td class="col delete">
+            <div class="actions-toolbar<?= /* @noEscape */ $quoteHelper->isSubmitAvailable()?'':' _disabled' ?>">
+                <?php /* @noEscape */ //$block->getActions($item) ?>
+            </div>
+        </td>-->
+    </tr>
+</tbody>
+<script>
+      require([
+        "jquery", 
+        "mage/mage",
+        "Magento_Catalog/js/price-utils",
+    ], function ($, _, priceUtils) {
+        var priceFormat = <?= /* @escapeNotVerified */ $this->helper('Magento\Tax\Helper\Data')->getPriceFormat($block->getStore()) ?>;
+
+         $(".custom_price").keypress(function(e){
+            customPriceValue = $('.custom_price').val();
+             if ((e.which != 46 ) && (e.which < 48 || e.which > 57)) {
+                    e.preventDefault();
+                  }
+            });
+		 $(".qty").keypress(function(e){
+            customPriceValue = $('.qty').val();
+             if ((e.which != 46 ) && (e.which < 48 || e.which > 57)) {
+                    e.preventDefault();
+                  }
+            });
+        $('.custom_price').keyup(function(e){
+          var valueData = this.value.split('.');
+          var decimalData,intData;
+          intData = valueData[0];
+          if(intData.length > 9){
+            intData = intData.slice(0, -1);
+          }
+          if(valueData.length >1){
+            decimalData = valueData[1];
+            if(decimalData.length > 2 ){
+              decimalData = decimalData.slice(0, -1);
+            }
+          }
+          var finalValue = decimalData != undefined ? intData+'.'+decimalData : intData;
+          $(this).val(finalValue);
+          e.preventDefault();
+        });
+      
+         $(".qty").keypress(function(e){
+            if ((e.which < 48 || e.which > 57)) {
+                e.preventDefault();
+              }
+        });
+         $('.custom_price').on('change', function () {
+            var proposedPrice = this.value;
+            var unitPrice =  $(this).closest('.item-info').find('.item-unitprice').text();  
+            unitPrice = unitPrice.split(' ');
+            unitPrice = unitPrice[unitPrice.length-1];
+            unitPrice = unitPrice.split(',').join('');
+           
+             if(proposedPrice < 1 || proposedPrice > parseFloat(unitPrice)) {
+                    proposedPrice = unitPrice;
+                    $(this).closest('.item-info').find('.custom_price').val(proposedPrice);
+                } 
+           
+            var qty = $(this).closest('.item-info').find('.input-text.qty').val();
+            var subtotal = proposedPrice * qty;
+            var calculatedsubTotal = priceUtils.formatPrice(subtotal, priceFormat, false); 
+            
+            $(this).closest('.item-info').find(".store.currency").hide();
+            $(this).closest('.item-info').find('.subtotal.proposedprice').text(calculatedsubTotal);
+           
+         });
+         $(".qty").on('change', function () {
+
+            var proposedPrice = $(this).closest('.item-info').find('.input-text.custom_price').val();
+           
+            var unitPrice =  $(this).closest('.item-info').find('.item-unitprice').text();  
+           
+            unitPrice = unitPrice.split(' ');
+            unitPrice = unitPrice[unitPrice.length-1];
+            unitPrice = unitPrice.split(',').join('');
+
+             if(proposedPrice < 1 || proposedPrice > parseFloat(unitPrice)) {
+                    proposedPrice = unitPrice;
+                    $(this).closest('.item-info').find('.custom_price').val(proposedPrice);
+                } 
+            var qty = $(this).closest('.item-info').find('.input-text.qty').val();
+            var subtotal = proposedPrice * qty;
+            var calculatedsubTotal = priceUtils.formatPrice(subtotal, priceFormat, false); 
+            
+            $(this).closest('.item-info').find(".store.currency").hide();
+            $(this).closest('.item-info').find('.subtotal.proposedprice').text(calculatedsubTotal);
+         });
+          
+    });
+</script>
+

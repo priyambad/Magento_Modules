@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * Copyright © Redington. All rights reserved.
+ * 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add action="redingtoncompany/role/index" id="Redington_Company::company_role" sortOrder="100" module="Redington_Company" parent="Redington::menu" resource="Redington_Company::role_index" title="Roles and Permissions"/>
+	</menu>
+</config>

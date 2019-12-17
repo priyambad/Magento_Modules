@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Redington. All rights reserved.
+ *
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Roles & Permissions -->
+        <referenceBlock name="customer-account-navigation-company-roles-link" remove="true"/>
+        <!-- Company Structure -->
+        <referenceBlock name="customer-account-navigation-company-link" remove="true"/>
+        <!-- Downloadable product link -->
+        <referenceBlock name="customer-account-navigation-downloadable-products-link" remove="true"/>
+        <!-- Customer Store Credit -->
+        <referenceBlock name="customer-account-navigation-customer-balance-link" remove="true"/>
+        <!-- Customer Stored Payment Methods -->
+        <referenceBlock name="customer-account-navigation-my-credit-cards-link" remove="true"/>
+        <!-- Customer Gift Registry -->
+        <referenceBlock name="customer-account-navigation-giftregistry-link" remove="true"/>
+        <!-- Customer Gift Card -->
+        <referenceBlock name="customer-account-navigation-giftregistry-link" remove="true"/>
+        <!-- Customer Gift Card -->
+        <referenceBlock name="customer-account-navigation-gift-card-link" remove="true"/>
+        <!-- My Invitations -->
+        <referenceBlock name="customer-account-navigation-magento-invitation-link" remove="true"/>
+    </body>
+</page>

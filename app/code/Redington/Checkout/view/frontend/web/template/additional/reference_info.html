@@ -1,0 +1,23 @@
+<div class="field am-checkout-pdocument">
+	<form name="checkout_document_upload" class="checkout_document_upload" id="checkout_document_upload" method="post" enctype="multipart/form-data">
+		<div class= "lpo-no-container">
+			<label class="label"><span data-bind="i18n: 'LPO Reference Number:'"></span></label>
+			<input type="text" name="lpo_reference_no" id="lpo_reference_no" onpaste="return isNumber(event);" maxlength="25" value="">
+		</div>
+			<div id="reference_number_message_section" class="reference_number_message_section"></div>
+		<div class="fileupload fileupload-new" data-provides="fileupload">
+			<div class="upload-txt">LPO Reference Document</div>
+			<span class="btn btn-primary btn-file">
+				<span class="fileupload-new">Upload document</span>
+				<span class="fileupload-exists">Upload document</span>         
+				<input id="reference_document" class="document-file" name="reference_document" type="file" data-bind="event: { change: function() { uploadImage($element.files[0],'reference_document') } }"/>
+				<input type="hidden" name="reference_document_blob_url" id="reference_document_blob_url" value="">
+			</span>
+			<div id="reference_document_preview" class="doc-name-txt" style="display: none">
+				<span class="fileupload-preview" id="reference_document_docname"></span>
+				<a href="#" class="clear-doc-data" id="reference_document_remove" data-bind = "click: deleteUploadedRefdoc">X</a>
+			</div>
+			<div id="reference_document_message_section" class="checkout-document-message-section"></div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_PaymentGroup
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+    <!--type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="payment_group_listing_data_source" xsi:type="string">Redington\PaymentGroup\Model\ResourceModel\Group\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Redington\PaymentGroup\Model\ResourceModel\Group\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">payment_terms</argument>
+            <argument name="resourceModel" xsi:type="string">Redington\PaymentGroup\Model\ResourceModel\Group</argument>
+        </arguments>
+    </virtualType-->
+</config>

@@ -1,0 +1,55 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php /** @var $block \Magento\NegotiableQuote\Block\Quote\Info */ ?>
+<?php $quote = $block->getQuote(true) ?>
+
+<section id="shipping-information" class="admin__page-section quote-view-shipping">
+    <div class="admin__page-section-title">
+        <span class="title"><?= $block->escapeHtml(__('Shipping Information')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <?php /* Shipping Method */ ?>
+        <div class="admin__page-section-item quote-shipping-method">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= $block->escapeHtml(__('Shipping Methods & Price')) ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <?php if ($block->getAddressHtml()
+                    && !$block->getQuote()->getIsVirtual()
+                    && !$block->hideShippingMethod()): ?>
+                    <?= $block->getChildHtml('negotiable.quote.shipping.form') ?>
+                <?php else: ?>
+                    <?= $block->escapeHtml(__('Sorry, rates are not available for this quote.')) ?>
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php /* Shipping Address */ ?>
+        <?php if ($block->getAddressHtml()): ?>
+            <div class="admin__page-section-item quote-shipping-address">
+                <?php /* Shipping Address */ ?>
+                <div class="admin__page-section-item-title">
+                    <span class="title"><?= $block->escapeHtml(__('Shipping Address')) ?></span>
+                </div>
+                <address id="shipping-address" class="admin__page-section-item-content"
+                         data-role="shipping-address"><?php /* @noEscape */
+                    echo $block->getAddressHtml(); ?></address>
+            </div>
+        <?php else: ?>
+            <div class="admin__page-section-item quote-shipping-address">
+                <div class="admin__page-section-item-title">
+                    <span class="title"><?= $block->escapeHtml(__('Shipping Address')) ?></span>
+                </div>
+                <div class="admin__page-section-item-content">
+                    <p><?= $block->escapeHtml(__('You have no shipping address for this quote.')) ?></p>
+                </div>
+            </div>
+        <?php endif; ?>
+    </div>
+</section>

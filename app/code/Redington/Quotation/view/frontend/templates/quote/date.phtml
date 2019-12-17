@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/** @var \Magento\NegotiableQuote\Block\Quote\Info $block */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="order-header-wrapper">
+
+	<div class="row">
+	<div class="col-md-12">
+		<div class="page-titletxt orderdetails-title">
+			<h4>Order details</h4>
+			<div class="order-detail-info">
+			<table>
+				<tbody><tr>
+					<th>
+					
+						<div class="orderdetails-refno order-width">
+							<h4><?= $block->escapeHtml(__('Ref. Quote No.')) ?> </h4>
+						</div>
+					
+					</th>
+					<th>
+						<div class="orderdetails-lponumber order-width">
+							<h4><?= $block->escapeHtml(__('Status')) ?></h4>
+						</div>
+					</th>
+					<th>
+						<div class="orderdetails-name order-width">
+							<h4><?= $block->escapeHtml(__('Created By')) ?></h4>
+						</div>
+						 
+					</th>
+					<th>
+						<div class="orderdetails-date order-width">
+							<h4>Order Date</h4>
+						</div>
+					</th>
+				</tr>
+				<tr>
+					<td>
+						<div class="orderdetails-refno order-width"><?= /* @noEscape */ $block->getQuote()->getQuotationId();?></div>
+					</td>
+					<td>
+						<div id="quote-status-field" class="quote-status order-width-status order-status-<?= $block->escapeHtml($block->getQuoteStatusLabel()) ?>"><?= $block->escapeHtml($block->getQuoteStatusLabel()) ?></div>
+					</td>
+					<td>
+						 
+						<div class="orderdetails-name order-width"> <?= $block->escapeHtml($block->getQuoteOwnerFullName()) ?></div>
+						 
+					</td>
+					<td>
+						<div class="orderdetails-date order-width">
+						<?= /* @noEscape */ $block->formatDate($block->getQuote()->getCreatedAt(), \IntlDateFormatter::LONG) ?>
+						</div>
+					</td>
+				</tr>
+			</tbody></table>		
+			</div>
+		</div>
+	</div>
+</div>

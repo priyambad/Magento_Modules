@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+	<group id="sap_integration">
+		<job instance="Redington\SapIntegration\Cron\OrderStatus" method="updateOrderStatus" name="redington_order_status">
+			<schedule>0 * * * *</schedule>
+		</job>
+		<job instance="Redington\SapIntegration\Cron\WarehouseStock" method="updateStock" name="redington_stock_update">
+			<schedule>30 * * * *</schedule>
+		</job>
+		<job instance="Redington\SapIntegration\Cron\Overdue" method="updateOverdueDetails" name="redington_overdue_update">
+			<schedule>*/1 * * * *</schedule>
+		</job>
+	</group>
+</config>

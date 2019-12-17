@@ -1,0 +1,26 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+?>
+<?php /** @var $block \Redington\Checkout\Block\Onepage\Success\Extrainfo */ ?>
+
+<?php if($block->getOrderStatus()){ ?>
+<span class="status-txt-<?php echo $block->getOrderStatus();?>"><strong>
+
+<?php
+		if($block->getOrderStatus()=='failed'){
+			echo 'Failed';
+		}
+		if($block->getOrderStatus()=='pending'){
+			echo 'Placed';
+		}
+		if($block->getOrderStatus()=='processing'){
+			echo 'Placed';
+		}
+			
+ } ?>
+ </strong></span>
+

@@ -1,0 +1,189 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<!-- Dashboard Top Info Tiles -->
+
+<?php
+$orderCount = $block->getOrderCount();
+?>
+<div class="dashboard-wrapper">
+    <div class="row">
+        <div class="col-md-4">
+			<a href="<?php echo $block->getUrl().'/sales/order/history/';?>">
+				<div class="item-dashboard">
+					<div class="icon-bg green-bgdash">
+						<img src="<?= $block->getViewFileUrl('images/dashbaord-orders-ic.png'); ?>" width="32" height="32" alt="dashbaord-orders-ic.png"> 
+					</div>
+					<div class="dashboard-info">
+						<div class="dashboard-count">
+							<?= $orderCount ?>
+						</div>
+						<div class="dashboard-title">
+							Orders
+						</div>
+					</div>
+				</div>
+			</a>
+        </div>
+        <!--div class="col-md-4">
+            <div class="item-dashboard">
+                <div class="icon-bg lightgreen-bgdash">
+                <img src="<?= $block->getViewFileUrl('images/dashbaord-quotes-ic.png'); ?>" width="32" height="32" alt="dashbaord-quotes-ic.png"> 
+                </div>
+                <div class="dashboard-info">
+                    <div class="dashboard-count">
+                        <?= $block->getQuotesCount() ?>
+                    </div>
+                    <div class="dashboard-title">
+                        Quotes 
+                    </div>
+                </div>
+            </div>
+        </div-->
+        <div class="col-md-4">
+			<a href="<?php echo $block->getUrl().'/customer/credit/';?>">
+				<div class="item-dashboard">
+					<div class="icon-bg orange-bgdash">
+					<img src="<?= $block->getViewFileUrl('images/dashbaord-avail-credits-ic.png'); ?>" width="32" height="32" alt="dashbaord-avail-credits-ic.png">
+					</div>
+					<div class="dashboard-info">
+						<div class="dashboard-count">
+							<?= $block->getCredit(); ?>
+						</div>
+						<div class="dashboard-title">
+							Available Credit
+						</div>
+					</div>
+				</div>
+			</a>
+        </div>
+           <div class="col-md-4">
+                <div class="item-dashboard">
+                    <div class="icon-bg redish-bgdash">
+                    <img src="<?= $block->getViewFileUrl('images/overdue-ic.png'); ?>" width="32" height="32" alt="dashbaord-avail-credits-ic.png">
+                    </div>
+                    <div class="dashboard-info">
+                        <div class="dashboard-count">
+                            <?= $block->getOverdueAmount(); ?>
+                        </div>
+                        <div class="dashboard-title">
+                            Overdue
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- Dashboard Top Info Tiles end -->
+<div class="block block-dashboard-orders">
+<?php
+    $_orders = $block->getOrders();
+    $count = count($_orders);
+?>
+    <div class="block-title order">
+        <strong><?= /* @escapeNotVerified */ __('Overview') ?></strong>
+        <?php if ($count > 0): ?>
+            <a class="action view" href="<?= /* @escapeNotVerified */ $block->getUrl('sales/order/history') ?>">
+                <span><?= /* @escapeNotVerified */ __('View All') ?></span>
+            </a>
+        <?php endif; ?>
+    </div>
+    <div class="block-content">
+    <?= $block->getChildHtml() ?>
+    <?php if ($count > 0): ?>
+        <div class="table-wrapper orders-recent">
+            <div class="account-info">
+                <div class="row">
+                    <?php foreach ($_orders as $_order): ?>
+                    <div class="col-md-12">
+                       
+                        
+                        <div class="item-dashboard overview-box">
+                            <a href="<?php echo $block->getUrl().'sales/order/view/order_id/'.$_order->getId().'/';?>">
+                                <div class="icon-bg">
+                                    <?php if($_order->getStatus()=='pending') :?>
+                                        <img src="<?= $block->getViewFileUrl('images/overview-order-placed-ic.png'); ?>" width="50" height="50" alt="">
+                                    <?php endif;?>
+                                    <?php if($_order->getStatus()=='order_confirmed') :?>
+                                        <img src="<?= $block->getViewFileUrl('images/overview-order-confirmed.png'); ?>" width="50" height="50" alt="">
+                                    <?php endif;?>
+                                    <?php if($_order->getStatus()=='preparing_dispatch') :?>
+                                        <img src="<?= $block->getViewFileUrl('images/overview-preparing-dispatch-ic.png'); ?>" width="50" height="50" alt="">
+                                    <?php endif;?>
+                                    <?php if($_order->getStatus()=='on_the_way') :?>
+                                        <img src="<?= $block->getViewFileUrl('images/overview-on-the-way-ic.png'); ?>" width="50" height="50" alt="">
+                                    <?php endif;?>
+                                    <?php if($_order->getStatus()=='delivered') :?>
+                                        <img src="<?= $block->getViewFileUrl('images/overview-delivered-ic.png'); ?>" width="50" height="50" alt="">
+                                    <?php endif;?>
+                                    <?php if($_order->getStatus()=='processing') : ?>
+                                    <img src="<?= $block->getViewFileUrl('images/overview-order-placed-ic.png'); ?>" width="50" height="50" alt="">
+                                    <?php endif;?>
+                                    <?php if($_order->getStatus()=='failed') : ?>
+                                    <img src="<?= $block->getViewFileUrl('images/overview-order-failed-ic.png'); ?>" width="50" height="50" alt="">
+                                    <?php endif;?>
+                                </div>
+                                <div class="dashboard-info">
+                                    <div class="overview-info">
+                                        <div class="overview-status order-status-<?=$_order->getStatus()?>">Order <?= $_order->getStatusLabel() ?> <span class="overview-date"><?= date('M j,Y', strtotime($_order->getUpdatedAt()))?></span></div>
+                                        <div class="overview-order">
+                                        <?php if($_order->getStatus()=='pending') :?>
+                                            Your order (Order No. <?= $_order->getRealOrderId()?>) has been Placed.
+                                        <?php endif;?>
+                                        <?php if($_order->getStatus()=='order_confirmed') :?>
+                                            Your order (Order No. <?= $_order->getRealOrderId()?>) has been confirmed.
+                                        <?php endif;?>
+                                        <?php if($_order->getStatus()=='preparing_dispatch')    :?>
+                                            Your order (Order No. <?= $_order->getRealOrderId()?>) is preparing for dispatch.
+                                        <?php endif;?>
+                                        <?php if($_order->getStatus()=='canceled')    :?>
+                                            Your order (Order No. <?= $_order->getRealOrderId()?>) has been canceled.
+                                        <?php endif;?>
+                                        <?php if($_order->getStatus()=='on_the_way') :?>
+                                            Your order (Order No. <?= $_order->getRealOrderId()?>) is on the way.
+                                        <?php endif;?>
+                                        <?php if($_order->getStatus()=='delivered') :?>
+                                            Your order (Order No. <?= $_order->getRealOrderId()?>) has been delivered.
+                                        <?php endif;?>
+
+                                        <?php if($_order->getStatus()=='processing') : ?>
+                                        Your order (Order No. <?= $_order->getRealOrderId()?>) has been Placed.
+                                        <?php endif;?>
+                                        <!-- Failed orders -->
+                                        <?php if($_order->getStatus()=='failed') : ?>
+                                        Your order (Order No. <?= $_order->getRealOrderId()?>) has failed.
+                                        <?php endif;?>
+
+                                        </div>
+                                        <div class="overview-track">
+                                            <?php if($_order->getStatus()=='failed') : ?>
+                                                <span><?= $block->getErrorMessage() ?></span>
+                                            <?php endif;?>
+                                        </div>
+                                        <!--<div class="order-action">
+                                            <?php if($_order->getStatus()=='failed') : ?>
+                                                <a class="cs-order-retry" href="<?= $block->escapeUrl($block->getUrl('sapintegration/order/retry/', ['id' => $_order->getId()])) ?>">Retry</a>
+                                            <?php endif;?>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="message info empty"><span><?= /* @escapeNotVerified */ __('You have placed no orders.') ?></span></div>
+    <?php endif; ?>
+    </div>
+</div>

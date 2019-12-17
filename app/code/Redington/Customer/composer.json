@@ -1,0 +1,21 @@
+{
+    "name": "Redington/Customer",
+    "description": "Redington Customer module",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "",
+            "name": "Spadeworx"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Redington\\Customer\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

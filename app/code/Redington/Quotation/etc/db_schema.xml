@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Redington, Inc. All rights reserved.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	
+	
+	<table name="quote" resource="checkout" engine="innodb" comment="Sales Flat Quote">
+		<column xsi:type="smallint" name="is_review" padding="5" unsigned="true" nullable="true" identity="false"
+                default="0" comment="Is Review"/>
+        <column xsi:type="smallint" name="is_quotation" padding="5" unsigned="true" nullable="true" identity="false"
+                default="0" comment="Is Quoatation"/>
+		<column xsi:type="varchar" name="quotation_id" length="12" comment="Quoatation Id"/>
+	</table>
+        <table name="redington_inventory_reservation" resource="default" engine="innodb">
+                <column xsi:type="int" name="reservation_id" padding="10" unsigned="true" nullable="false" identity="true"/>
+                <column xsi:type="int" name="plant_code" padding="10" unsigned="true" nullable="false" identity="false"/>
+                <column xsi:type="varchar" name="sku" nullable="false" length="64"/>
+                <column xsi:type="decimal" name="quantity" scale="4" precision="10" unsigned="false" nullable="false"
+                        default="0"/>
+                <constraint xsi:type="primary" referenceId="PRIMARY">
+                        <column name="reservation_id"/>
+                </constraint>
+                <index referenceId="REDINGTON_INVENTORY_RESERVATION_PLANT_CODE_SKU_QUANTITY" indexType="btree">
+                        <column name="plant_code"/>
+                        <column name="sku"/>
+                        <column name="quantity"/>
+                </index>
+        </table>
+        <table name="redington_quote_reservation" resource="checkout" engine="innodb">
+                <column xsi:type="int" name="reservation_id" padding="10" unsigned="true" nullable="false" identity="true"/>
+                <column xsi:type="int" name="quote_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Quote Id"/>
+                <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Created At"/>
+                <column xsi:type="int" name="company_id" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Quote Id"/>
+                <constraint xsi:type="primary" referenceId="PRIMARY">
+                        <column name="reservation_id"/>
+                </constraint>
+                <constraint xsi:type="foreign" referenceId="REDINGTON_QUOTE_RESERVATION_QUOTE_ID_QUOTE_ENTITY_ID" table="redington_quote_reservation" column="quote_id"
+                    referenceTable="quote" referenceColumn="entity_id" onDelete="CASCADE"/>
+                <constraint xsi:type="foreign" referenceId="REDINGTON_QUOTE_RESERVATION_COMPANY_ID_COMPANY_ENTITY_ID" table="redington_quote_reservation" column="company_id"
+                    referenceTable="company" referenceColumn="entity_id" onDelete="CASCADE"/>
+                <column xsi:type="int" name="is_review" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Is order review"/>
+                <column xsi:type="int" name="status" padding="10" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Status"/>
+                <index referenceId="REDINGTON_QUOTE_RESERVATION_RESERVATION_ID_QUOTE_ID_COMPANY_ID" indexType="btree">
+                        <column name="reservation_id"/>
+                        <column name="quote_id"/>
+                        <column name="company_id"/>
+                </index>
+        </table>
+        <table name="quote_item" resource="checkout" engine="innodb" comment="quote item">
+        <column xsi:type="decimal" name="proposed_price"  unsigned="true" nullable="true" 
+                default="0" comment="Proposed Price"/>
+        <column xsi:type="decimal" name="proposed_qty" unsigned="true" nullable="true" 
+                default="0" comment="Proposed Qty"/>
+    </table>
+	<table name="negotiable_quote" resource="checkout" engine="innodb" comment="negotiable_quote">
+		<column xsi:type="varchar" name="quotation_id" length="12" comment="Quoatation Id"/>
+	</table>
+	<table name="negotiable_quote_grid" resource="checkout" engine="innodb" comment="negotiable_quote_grid">
+		<column xsi:type="varchar" name="quotation_id" length="12" comment="Quoatation Id"/>
+	</table>
+</schema>

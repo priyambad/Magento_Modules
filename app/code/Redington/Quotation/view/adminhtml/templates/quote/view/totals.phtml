@@ -1,0 +1,60 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/** @var $block \Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Totals */
+$highlighted = ($block->canEdit() && ($block->hasQuoteChanges() || $block->hasUnconfirmedChanges()))
+    ? ' _highlighted'
+    : '';
+?>
+<style>
+  .quote-subtotal-table .shipping,.quote_tax,.grand_total{
+    display: none;
+  }  
+</style>
+<table class="data-table admin__table-secondary quote-subtotal-table<?= /* @noEscape */ $highlighted ?>"
+       data-role="data-table" data-mage-init='{"Magento_NegotiableQuote/quote/create/negotiation-totals" : {}}'>
+
+    <?= /* @noEscape */ $block->getOutputFormat() ?>
+    <?php foreach ($block->getTotals() as $code => $total): ?>
+        <?php if ($total->getBlockName()): ?>
+            <?= $block->getChildHtml($total->getBlockName(), false) ?>
+        <?php else:?>
+            <tr class="<?= $block->escapeHtml($code) ?>">
+                <th <?= $block->escapeHtml($block->getLabelProperties()) ?> scope="row">
+                    <?php if ($total->getStrong()):?>
+                        <strong><?= $block->escapeHtml($total->getLabel()) ?></strong>
+                    <?php else:?>
+                        <?= $block->escapeHtml($total->getLabel()) ?>
+                    <?php endif; ?>
+                </th>
+                <td <?= $block->escapeHtml($block->getValueProperties()) ?>
+                    data-th="<?= $block->escapeHtml($total->getLabel()) ?>"
+                    <?= /* @noEscape */ $total->getRole() ? 'data-role="' . $total->getRole() . '"' : '' ?>>
+                    <?php if ($total->getStrong()):?>
+                        <strong>
+                    <?php endif; ?>
+                    <?= /* @noEscape */ $block->displayPrices($total->getValue()) ?>
+                    <?php if ($total->getCurrency()):?>
+                        <br />
+                        [<?php
+                        /* @noEscape */ echo $block->displayPrices(
+                            $total->getQuoteValue() !== null ? $total->getQuoteValue() : $total->getValue(),
+                            $total->getCurrency()
+                        )
+                        ?>]
+                    <?php endif; ?>
+                    <?php if ($total->getStrong()):?>
+                        </strong>
+                    <?php endif; ?>
+                </td>
+            </tr>
+        <?php endif; ?>
+    <?php endforeach?>
+</table>

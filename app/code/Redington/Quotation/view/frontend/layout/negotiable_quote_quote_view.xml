@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="quote.status"
+                        template="Redington_Quotation::quote/status.phtml">
+        </referenceBlock>
+        <referenceBlock name="quote.date"
+                        template="Redington_Quotation::quote/date.phtml">
+        </referenceBlock>
+            
+        <referenceBlock name="negotiable.quote.info.links"
+                        template="Redington_Quotation::quote/info/links.phtml">
+        </referenceBlock>
+		<referenceBlock name="quote_info" template="Redington_Quotation::quote/info.phtml"></referenceBlock>
+        <referenceBlock name="quote.view" template="Redington_Quotation::quote/view.phtml"></referenceBlock>
+        <referenceBlock name="quote_items" template="Redington_Quotation::quote/items.phtml"></referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.default" template="Redington_Quotation::quote/item/default.phtml"></referenceBlock>
+		<referenceBlock name="checkout.cart.item.renderers.simple.actions.remove" template="Redington_Quotation::quote/item/remove.phtml"/>
+        <referenceBlock name="checkout.cart.item.renderers.simple" template="Redington_Quotation::quote/item/default.phtml"></referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.bundle" template="Redington_Quotation::quote/item/default.phtml"></referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.configurable" template="Redington_Quotation::quote/item/default.phtml"></referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.grouped" template="Redington_Quotation::quote/item/default.phtml"></referenceBlock>
+        <referenceBlock name="checkout.cart.item.renderers.downloadable" template="Redington_Quotation::quote/item/default.phtml"></referenceBlock>
+        <referenceBlock name="comment.form" template="Redington_Quotation::quote/comments/form.phtml"></referenceBlock>
+        <referenceBlock name="negotiable.quote.info.buttons" template="Redington_Quotation::quote/info/buttons.phtml"></referenceBlock>
+    </body>
+</page>

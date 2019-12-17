@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">company_form.company_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Company Information</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="reset" class="Magento\Company\Block\Adminhtml\Edit\ResetButton"/>
+            <button name="save" class="Magento\Company\Block\Adminhtml\Edit\SaveButton"/>
+            <button name="delete" class="Magento\Company\Block\Adminhtml\Edit\DeleteButton"/>
+            <button name="back" class="Magento\Company\Block\Adminhtml\Edit\BackButton"/>
+        </buttons>
+        <namespace>company_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>company_form.company_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="company_form_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="company/index/save"/>
+        </settings>
+        <dataProvider class="Magento\Company\Model\Company\DataProvider" name="company_form_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <fieldset name="general" sortOrder="10">
+        <settings>
+            <additionalClasses>
+                <class name="_block-wrapper">true</class>
+            </additionalClasses>
+            <collapsible>false</collapsible>
+            <label/>
+            <dataScope>general</dataScope>
+        </settings>
+        <field name="company_name" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">company_name</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Company Name</label>
+            </settings>
+        </field>
+        <field name="status" component="Magento_Company/js/form/element/company/status" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">company</item>
+                    <item name="confirmation" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true"><![CDATA[Change Company Status?]]></item>
+                        </item>
+                        <item name="status" xsi:type="array">
+                            <!-- Pending -->
+                            <item name="0" xsi:type="array">
+                                <item name="message" xsi:type="string" translate="true"><![CDATA[Are you sure you want to temporarily disable this company account? If you confirm, login for all company members will be blocked.]]></item>
+                                <item name="template" xsi:type="string">base</item>
+                                <item name="isForm" xsi:type="boolean">false</item>
+                            </item>
+                            <!-- Approved -->
+                            <item name="1" xsi:type="array">
+                                <item name="message" xsi:type="string" translate="true"><![CDATA[Are you sure you want to set this company to active? If you confirm, the company members will be able to operate within their company account.]]>&gt;</item>
+                                <item name="template" xsi:type="string">base</item>
+                                <item name="isForm" xsi:type="boolean">false</item>
+                            </item>
+                            <!-- Rejected -->
+                            <item name="2" xsi:type="array">
+                                <item name="message" xsi:type="string" translate="true"><![CDATA[Are you sure you want to reject this company? If you confirm, login for all company members will be blocked.]]></item>
+                                <item name="reason_label" xsi:type="string" translate="true"><![CDATA[Please specify the reason]]></item>
+                                <item name="note" xsi:type="string" translate="true"><![CDATA[The reason will appear in the 'Rejected' email sent to the Company Admin. It will also be saved and displayed in Admin Panel (in the company profile).]]></item>
+                                <item name="template" xsi:type="string">reject</item>
+                                <item name="handler" xsi:type="string">reject</item>
+                                <item name="isForm" xsi:type="boolean">true</item>
+                            </item>
+                            <!-- Blocked -->
+                            <item name="3" xsi:type="array">
+                                <item name="message" xsi:type="string" translate="true"><![CDATA[Are you sure you want to block this company? If you proceed, the company members will not be able to place orders.]]></item>
+                                <item name="template" xsi:type="string">base</item>
+                                <item name="isForm" xsi:type="boolean">false</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Status</label>
+                <visible>true</visible>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Company\Model\Company\Source\Status"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="reject_reason" component="Magento_Company/js/form/element/company/reject-reason" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reject_reason</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Reason for Rejection</label>
+            </settings>
+        </field>
+        <field name="company_email" component="Magento_Company/js/add/company-email" formElement="email">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="companyValidateUrl" xsi:type="url" path="company/email/validate"/>
+                    <item name="source" xsi:type="string">company_email</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="validate-async-company-email" xsi:type="boolean">true</rule>
+                    <rule name="validate-email" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Company Email</label>
+            </settings>
+        </field>
+        <field name="sales_representative_id" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">sales_representative_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Sales Representative</label>
+                <visible>true</visible>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Company\Model\Company\Source\SalesRepresentatives"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="information" sortOrder="20">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Account Information</label>
+            <dataScope>information</dataScope>
+        </settings>
+        <field name="legal_name" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">legal_name</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Company Legal Name</label>
+            </settings>
+        </field>
+        <field name="vat_tax_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">vat_tax_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">VAT / TAX ID</label>
+            </settings>
+        </field>
+        <field name="reseller_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reseller_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Reseller ID</label>
+            </settings>
+        </field>
+        <field name="comment" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">comment</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Comment</label>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="address" sortOrder="31">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Legal Address</label>
+            <dataScope>address</dataScope>
+        </settings>
+        <container name="street_container" component="Magento_Ui/js/form/components/group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Street Address</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="dataScope" xsi:type="string">street</item>
+                </item>
+            </argument>
+            <field name="street" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">street</item>
+                    </item>
+                </argument>
+                <settings>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">true</rule>
+                    </validation>
+                    <dataType>text</dataType>
+                    <dataScope>0</dataScope>
+                </settings>
+            </field>
+            <field name="street_second" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">street</item>
+                    </item>
+                </argument>
+                <settings>
+                    <dataType>text</dataType>
+                    <dataScope>1</dataScope>
+                </settings>
+            </field>
+        </container>
+        <field name="city" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">city</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">City</label>
+            </settings>
+        </field>
+        <field name="country_id" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">country_id</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Country</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Directory\Model\ResourceModel\Country\Collection"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="region_id" component="Magento_Ui/js/form/element/region" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">address</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">State/Province</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <filterBy>
+                            <field>country_id</field>
+                            <target>${ $.provider }:${ $.parentScope }.country_id</target>
+                        </filterBy>
+                        <customEntry>region</customEntry>
+                        <options class="Magento\Directory\Model\ResourceModel\Region\Collection"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="region" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">address</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="postcode" formElement="input" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">postcode</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Postal Code</label>
+            </settings>
+        </field>
+        <field name="telephone" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">telephone</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Phone Number</label>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="company_admin" sortOrder="40">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Company Admin</label>
+            <dataScope>company_admin</dataScope>
+        </settings>
+        <field name="website_id" formElement="select" component="Magento_Company/js/edit/add-user-website">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">website_id</item>
+                    <item name="value" xsi:type="string">0</item>
+                    <item name="addUserUrl" xsi:type="url" path="company/index/addUser"/>
+                    <item name="modalProvider" xsi:type="string">ns = company_form, index = replace_company_admin_modal2</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Website</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Company\Model\Company\Source\Website"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="job_title" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">job_title</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Job Title</label>
+            </settings>
+        </field>
+        <field name="email" component="Magento_Company/js/edit/add-user" formElement="email">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">email</item>
+                    <item name="modalProvider" xsi:type="string">ns = company_form, index = replace_company_admin_modal</item>
+                    <item name="getCustomerDataUrl" xsi:type="url" path="company/index/addUser"/>
+                </item>
+            </argument>
+            <settings>
+                <elementTmpl>Magento_Company/edit/email-field</elementTmpl>
+                <validation>
+                    <rule name="validate-customer-status" xsi:type="boolean">true</rule>
+                    <rule name="validate-customer-company" xsi:type="boolean">true</rule>
+                    <rule name="validate-email" xsi:type="boolean">true</rule>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Email</label>
+            </settings>
+        </field>
+        <field name="prefix" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">prefix</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Prefix</label>
+            </settings>
+        </field>
+        <field name="firstname" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">firstname</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">First Name</label>
+            </settings>
+        </field>
+        <field name="middlename" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">middlename</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Middle Name/Initial</label>
+            </settings>
+        </field>
+        <field name="lastname" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">lastname</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Last Name</label>
+            </settings>
+        </field>
+        <field name="suffix" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">suffix</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Suffix</label>
+            </settings>
+        </field>
+        <field name="gender" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">gender</item>
+                    <item name="value" xsi:type="string">3</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Gender</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Company\Model\Company\Source\Gender"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+    <fieldset name="settings" sortOrder="60">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Advanced Settings</label>
+            <dataScope>settings</dataScope>
+        </settings>
+        <field name="customer_group_id" class="Magento\Company\Ui\Component\Form\Field\CustomerGroup" component="Magento_Company/js/form/element/ui-group/field-with-confirmation" sortOrder="0" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="confirmation" xsi:type="array">
+                        <item name="text" xsi:type="array">
+                            <item name="header" xsi:type="string" translate="true">Change Customer Group?</item>
+                            <item name="message" xsi:type="string" translate="true">This action will change the customer group for all members of this company. Would you like to proceed?</item>
+                        </item>
+                    </item>
+                    <item name="source" xsi:type="string">customer_group_id</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">true</rule>
+                </validation>
+                <elementTmpl>Magento_B2b/form/element/ui-group</elementTmpl>
+                <dataType>text</dataType>
+                <label translate="true">Customer Group</label>
+                <visible>true</visible>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Company\Model\Customer\Source\Group"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+    </fieldset>
+    <container name="modalContainer">
+        <modal name="replace_company_admin_modal" component="Magento_Company/js/edit/modal">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="emailProvider" xsi:type="string">ns = company_form, index = email</item>
+                </item>
+            </argument>
+            <settings>
+                <options>
+                    <option name="buttons" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Cancel</item>
+                            <item name="class" xsi:type="string">action-secondary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="string">adminChangeCancel</item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Proceed</item>
+                            <item name="class" xsi:type="string">action-primary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="string">adminChangeActive</item>
+                            </item>
+                        </item>
+                    </option>
+                    <option name="modalClass" xsi:type="string">popup-tree-decline</option>
+                    <option name="title" xsi:type="string">Replace Company Admin</option>
+                    <option name="type" xsi:type="string">popup</option>
+                </options>
+                <onCancel>adminChangeCancel</onCancel>
+            </settings>
+            <container name="modal_content" template="Magento_Company/edit/modal-content"/>
+        </modal>
+        <modal name="replace_company_admin_modal2" component="Magento_Company/js/edit/modal">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="emailProvider" xsi:type="string">ns = company_form, index = website_id</item>
+                </item>
+            </argument>
+            <settings>
+                <options>
+                    <option name="buttons" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Cancel</item>
+                            <item name="class" xsi:type="string">action-secondary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="string">adminChangeCancel</item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Proceed</item>
+                            <item name="class" xsi:type="string">action-primary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="string">adminChangeActive</item>
+                            </item>
+                        </item>
+                    </option>
+                    <option name="modalClass" xsi:type="string">popup-tree-decline</option>
+                    <option name="title" xsi:type="string">Replace Company Admin</option>
+                    <option name="type" xsi:type="string">popup</option>
+                </options>
+                <onCancel>adminChangeCancel</onCancel>
+            </settings>
+            <container name="modal_content" template="Magento_Company/edit/modal-content"/>
+        </modal>
+    </container>
+</form>

@@ -1,0 +1,226 @@
+<?xml version="1.0"?>
+<root>
+	<blocks>
+		<cms_item>
+			<title>Redington Header Menu</title>
+			<identifier>redington-header-menu</identifier>
+			<content>
+				<![CDATA[
+				<div class="nav-list">
+					<ul class="nav navbar-nav">
+					  <li><a href="{{store url=""}}">Home</a></li>
+					  <li><a href="{{store url="promotions"}}">Promotions </a></li>
+					  <li><a href="{{store url="top-deals"}}">Top Deals</a></li>
+					  <li><a href="{{store url="contact"}}">Contact Us</a></li>
+					</ul>		
+					</div>
+				]]>
+			</content>
+			<is_active>1</is_active>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Redington Footer Need Help</title>
+			<identifier>redington-footer-need-help</identifier>
+			<content>
+				<![CDATA[
+				<div class="container">
+					<div class="row">
+						<div class="col-md-1">
+							<div class="newletter-img">
+								<img src="{{view url="images/newsletter.png"}}" width="60" height="120" alt=""/>
+							</div>
+						</div>
+						<div class="col-md-8">
+							<div class="newletter-txt">
+								<h5>Need Help</h5>
+								<p>Contact our Customer Support that is always ready to help you with any possible, problems of information.</p>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<a href="{{store url="contact"}}" class="btn btn btn-outline-success btn-white-green">Get in touch with us</a>
+						</div>
+					</div>
+				</div>
+				]]>
+			</content>
+			<is_active>1</is_active>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Redington Footer Logo Section</title>
+			<identifier>redington-footer-logo-section</identifier>
+			<content>
+				<![CDATA[
+				<div class="footer-logo">
+					<a href="{{store url=''}}"><img src="{{view url="images/Redington-color-logo.png"}}" width="153" height="40" alt=""/> </a>	
+					<p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Praesent commodo cursus magna.</p>
+				</div>
+				]]>
+			</content>
+			<is_active>1</is_active>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Redington Footer Social Links</title>
+			<identifier>redington-footer-social-links</identifier>
+			<content>
+				<![CDATA[
+				<div class="footer-title"><h5>Follow Us</h5></div>
+				<ul class="footer-socialicon">
+					<li><a href="https://twitter.com/redingtonvalue/" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+					<li><a href="https://www.linkedin.com/company/RedingtonValue/" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+					<li><a href="https://www.facebook.com/RedingtonValue/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+				</ul>
+				]]>
+			</content>
+			<is_active>1</is_active>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Redington Footer Contact Section</title>
+			<identifier>redington-footer-contact-section</identifier>
+			<content>
+				<![CDATA[
+				<div class="footer-contact">
+					<div class="footer-title"><h5>Contact Us</h5></div>
+					<div class="contact-row">
+						<p><i class="fa fa-map-marker" aria-hidden="true"></i><span>Address:</span>Khalid Bin Al Waleed Road (Bank Street) - Dubai - United Arab Emirates</p>
+					</div>
+					<div class="contact-row">
+						<p><i class="fa fa-envelope-o" aria-hidden="true"></i><span>Email:</span> <a href="mailto:contact@redington.com" target="_top">contact@redington.com</a></p>
+					</div>
+					<div class="contact-row">
+						<p><i class="fa fa-phone" aria-hidden="true"></i><span>Phone:</span>+971 4 373 4700</p>
+					</div>
+				</div>
+				]]>
+			</content>
+			<is_active>1</is_active>
+			<store_id>0</store_id>
+		</cms_item>
+		<cms_item>
+			<title>Redington Home Page Content</title>
+			<identifier>id-1-block-2</identifier>
+			<content>
+				<![CDATA[
+				<div class="home-style home-page-1">
+					<div class="list-product-home">
+					{{block class="Sm\ListingTabs\Block\ListingTabs" template="Sm_ListingTabs::default.phtml" title="Best Sellers" type_show="slider" type_listing="all" display_countdown="0" under_price="5" type_filter="categories" field_tabs="" category_select="" category_tabs="51,53,55,57" order_by="ordered_qty" order_dir="ASC" limitation="6"}}
+					</div>
+					<div class="ads-banner">
+						<div class="row">
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col-md-5">                                                                                                                                                                               
+									  <a href="#">                                                                                                                                                                                               
+										<img src="{{view url=images/home/headphone-banner.jpg}}" width="100%" alt=""/>                                                                                                                                                                             
+									  </a>
+									</div>
+									<div class="col-md-7">
+										<div class="row">
+											<div class="col-md-12">
+											  <a href="#">                                                                                                                                                                                                                             
+												<img src="{{view url=images/home/ipad-hori-banner.jpg}}" width="100%" alt=""/>                                                                                                                                                                                                             
+											  </a>
+											 </div>
+											 <div class="col-md-12">
+											  <a href="#"> 
+												<img src="{{view url=images/home/macbookpro-banner.jpg}}" width="100%" alt=""/>                                                                                                                                                                                                          
+											  </a>
+											  </div>                                                                                                                                                                           
+										  </div>                                                                                                                                                           
+									  </div>                                                                                                                                          
+								  </div>                                                                                                                            
+							  </div>                                                                                                                            
+							  <div class="col-md-2">                                                                                                                                          
+								  <a href="#">                                                                                                                                                            
+									<img src="{{view url=images/home/lenovo-banner.jpg}}" width="100%" alt=""/> 
+								  </a> 
+							  </div>
+						</div>
+					</div>
+					<div class="list-product-home list-product-home-custom">{{block class="Sm\ListingTabs\Block\ListingTabs" template="Sm_ListingTabs::default.phtml" title="New Arrivals" type_show="slider" type_listing="all" display_countdown="0" under_price="5" type_filter="categories" field_tabs="" category_select="" category_tabs="51,53,55,57" order_by="created_at" order_dir="ASC" limitation="6"}}</div>
+					<div class="home-collection">
+						<div class="collections-wrap">
+							<div class="component_topSection">
+							  <h4 class="component_title">Collections</h4>  
+							</div>
+							<div class="collections">
+								<div class="owl-carousel">
+									<div class="item collection-box"><a title="Notebooks" href="#">
+											<img src="{{view url=images/home/notebooks.png}}" width="50" height="50" alt="">
+										   <h5>Notebooks</h5>
+									</a></div>
+									<div class="item collection-box"><a title="Tablets" href="#">
+										   <img src="{{view url=images/home/tablets.png}}" width="50" height="50" alt="">
+										   <h5>Tablets</h5>
+									</a></div>
+									<div class="item collection-box"><a title="Accessories" href="#"> 
+											<img src="{{view url=images/home/accessories.png}}" width="50" height="50" alt="">					  
+											<h5>Accessories</h5>
+									</a></div>
+									<div class="item collection-box"><a title="Desktops" href="#"> 
+										<img src="{{view url=images/home/desktops.png}}" width="50" height="50" alt="">
+										<h5>Desktops</h5>
+									</a></div>
+									<div class="item collection-box"><a title="Smart Watches" href="#"> 
+										<img src="{{view url=images/home/smartwatch.png}}" width="50" height="50" alt="">
+										<h5>Smart Watches</h5>
+									</a></div>
+									<div class="item collection-box"><a title="Smart Phones" href="#"> 
+										<img src="{{view url=images/home/smartphone.png}}" width="50" height="50" alt="">
+										<h5>Smart Phones</h5>
+									</a></div>
+								</div>
+							</div>
+							<script type="text/javascript">
+									require([
+										'jquery',
+										'owlcarousel'
+									], function ($) {
+										jQuery(".home-collection .owl-carousel").owlCarousel({
+											responsive:{
+												0:{
+													items:2
+												},
+												480:{
+													items:3
+												},
+												768:{
+													items:4
+												},
+												992:{
+													items:5
+												},
+												1200:{
+													items:6
+												}
+											},
+
+											autoplay:false,
+											loop:false,
+											nav : true,
+											dots: false,
+											autoplaySpeed : 500,
+											navSpeed : 500,
+											dotsSpeed : 500,
+											autoplayHoverPause: true,
+											margin:0,
+										});	  
+									});	
+								
+						</script>
+						</div>
+					</div>
+					<div class="full-categories">
+					<div class="hot-categories-home">{{block class="Sm\Categories\Block\Categories" template="Sm_Categories::default.phtml" title_module="Hot categories" select_category="51,53,55,57" limitation="5"}}</div>
+					</div>
+					</div>
+				]]>
+			</content>
+			<is_active>1</is_active>
+			<store_id>0</store_id>
+		</cms_item>
+	</blocks>
+</root>

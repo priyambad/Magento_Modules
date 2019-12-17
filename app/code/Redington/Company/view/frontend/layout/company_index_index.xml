@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">    
+    <update handle="customer_account"/>
+    <update handle="customer_form_template_handle"/>
+    <body>     
+        <referenceContainer name="content">     
+            <container htmlTag="div" htmlClass="manage-company-accounts" name="company.container">
+                <block class="Magento\Company\Block\Company\Management\Info"
+                       name="company.management.info" as="info"
+                       template="Magento_Company::company/management/info.phtml" />
+                <block class="Magento\Company\Block\Company\Management" name="company_management"
+                       ifconfig="btob/website_configuration/company_active"
+                       template="Magento_Company::company/management.phtml">
+                    <block class="Magento\Framework\View\Element\Template"
+                           name="company.management.dialog.team.add" as="dialog.team.add"
+                           template="Magento_Company::company/management/dialog/team/add.phtml" />
+                    <block class="Magento\Company\Block\Company\Management\Add"
+                           name="company.management.dialog.customer.add" as="dialog.customer.add"
+                           template="Redington_Company::company/management/dialog/customer/add.phtml">
+                        <block class="Magento\CustomerCustomAttributes\Block\Form" template="Magento_CustomerCustomAttributes::form/userattributes.phtml" name="customer_form_user_attributes_create">
+                            <action method="setFormCode">
+                                <argument name="code" xsi:type="string">customer_account_create</argument>
+                            </action>
+                            <action method="setEntityModelClass">
+                                <argument name="code" xsi:type="string">Magento\Customer\Model\Customer</argument>
+                            </action>
+                        </block>
+                        <block class="Magento\CustomerCustomAttributes\Block\Form" template="Magento_CustomerCustomAttributes::form/userattributes.phtml" name="customer_form_user_attributes_edit" cacheable="false">
+                            <action method="setFormCode">
+                                <argument name="code" xsi:type="string">customer_account_edit</argument>
+                            </action>
+                            <action method="setEntityModelClass">
+                                <argument name="code" xsi:type="string">Magento\Customer\Model\Customer</argument>
+                            </action>
+                        </block>
+                    </block>
+                    <block class="Magento\Framework\View\Element\Template"
+                           name="company.management.dialog.delete.del" as="dialog.delete.del"
+                           template="Magento_Company::company/management/dialog/delete/del.phtml" />
+                    <block class="Magento\Framework\View\Element\Template"
+                           name="company.management.dialog.alert.alert" as="dialog.alert.alert"
+                           template="Magento_Company::company/management/dialog/alert/alert.phtml" />
+                </block>
+            </container> 
+        </referenceContainer>     
+    </body>
+</page>

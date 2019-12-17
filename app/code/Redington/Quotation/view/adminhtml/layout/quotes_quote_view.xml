@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+	<css src="Redington_Quotation::css/quote.css" />
+	</head>
+	<body>
+		<referenceBlock name="negotiable.quote.shipping" remove="true"/>
+		<referenceBlock name="negotiable.quote.items.grid" template="Redington_Quotation::quote/view/items/grid.phtml" ></referenceBlock>
+        <referenceContainer name="content">
+			<block class="Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Info" name="negotiable.quote.info"
+                   template="Redington_Quotation::quote/view/info.phtml">
+                    <block class="Magento\Framework\View\Element\Template"
+                           name="negotiable.quote.info.extra.container" as="extra.container">
+                        <block class="Magento\NegotiableQuote\Block\Adminhtml\Quote\View\CustomerGroup"
+                               name="customer.group.extra.data"
+                               after="negotiable.quote.info.extra.container"
+                               template="Magento_NegotiableQuote::quote/view/group.phtml"/>
+                    </block>
+            </block>
+				<block class="Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Info" name="negotiable.quote.message"
+                   template="Redington_Quotation::quote/view/message.phtml"/>
+        	     <block class="Magento\Backend\Block\Template" name="quote.negotiation" template="Magento_NegotiableQuote::quote/view/negotiation.phtml">
+                <block class="Magento\NegotiableQuote\Block\Adminhtml\Quote\Comments" name="negotiable.quote.comments" as="quote_comments" template="Redington_Quotation::quote/view/comments.phtml">
+                    <block class="Magento\NegotiableQuote\Block\Adminhtml\Quote\History" name="negotiable.quote.history" as="quote_history" template="Redington_Quotation::quote/history.phtml">
+                        <block class="Magento\Framework\View\Element\Template" name="diff.values" template="Magento_NegotiableQuote::quote/history/diff.phtml"/>
+                    </block>
+                </block>
+                <block class="Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Totals" name="negotiable.quote.totals" template="Redington_Quotation::quote/view/totals.phtml">
+                    <block class="Magento\NegotiableQuote\Block\Quote\Totals\Original" name="negotiable.quote.totals.original" template="Redington_Quotation::quote/view/totals/original.phtml" />
+                    <block class="Magento\NegotiableQuote\Block\Adminhtml\Quote\View\Totals\Negotiation" name="negotiable.quote.totals.negotiation" template="Magento_NegotiableQuote::quote/view/totals/negotiation.phtml" />
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

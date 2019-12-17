@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Redington, Inc. All rights reserved.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+        <table name="redington_contact" resource="default" engine="innodb">
+                <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"/>
+                <column xsi:type="varchar" name="full_name" length="200" nullable="false"/>
+                <column xsi:type="varchar" name="email" nullable="false" length="64"/>
+                <column xsi:type="varchar" name="mobile" nullable="false" length="20"/>
+                <column xsi:type="varchar" name="country_code" nullable="false" length="10"/>
+                <constraint xsi:type="primary" referenceId="PRIMARY">
+                        <column name="entity_id"/>
+                </constraint>
+        </table>
+</schema>
+	

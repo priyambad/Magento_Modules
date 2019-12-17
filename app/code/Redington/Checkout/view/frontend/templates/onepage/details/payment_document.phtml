@@ -1,0 +1,40 @@
+<?php
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+?>
+<?php /** @var $block \Redington\Checkout\Block\Onepage\Success\Extrainfo */ ?>
+
+<?php
+$paymentRefdoc = $block->getPaymentRefDoc();
+$paymentRefnumber = $block->getPaymentRefNum();
+$paymentTerm = $block->getPaymentTerm();
+$paymentMethod = $block->getPaymentMethod();
+//$purchaseDocument = $block->getPurchaseOrderDocument();$paymentTerm = $block->getPaymentTerm();
+?>
+<?php /*if($paymentRefdoc) : ?>
+	<div class="block block-order-details-documents">
+		<div class="block-title-custom payments-block">		
+			<?php 
+				if($paymentRefnumber){
+					echo '<div class="document-label">'.__('<strong>Payment Reference Number</strong>').' : '.$paymentRefnumber.'</div>';
+				}
+			?>
+		</div>
+		
+		<div class="block-title-custom payments-block"><strong><?= __('Payment Document') ?>:</strong>
+			<span class="block-content-lponumber">	
+				<?php 
+				if($paymentRefdoc){
+					echo '<span class="document-label"><a href="'.$paymentRefdoc.'" target="_blank" >'.__('Payment Reference Document').'</a></span>';
+				}else{
+					echo '<span class="document-label no-document">'.__('Payment Reference Document').":". __('Not Uploaded').'</span>';
+				}
+				
+				?>
+			</span>
+		</div>
+	</div>
+<?php endif;*/?>

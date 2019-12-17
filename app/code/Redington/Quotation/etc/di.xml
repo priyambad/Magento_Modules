@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd"> 
+  	<!--preference for="Magento\NegotiableQuote\Controller\Adminhtml\Quote\Send" type="Redington\Quotation\Controller\Adminhtml\Quote\Send"/-->
+	<preference for="Magento\NegotiableQuote\Model\Action\Item\Price\Update" type="Redington\Quotation\Model\Update"/>
+	<preference for="Magento\NegotiableQuote\Model\NegotiableQuoteItemManagement" type="Redington\Quotation\Model\NegotiableQuoteItemManagement"/>
+	<preference for="Magento\NegotiableQuote\Model\NegotiableQuoteManagement" type="Redington\Quotation\Model\NegotiableQuote\NegotiableQuoteManagement"/>
+	<preference for="Magento\Quote\Model\Webapi\ParamOverriderCartId" type="Redington\Quotation\Model\NegotiableQuote\ParamOverriderCartId"/>
+	<preference for="Magento\NegotiableQuote\Model\Validator\NegotiablePrice" type="Redington\Quotation\Model\NegotiablePrice"/>
+	<preference for="Magento\NegotiableQuote\Model\History\CriteriaBuilder" type="Redington\Quotation\Model\History\CriteriaBuilder"/>
+	<preference for="Magento\NegotiableQuote\Model\Email\Sender" type="Redington\Quotation\Model\Email\Sender"/>
+	<preference for="Magento\NegotiableQuote\Model\ResourceModel\QuoteGrid" type="Redington\Quotation\Model\ResourceModel\QuoteGrid"/>
+</config>

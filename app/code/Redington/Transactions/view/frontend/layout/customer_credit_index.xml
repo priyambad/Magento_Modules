@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+<update handle="customer_account"/>
+	<body>
+		<referenceBlock name="page.main.title"> 
+			<action method="setPageTitle"> 
+				<argument translate="true" name="title" xsi:type="string">Store Credit</argument> 
+			</action> 
+	     </referenceBlock> 
+		<referenceContainer name="content">
+			<block class="Redington\Transactions\Block\Company\CreditBalance"
+					name="company-credit-history-balance"
+					template="Redington_Transactions::credit/credit_action_header.phtml" cacheable="true"/>
+			<uiComponent name="credit_listing"/>
+			<uiComponent name="transaction_listing"/>
+		</referenceContainer>
+	</body>
+</page>

@@ -1,0 +1,88 @@
+<?php
+/**
+ * Copyright © Redington. All rights reserved.
+ *
+ */
+// @codingStandardsIgnoreFile
+/** @var $block \Redington\Company\Block\Adminhtml\Edit */
+$role = $block->getRole();
+?>
+
+<form class="form form-edit-role" method="post" id="role-edit-form" action="<?=$block->escapeUrl($block->getUrl('*/*/editPost', ['id' => $role->getId()]));?>"
+      data-mage-init='{"validation":{}}'>
+    <?=$block->getBlockHtml('formkey');?>
+    <div class="page-main-actions">
+        <div class="page-actions-placeholder"></div>
+        <div class="page-actions" data-ui-id="page-actions-toolbar-content-header">
+            <div class="page-actions-inner" data-title="Address Approval">
+                <div class="page-actions-buttons">
+                    <button id="back" title="Back" type="button" class="action-default scalable back" onclick="setLocation('<?php echo $block->getBackUrl(); ?>')" data-ui-id="addressapproval-view-back-button">
+                        <span><?=$block->escapeHtml(__('Back'));?></span>
+                    </button>
+                    <button id="save" title="Save Address" type="submit" class="action-default scalable action save primary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" data-ui-id="addressapproval-view-save-button" role="button" aria-disabled="false">
+                        <span class="ui-button-text">
+                            <span><?=$block->escapeHtml(__('Save Role'));?></span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <fieldset class="fieldset info">
+        <legend class="legend"><span><?=$block->escapeHtml(__('Role Information'));?></span></legend>
+        <div class="field role-name _required">
+            <label class="label" for="role_name">
+                <span><?=$block->escapeHtml(__('Role Name'));?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="role_name" id="role_name"
+                       value="<?=$block->escapeHtml($role->getRoleName());?>"
+                       title="<?=$block->escapeHtml(__('Role Name'));?>"
+                       data-async-is-valid="true"
+                       data-mage-init='{"Redington_Company/js/form/element/async-validation": {
+                            "name": "company_role_name",
+                            "validateUrl": "<?=/* @escapeNotVerified */$block->getUrl('redingtoncompany/role/validate');?>"
+                       }}'
+                       data-validate="{required:true, 'validate-async-company-role-name': true}"
+                       class="input-text">
+            </div>
+        </div>
+        <div class="field role-name _required">
+            <label class="label" for="comapny">
+                <span><?=$block->escapeHtml(__('Company'));?></span>
+            </label>
+            <div class="control">
+                <select name="companies" id="companies">
+                    <option>--Please choose Company--</option>
+                       <?php
+$options = $block->getSelectedCompany();
+$companies = $block->getCompanies();
+foreach ($companies->getData() as $company):
+    $selected = ($options == $company['entity_id']) ? "selected" : "";
+    ?>
+									                    <option value="<?=$company['entity_id'];?>" <?php echo $selected; ?> >
+									                        <?=$company['company_name'];?>
+									                    </option>
+													<?php endforeach;?>
+
+                </select>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="fieldset info">
+        <legend class="legend"><span>Role Permissions</span></legend>
+        <div class="box-actions">
+            <button class="action expand" data-action="expand-tree" type="button">
+                <span>Expand All</span>
+            </button>
+            <button class="action expand" data-action="collapse-tree" type="button">
+                <span>Collapse All</span>
+            </button>
+        </div>
+        <div class="tree x-tree" id="role-tree" data-role="role-tree"
+             data-mage-init='<?=$block->escapeHtml($block->getJsonHelper()->jsonEncode($block->getTreeJsOptions()));?>'>
+        </div>
+        <input type="hidden" name="role_permissions" />
+    </fieldset>
+</form>

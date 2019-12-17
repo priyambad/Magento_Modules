@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <body>
+        
+        <referenceContainer name="content">
+          
+         <block class="Redington\Quotation\Block\Quote" name="redington_quote" template="Redington_Quotation::quote.phtml" cacheable="false" />				            
+        </referenceContainer>        
+    </body>
+</config>

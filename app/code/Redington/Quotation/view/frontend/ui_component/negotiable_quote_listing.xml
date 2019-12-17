@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">negotiable_quote_listing.negotiable_quote_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>negotiable_quote_columns</spinner>
+        <deps>
+            <dep>negotiable_quote_listing.negotiable_quote_listing_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="negotiable_quote_listing_data_source">
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <updateUrl path="negotiable_quote/ui/render"/>
+        </settings>
+        <dataProvider class="Magento\NegotiableQuote\Ui\DataProvider\DataProvider" name="negotiable_quote_listing_data_source">
+            <settings>
+                <requestFieldName>entity_id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <filters name="listing_filters" template="Redington_Quotation/quote/grid/filters/filters">
+        <settings>
+            <statefull>
+                <property name="applied" xsi:type="boolean">false</property>
+            </statefull>
+        </settings>
+        <filterInput class="Magento\NegotiableQuote\Ui\Component\Filters\Quote\CurrentCustomer"
+            name="is_customer_quote"
+            component="Redington_Quotation/js/quote/grid/filters/elements/current_customer"
+            template="Redington_Quotation/quote/grid/filters/elements/current_customer"
+            provider="ns = ${ $.ns }, index = listing_filters">
+            <settings>
+                <dataScope>is_customer_quote</dataScope>
+            </settings>
+        </filterInput>
+    </filters>
+    <columns name="negotiable_quote_columns" component="uiB2bListing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="table_css_class" xsi:type="string">table</item>
+            </item>
+        </argument>
+        <settings>
+            <childDefaults>
+                <param name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">negotiable_quote_listing.negotiable_quote_listing.listing_top.bookmarks</item>
+                    <item name="root" xsi:type="string">columns.${ $.index }</item>
+                    <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                </param>
+            </childDefaults>
+            <storageConfig>
+                <namespace>current</namespace>
+                <provider>negotiable_quote_listing.negotiable_quote_listing.listing_top.bookmarks</provider>
+            </storageConfig>
+        </settings>
+        <column name="quotation_id" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Quote No</label>
+                <sortable>false</sortable>                
+            </settings>
+        </column>
+        <column name="quote_name" component="Magento_NegotiableQuote/js/quote/grid/columns/text_with_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Quote Name</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+            <settings>
+                <dateFormat>L</dateFormat>
+                <dataType>date</dataType>
+                <label translate="true">Created</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="created_by" class="Magento\NegotiableQuote\Ui\Component\Listing\Column\CreatedBy">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Created By</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+           
+        <column name="updated_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+            <settings>
+                <dateFormat>L</dateFormat>
+                <dataType>date</dataType>
+                <label translate="true">Last Updated</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="base_grand_total" class="Redington\Quotation\Ui\Component\Listing\Column\Price">
+             <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Quote Total</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="status" class="Magento\NegotiableQuote\Ui\Component\Listing\Column\Status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                </item>
+            </argument>
+            <settings>
+                <options class="Magento\NegotiableQuote\Model\Quote\Source\Status"/>
+                <label translate="true">Status</label>
+                <sortable>false</sortable>
+            </settings>
+        </column>        
+        <actionsColumn name="actions" class="Magento\NegotiableQuote\Ui\Component\Listing\Column\Actions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+            <settings>
+                <label>Action</label>
+                <resizeEnabled>false</resizeEnabled>
+                <resizeDefaultWidth>107</resizeDefaultWidth>
+                <indexField>entity_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+    <container name="listing_top">
+        <paging name="listing_paging" component="uiB2bPaging">
+            <settings>
+                <selectProvider>negotiable_quote_listing.negotiable_quote_listing.negotiable_quote_columns.ids</selectProvider>
+                <storageConfig>
+                    <namespace>current.paging</namespace>
+                    <provider>negotiable_quote_listing.negotiable_quote_listing.listing_top.bookmarks</provider>
+                </storageConfig>
+            </settings>
+        </paging>
+    </container>
+</listing>

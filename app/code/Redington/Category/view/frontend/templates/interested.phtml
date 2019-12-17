@@ -1,0 +1,124 @@
+<?php
+/*------------------------------------------------------------------------
+# SM Categories - Version 3.2.0
+# Copyright (c) 2016 YouTech Company. All Rights Reserved.
+# @license - Copyrighted Commercial Software
+# Author: YouTech Company
+# Websites: http://www.magentech.com
+-------------------------------------------------------------------------*/
+
+$items = $this->_getList();
+ $image = 'recently_viewed_products_grid_content_widget';
+$type = 'widget-viewed';
+    $mode = 'grid';
+
+    $type = $type . '-' . $mode;
+?>
+<div class="block widget block-viewed-products">
+        <div class="block-title">
+            <strong role="heading" aria-level="2">You may be also interested in</strong>
+        </div>
+        <div class="block-content">
+           
+          <div class="interested-in-collection">
+                <ul class="owl-carousel interested-in-carousel list-product-home product-items ">
+                    <?php foreach ($items as $_item): ?>
+                        <li class="product-item">
+                            <div class="item collection-box">
+                                <a href="<?= /* @escapeNotVerified */ $_item->getUrl() ?>" class="product-item-photo">
+                                   <?= $block->getImage($_item, $image)->toHtml() ?> 
+                                </a>
+                                <div class="product-item-details">
+                                    <strong class="product-item-name">
+                                        <a title="<?= $block->escapeHtml($_item->getName()) ?>"
+                                           href="<?= /* @escapeNotVerified */ $block->getProductUrl($_item) ?>" class="product-item-link">
+                                            <?= $block->escapeHtml($_item->getName()) ?>
+                                        </a>
+                                    </strong>
+                                    <?php /* @escapeNotVerified */ echo $block->getProductPriceHtml(
+                                        $_item,
+                                        \Magento\Catalog\Pricing\Price\FinalPrice::PRICE_CODE,
+                                        \Magento\Framework\Pricing\Render::ZONE_ITEM_LIST,
+                                        [
+                                            'price_id_suffix' => '-' . $type
+                                        ]
+                                    ) ?>
+                                   
+                                    
+                                 
+                                        <div class="product-item-actions">
+                                                <div class="actions-primary">
+                                                    <?php if ($_item->isSaleable()): ?>
+                                                        <?php if ($_item->getTypeInstance()->hasRequiredOptions($_item)): ?>
+                                                            <button class="action tocart primary"
+                                                                    data-mage-init='{"redirectUrl": {"url": "<?= /* @escapeNotVerified */ $block->getAddToCartUrl($_item) ?>"}}'
+                                                                    type="button" title="<?= /* @escapeNotVerified */ __('Add to Cart') ?>">
+                                                                <span><?= /* @escapeNotVerified */ __('Add to Cart') ?></span>
+                                                            </button>
+                                                        <?php else: ?>
+                                                            <?php
+                                                                $postDataHelper = $this->helper('Magento\Framework\Data\Helper\PostHelper');
+                                                                $postData = $postDataHelper->getPostData($block->getAddToCartUrl($_item), ['product' => $_item->getEntityId()])
+                                                            ?>
+                                                            <button class="action tocart primary btn-action btn-cart"
+                                                                    data-post='<?= /* @escapeNotVerified */ $postData ?>'
+                                                                    type="button" title="<?= /* @escapeNotVerified */ __('Add to Cart') ?>">
+                                                                <span><?= /* @escapeNotVerified */ __('Add to Cart') ?></span>
+                                                            </button>
+                                                        <?php endif; ?>
+                                                    <?php else: ?>
+                                                        <?php if ($_item->getIsSalable()): ?>
+                                                            <div class="stock available"><span><?= /* @escapeNotVerified */ __('In stock') ?></span></div>
+                                                        <?php else: ?>
+                                                            <div class="stock unavailable"><span><?= /* @escapeNotVerified */ __('Out of stock') ?></span></div>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                         
+                                        </div>
+                                   
+                                </div>
+                            </div>
+                        </li>
+                    <?php endforeach ?>
+                </ul>
+            </div>
+           
+        </div>
+    <script type="text/javascript">
+    require([
+        'jquery',
+        'owlcarousel'
+    ], function ($) {
+        jQuery(".interested-in-collection .interested-in-carousel").owlCarousel({
+            responsive:{
+                0:{
+                    items:0
+                },
+                480:{
+                    items:2
+                },
+                768:{
+                    items:3
+                },
+                992:{
+                    items:4
+                },
+                1200:{
+                    items:4
+                }
+
+            },
+
+            autoplay:false,
+            loop:false,
+            nav : true,
+            dots: false,
+            autoplaySpeed : 500,
+            navSpeed : 500,
+            dotsSpeed : 500,
+            autoplayHoverPause: true,
+            margin:0,
+        });   
+    });     
+</script>

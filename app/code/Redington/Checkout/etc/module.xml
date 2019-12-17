@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Checkout
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Redington_Checkout" setup_version="1.0.7">
+        <sequence>  
+			<moduel name="Redington_Quotation"/>
+            <module name="Magento_Checkout"/>
+			<module name="Amasty_Checkout"/>
+			<module name="Magento_Customer"/>
+			<module name="Redington_Configuration"/>
+        </sequence>
+    </module>
+</config>

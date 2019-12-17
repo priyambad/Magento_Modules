@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Customer
+ */
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Customer\Model\Registration">
+        <plugin name="DisableRegistration::after" type="Redington\Customer\Plugin\Customer\Model\Registration\DisableRegistrationPlugin"/>
+    </type>
+    <preference for="Magento\Customer\Model\Url" type="Redington\Customer\Model\Url"/>
+    <preference for="Magento\Customer\Controller\Account\Logout" type="Redington\Customer\Controller\Account\Logout"/>
+    <preference for="Magento\Customer\Block\Form\Login" type="Redington\Customer\Block\Form\Login"/>
+    <preference for="Magento\Customer\Block\Account\Dashboard\Address" type="Redington\Customer\Block\Account\Dashboard\Address"/>
+    <preference for="Magento\Quote\Model\QuoteRepository" type="Redington\Customer\Model\QuoteRepository"/>
+</config>

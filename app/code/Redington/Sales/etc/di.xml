@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Redington Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Cdc
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/ObjectManager/etc/config.xsd">
+
+    <preference for="Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer" type="Redington\Sales\Block\Order\Item\Renderer\DefaultRenderer"/>
+</config>

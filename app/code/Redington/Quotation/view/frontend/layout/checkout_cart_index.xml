@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author SpadeWorx Team
+ * @copyright Copyright (c) 2019 Redington
+ * @package Redington_Quotation
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <body>
+        <referenceContainer name="checkout.cart.methods">
+            <block class="Magento\NegotiableQuote\Block\Checkout\Link" name="checkout.cart.methods.request.quote"
+                   ifconfig="btob/website_configuration/negotiablequote_active"
+                   template="Redington_Quotation::checkout/link.phtml" after="-"/>
+        </referenceContainer>      
+    </body>
+</config>
