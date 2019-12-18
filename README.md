@@ -1,1 +1,1 @@
-# Armstrog
+# Magento modules
